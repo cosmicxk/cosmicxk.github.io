@@ -60,7 +60,7 @@
 </script>
 
   <meta name="description" content="恢复下载 复制之前备份的仓库地址  本地git clone 地址   git clone 地址">
-<meta name="keywords" content="Hexo,Git,备份">
+<meta name="keywords" content="Git,Hexo,备份">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo恢复、部署、备份">
 <meta property="og:url" content="https://space.bilibili.com/34033362/#/bangumi/2019/08/22/Hexo恢复、部署、备份/index.html">
@@ -68,7 +68,7 @@
 <meta property="og:description" content="恢复下载 复制之前备份的仓库地址  本地git clone 地址   git clone 地址">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://space.bilibili.com/pictrues/git.png">
-<meta property="og:updated_time" content="2020-11-12T02:57:58.136Z">
+<meta property="og:updated_time" content="2020-11-12T04:27:27.346Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo恢复、部署、备份">
 <meta name="twitter:description" content="恢复下载 复制之前备份的仓库地址  本地git clone 地址   git clone 地址">
@@ -306,7 +306,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-12 10:57:58" itemprop="dateModified" datetime="2020-11-12T10:57:58+08:00">2020-11-12</time>
+                <time title="修改时间：2020-11-12 12:27:27" itemprop="dateModified" datetime="2020-11-12T12:27:27+08:00">2020-11-12</time>
               </span>
             
           
@@ -420,9 +420,11 @@
 </blockquote>
 <h1 id="备份"><a href="#备份" class="headerlink" title="备份"></a><strong>备份</strong></h1><ul>
 <li>新建一个仓库，将原来的备份仓库删除，新建的时候有提示如何备份</li>
+<li>如果上传找不到仓库，则没有建立连接</li>
+<li>如果提示已存在仓库，则运行rm origin，再重新建立连接</li>
 </ul>
 <p><img src="/pictrues/git.png" alt="git指令" title="git指令"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git add . （所有文件）</span><br><span class="line">git add &quot;相对路径&quot;  -f(强制)   （具体文件，例如themes/next）</span><br><span class="line">git commit -m &quot;备注&quot;</span><br><span class="line">git status</span><br><span class="line">git rm &quot;&quot;  -f(强制)</span><br><span class="line">git push  (本地同步github)</span><br><span class="line">git pull  (github同步本地)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git add . （所有文件）</span><br><span class="line">git add &quot;相对路径&quot;  -f(强制)   （具体文件，例如themes/next）</span><br><span class="line">git commit -m &quot;备注&quot;</span><br><span class="line">git status</span><br><span class="line">git remote rm origin(如果提示已存在仓库)</span><br><span class="line">git remote add origin git@github.com:xxx/yyy.git</span><br><span class="line">git push --set-upstream origin main</span><br><span class="line">git push  (本地同步github)</span><br><span class="line">git pull  (github同步本地)</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>文本编辑 <code>git commit</code></li>
@@ -488,10 +490,10 @@
           
           <div class="post-tags">
             
-              <a href="/tags/Hexo/" rel="tag"> <i class="fa fa-location-arrow" aria-hidden="true"></i> Hexo</a>
+              <a href="/tags/Git/" rel="tag"> <i class="fa fa-location-arrow" aria-hidden="true"></i> Git</a>
 
             
-              <a href="/tags/Git/" rel="tag"> <i class="fa fa-location-arrow" aria-hidden="true"></i> Git</a>
+              <a href="/tags/Hexo/" rel="tag"> <i class="fa fa-location-arrow" aria-hidden="true"></i> Hexo</a>
 
             
               <a href="/tags/备份/" rel="tag"> <i class="fa fa-location-arrow" aria-hidden="true"></i> 备份</a>
