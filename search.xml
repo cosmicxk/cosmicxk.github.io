@@ -43,12 +43,12 @@
   <entry>
     <title>Leetcode</title>
     <url>/2020/10/30/Leetcode/</url>
-    <content><![CDATA[<h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h2><p><img src="/pictrues/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C.png" alt="两数之和" title="两数之和"></p>
+    <content><![CDATA[<h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h2><a id="more"></a>
+
+<p><img src="/pictrues/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C.png" alt="两数之和" title="两数之和"></p>
 <h3 id="循环嵌套"><a href="#循环嵌套" class="headerlink" title="循环嵌套"></a>循环嵌套</h3><blockquote>
 <p>c/c++</p>
 </blockquote>
-<a id="more"></a>
-
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;</span><br><span class="line">        int i,j;</span><br><span class="line">        for(i=0; i&lt;nums.size()-1; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            for(j=i+1;j&lt;nums.size();j++)</span><br><span class="line">            &#123;</span><br><span class="line">                if(nums[i]+nums[j]==target)</span><br><span class="line">                &#123;</span><br><span class="line">                   return &#123;i,j&#125;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return &#123;&#125;;		#若没有答案返回空</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -243,7 +243,7 @@
 <div id="decryptionError" style="display: none;">Incorrect Password!</div>
 <div id="noContentError" style="display: none;">No content to display!</div>
 <div id="encrypt-blog" style="display:none">
-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
+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
 </div>
 <script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
       <categories>
@@ -465,8 +465,8 @@ U2FsdGVkX1883U3yy1ohNGGgz1f4BakwpiMzAJPCyZ5bSFZUkTWnmhzvN83aSOWmUheO1gMC9r3qjwMa
         <category>部署</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>Git</tag>
+        <tag>Hexo</tag>
         <tag>备份</tag>
       </tags>
   </entry>
