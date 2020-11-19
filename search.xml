@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>VMware_Ubuntu</title>
+    <url>/2020/11/19/VMware-Ubuntu/</url>
+    <content><![CDATA[<p>Notes on installing Ubuntu</p>
+<a id="more"></a>
+<h2 id="Ubuntu20-04-1"><a href="#Ubuntu20-04-1" class="headerlink" title="Ubuntu20.04.1"></a>Ubuntu20.04.1</h2><h3 id="修改apt源-国内"><a href="#修改apt源-国内" class="headerlink" title="修改apt源(国内)"></a>修改apt源(国内)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup</span><br><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除所有，复制代码，以<a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="noopener">清华源</a>为例</li>
+</ul>
+<p><code>sudo apt-get update</code></p>
+<h3 id="设置网速"><a href="#设置网速" class="headerlink" title="设置网速"></a>设置网速</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo lshw -numeric -class network</span><br><span class="line">sudo ip addr show</span><br><span class="line">sudo ip route show</span><br><span class="line">sudo tracepath forum.ubuntu.org.cn</span><br><span class="line">sudo apt-get install traceroute　　</span><br><span class="line">sudo traceroute forum.ubuntu.org.cn</span><br><span class="line">speedtest-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载搜狗输入法"><a href="#下载搜狗输入法" class="headerlink" title="下载搜狗输入法"></a>下载搜狗输入法</h3><ul>
+<li>下载安装包或者终端下载，软件安装都是默认位置</li>
+</ul>
+<h3 id="下载SwitchyOmega"><a href="#下载SwitchyOmega" class="headerlink" title="下载SwitchyOmega"></a>下载SwitchyOmega</h3><ul>
+<li><a href="https://github.com/FelisCatus/SwitchyOmega/tags" target="_blank" rel="noopener">Chrome扩展插件</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Ubuntu</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo的使用方法</title>
     <url>/2020/11/12/Hexo%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -243,7 +271,7 @@
 <div id="decryptionError" style="display: none;">Incorrect Password!</div>
 <div id="noContentError" style="display: none;">No content to display!</div>
 <div id="encrypt-blog" style="display:none">
-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
+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
 </div>
 <script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
       <categories>
