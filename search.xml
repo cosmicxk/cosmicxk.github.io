@@ -3,21 +3,21 @@
   <entry>
     <title>VMware_Ubuntu</title>
     <url>/2020/11/19/VMware-Ubuntu/</url>
-    <content><![CDATA[<p>Notes on installing Ubuntu</p>
+    <content><![CDATA[<p>Notes on installing Ubuntu.</p>
 <a id="more"></a>
-<h2 id="Ubuntu20-04-1"><a href="#Ubuntu20-04-1" class="headerlink" title="Ubuntu20.04.1"></a>Ubuntu20.04.1</h2><h3 id="修改apt源-国内"><a href="#修改apt源-国内" class="headerlink" title="修改apt源(国内)"></a>修改apt源(国内)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup</span><br><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<h2 id="Ubuntu20-04-1"><a href="#Ubuntu20-04-1" class="headerlink" title="Ubuntu20.04.1"></a>Ubuntu20.04.1</h2><h3 id="apt源-国内"><a href="#apt源-国内" class="headerlink" title="apt源(国内)"></a>apt源(国内)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup</span><br><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>删除所有，复制代码，以<a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="noopener">清华源</a>为例</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
 
-<h3 id="设置网速"><a href="#设置网速" class="headerlink" title="设置网速"></a>设置网速</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo lshw -numeric -class network</span><br><span class="line">sudo ip addr show</span><br><span class="line">sudo ip route show</span><br><span class="line">sudo tracepath forum.ubuntu.org.cn</span><br><span class="line">sudo apt-get install traceroute　　</span><br><span class="line">sudo traceroute forum.ubuntu.org.cn</span><br><span class="line">speedtest-cli</span><br></pre></td></tr></table></figure>
+<h3 id="网速"><a href="#网速" class="headerlink" title="网速"></a>网速</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo lshw -numeric -class network</span><br><span class="line">sudo ip addr show</span><br><span class="line">sudo ip route show</span><br><span class="line">sudo tracepath forum.ubuntu.org.cn</span><br><span class="line">sudo apt-get install traceroute　　</span><br><span class="line">sudo traceroute forum.ubuntu.org.cn</span><br><span class="line">speedtest-cli</span><br></pre></td></tr></table></figure>
 
-<h3 id="安装VMwareTools"><a href="#安装VMwareTools" class="headerlink" title="安装VMwareTools"></a>安装VMwareTools</h3><ul>
+<h3 id="VMwareTools"><a href="#VMwareTools" class="headerlink" title="VMwareTools"></a>VMwareTools</h3><ul>
 <li>安装之后可以拖拽文件来共享</li>
 </ul>
-<h3 id="下载WPS"><a href="#下载WPS" class="headerlink" title="下载WPS"></a>下载WPS</h3><ul>
+<h3 id="WPS"><a href="#WPS" class="headerlink" title="WPS"></a>WPS</h3><ul>
 <li>卸载原生liboffice</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove liboffice-common	#与WPS不兼容</span><br><span class="line">sudo apt-get install liboffice	#以后安装执行此命令</span><br></pre></td></tr></table></figure>
@@ -32,15 +32,15 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo mv wps_symbol_fonts.zip /usr/share/fonts</span><br><span class="line">cd /usr/share/fonts</span><br><span class="line">sudo unzip wps_symbol_fonts.zip</span><br><span class="line">sudo rm wps_symbol_fonts.zip</span><br><span class="line">sudo mkfontscale	#生成字体的索引信息</span><br><span class="line">sudo mkfontdir</span><br><span class="line">sudo fc-cache	#更新字体缓存</span><br></pre></td></tr></table></figure>
 
-<h3 id="下载Flashplayer"><a href="#下载Flashplayer" class="headerlink" title="下载Flashplayer"></a>下载<a href="http://get.adobe.com/cn/flashplayer/" target="_blank" rel="noopener">Flashplayer</a></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd Downloads</span><br><span class="line">tar -zxvf &lt;example&gt;.tar.gz	#找不到命令就安装tar</span><br><span class="line">sudo cp libflashplayer.so /usr/lib/mozilla/plugins/</span><br><span class="line">sudo chmod 755 /usr/lib/mozilla/plugins/libflashplayer.so</span><br><span class="line">sudo cp -r ./usr/* /usr/</span><br></pre></td></tr></table></figure>
+<h3 id="Flashplayer"><a href="#Flashplayer" class="headerlink" title="Flashplayer"></a><a href="http://get.adobe.com/cn/flashplayer/" target="_blank" rel="noopener">Flashplayer</a></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd Downloads</span><br><span class="line">tar -zxvf &lt;example&gt;.tar.gz	#找不到命令就安装tar</span><br><span class="line">sudo cp libflashplayer.so /usr/lib/mozilla/plugins/</span><br><span class="line">sudo chmod 755 /usr/lib/mozilla/plugins/libflashplayer.so</span><br><span class="line">sudo cp -r ./usr/* /usr/</span><br></pre></td></tr></table></figure>
 
-<h3 id="下载搜狗输入法"><a href="#下载搜狗输入法" class="headerlink" title="下载搜狗输入法"></a>下载搜狗输入法</h3><ul>
+<h3 id="搜狗输入法"><a href="#搜狗输入法" class="headerlink" title="搜狗输入法"></a>搜狗输入法</h3><ul>
 <li>下载安装包或者终端下载，软件安装都是默认位置</li>
 </ul>
-<h3 id="下载SwitchyOmega"><a href="#下载SwitchyOmega" class="headerlink" title="下载SwitchyOmega"></a>下载SwitchyOmega</h3><ul>
+<h3 id="SwitchyOmega"><a href="#SwitchyOmega" class="headerlink" title="SwitchyOmega"></a>SwitchyOmega</h3><ul>
 <li><a href="https://github.com/FelisCatus/SwitchyOmega/tags" target="_blank" rel="noopener">Chrome扩展插件</a></li>
 </ul>
-]]></content>
+<h3 id="g"><a href="#g" class="headerlink" title="g++"></a>g++</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">g++ --version</span><br><span class="line">sudo apt install g++	#安装</span><br><span class="line">sudo apt remove g++		#卸载</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -92,16 +92,20 @@
   <entry>
     <title>Leetcode</title>
     <url>/2020/10/30/leetcode/</url>
-    <content><![CDATA[<h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h2><a id="more"></a>
+    <content><![CDATA[<p>Fighting Leetcode Record!!!</p>
+<a id="more"></a>
 
-<p><img src="/pictrues/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C.png" alt="两数之和" title="两数之和"></p>
+<h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h2><ul>
+<li>给定 nums = [2, 7, 11, 15], target = 9</li>
+<li>返回 [0, 1]</li>
+</ul>
 <h3 id="循环嵌套"><a href="#循环嵌套" class="headerlink" title="循环嵌套"></a>循环嵌套</h3><blockquote>
-<p>c/c++</p>
+<p>C/C++</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;</span><br><span class="line">        int i,j;</span><br><span class="line">        for(i=0; i&lt;nums.size()-1; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            for(j=i+1;j&lt;nums.size();j++)</span><br><span class="line">            &#123;</span><br><span class="line">                if(nums[i]+nums[j]==target)</span><br><span class="line">                &#123;</span><br><span class="line">                   return &#123;i,j&#125;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return &#123;&#125;;		#若没有答案返回空</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>python3</p>
+<p>Python3</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:</span><br><span class="line">        for i in range(len(nums)):</span><br><span class="line">            for j in range(i+1,len(nums)):</span><br><span class="line">                if nums[i]+nums[j]==target:</span><br><span class="line">                    return [i,j]</span><br><span class="line">        return []		#若没有答案返回空</span><br></pre></td></tr></table></figure>
 
@@ -115,14 +119,15 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux命令速查手册</title>
-    <url>/2020/10/15/Linux%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<blockquote>
+    <title>Linux命令速查</title>
+    <url>/2020/10/15/Linux%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/</url>
+    <content><![CDATA[<p>Linux Command！</p>
+<a id="more"></a>
+<blockquote>
 <p>本文转摘自<a href="https://www.codesheep.cn/" target="_blank" rel="noopener">codesheep</a></p>
 </blockquote>
 <h2 id="date显示系统日期"><a href="#date显示系统日期" class="headerlink" title="date显示系统日期"></a>date显示系统日期</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cal 2007               显示2007年的日历表</span><br><span class="line">date 041217002007.00   设置日期和时间 - 月日时分年.秒</span><br><span class="line">clock -w               将时间修改保存到 BIOS</span><br></pre></td></tr></table></figure>
 
-<a id="more"></a>
 <h2 id="查看Linux系统信息"><a href="#查看Linux系统信息" class="headerlink" title="查看Linux系统信息"></a>查看Linux系统信息</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">arch      				显示机器的处理器架构(1)</span><br><span class="line">uname -m  				显示机器的处理器架构(2)</span><br><span class="line">uname -r  				显示正在使用的内核版本</span><br><span class="line">dmidecode -q          	显示硬件系统部件 - (SMBIOS / DMI)</span><br><span class="line">hdparm -i /dev/hda    	罗列一个磁盘的架构特性</span><br><span class="line">hdparm -tT /dev/sda   	在磁盘上执行测试性读取操作</span><br><span class="line">cat /proc/cpuinfo     	显示CPU info的信息</span><br><span class="line">cat /proc/interrupts  	显示中断</span><br><span class="line">cat /proc/meminfo     	校验内存使用</span><br><span class="line">cat /proc/swaps       	显示哪些swap被使用</span><br><span class="line">cat /proc/version     	显示内核的版本</span><br><span class="line">cat /proc/net/dev     	显示网络适配器及统计</span><br><span class="line">cat /proc/mounts      	显示已加载的文件系统</span><br><span class="line">lspci -tv   			罗列PCI设备</span><br><span class="line">lsusb -tv   			显示USB设备</span><br></pre></td></tr></table></figure>
 
 <h2 id="关机、重启、登出"><a href="#关机、重启、登出" class="headerlink" title="关机、重启、登出"></a>关机、重启、登出</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">shutdown -h now    	关闭系统(1)</span><br><span class="line">init 0            	关闭系统(2)</span><br><span class="line">telinit 0         	关闭系统(3)</span><br><span class="line">shutdown -h hours:minutes &amp;   	按预定时间关闭系统</span><br><span class="line">shutdown -c       	取消按预定时间关闭系统</span><br><span class="line">shutdown -r now   	重启(1)</span><br><span class="line">reboot   			重启(2)</span><br><span class="line">logout   			注销</span><br></pre></td></tr></table></figure>
@@ -176,18 +181,18 @@
       </tags>
   </entry>
   <entry>
-    <title>数据结构一览</title>
-    <url>/2019/08/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%80%E8%A7%88/</url>
-    <content><![CDATA[<blockquote>
-<p>持续更新</p>
-</blockquote>
+    <title>数据结构</title>
+    <url>/2019/08/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<p>Continually Updated.(Just Kidding)</p>
+<a id="more"></a>
+
+
 <h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><ul>
 <li>时间复杂度是总运算次数表达式中受n的变化影响最大的那一项(不含系数)</li>
 </ul>
 <h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><ul>
 <li>临时占用存储空间大小的量度</li>
 </ul>
-<a id="more"></a>
 <h2 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h2><ul>
 <li>抽象数据类型：可以减少大量的设计过程和开发过程。</li>
 </ul>
@@ -211,12 +216,13 @@
   <entry>
     <title>三次握手、四次挥手</title>
     <url>/2019/08/25/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E3%80%81%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/</url>
-    <content><![CDATA[<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><h3 id="第一次握手"><a href="#第一次握手" class="headerlink" title="第一次握手"></a>第一次握手</h3><ul>
+    <content><![CDATA[<p>Three handshake and four waves between the server and the client.</p>
+<a id="more"></a>
+<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><h3 id="第一次握手"><a href="#第一次握手" class="headerlink" title="第一次握手"></a>第一次握手</h3><ul>
 <li>客户端处于closed状态，服务器处于listen状态。此时由客户端发送SYN报文，并确认自己的初始化序列号ISN，之后客户端处于SYN-send状态。</li>
 <li>SYN： 同步序列编号(Synchronize Sequence Numbers)</li>
 </ul>
-<h3 id="第二次握手"><a href="#第二次握手" class="headerlink" title="第二次握手"></a>第二次握手</h3><a id="more"></a>
-<ul>
+<h3 id="第二次握手"><a href="#第二次握手" class="headerlink" title="第二次握手"></a>第二次握手</h3><ul>
 <li>服务器接受到报文后，将自己的SYN作为应答，并指定了自己的序列号ISN，同时把客户端序列号+1作为ACK的值发送，之后服务器处于SYN-received状态。</li>
 </ul>
 <p><img src="/pictrues/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" alt="三次握手"></p>
@@ -284,15 +290,15 @@
     <url>/2019/08/23/Enshrine/</url>
     <content><![CDATA[<div id="hbe-security">
   <div class="hbe-input-container">
-  <input type="password" class="hbe-form-control" id="pass" placeholder="passwords" />
-    <label for="pass">passwords</label>
+  <input type="password" class="hbe-form-control" id="pass" placeholder="password" />
+    <label for="pass">password</label>
     <div class="bottom-line"></div>
   </div>
 </div>
 <div id="decryptionError" style="display: none;">Incorrect Password!</div>
 <div id="noContentError" style="display: none;">No content to display!</div>
 <div id="encrypt-blog" style="display:none">
-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
+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
 </div>
 <script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
       <categories>
@@ -302,10 +308,12 @@ U2FsdGVkX1/AAVPwtRWTOkSbmwP7U2jiuJTfWxsHs56s/sNNhnJwpaFAGmOt1v3fzuQNod79quebfejZ
   <entry>
     <title>Hexo部署到远程服务器</title>
     <url>/2019/08/23/Hexo%E9%83%A8%E7%BD%B2%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-    <content><![CDATA[<p><a href="https://blog.csdn.net/StaunchKai/article/details/82878928" target="_blank" rel="noopener">参考文章</a></p>
+    <content><![CDATA[<p>Notes on how to depoly Hexo to remote server.</p>
+<a id="more"></a>
+
+<p><a href="https://blog.csdn.net/StaunchKai/article/details/82878928" target="_blank" rel="noopener">参考文章</a></p>
 <h1 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h1><h2 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a>安装 Git</h2><h3 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel</span><br><span class="line">yum install  gcc perl-ExtUtils-MakeMaker</span><br></pre></td></tr></table></figure>
 
-<a id="more"></a>
 <ul>
 <li>查看git当前版本的版本号</li>
 </ul>
@@ -430,14 +438,15 @@ U2FsdGVkX1/AAVPwtRWTOkSbmwP7U2jiuJTfWxsHs56s/sNNhnJwpaFAGmOt1v3fzuQNod79quebfejZ
   <entry>
     <title>Hexo恢复、部署、备份</title>
     <url>/2019/08/22/Hexo%E6%81%A2%E5%A4%8D%E3%80%81%E9%83%A8%E7%BD%B2%E3%80%81%E5%A4%87%E4%BB%BD/</url>
-    <content><![CDATA[<h1 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a><strong>恢复</strong></h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><ul>
+    <content><![CDATA[<p>About Hexo recovery, deployment, and backup.</p>
+<a id="more"></a>
+<h1 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a><strong>恢复</strong></h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><ul>
 <li><p>复制之前备份的仓库地址</p>
 </li>
 <li><p>本地git clone 地址</p>
 <p>  <code>git clone 地址</code></p>
 </li>
 </ul>
-<a id="more"></a>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
 <li><p><strong>git下载</strong>安装一路next(<a href="https://npm.taobao.org/mirrors/git-for-windows/" target="_blank" rel="noopener">git-for-windows</a>)</p>
 </li>
@@ -522,11 +531,12 @@ U2FsdGVkX1/AAVPwtRWTOkSbmwP7U2jiuJTfWxsHs56s/sNNhnJwpaFAGmOt1v3fzuQNod79quebfejZ
   <entry>
     <title>Markdown的使用方法</title>
     <url>/2019/08/20/Markdown%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="修改实时预览字体"><a href="#修改实时预览字体" class="headerlink" title="修改实时预览字体"></a>修改实时预览字体</h2><blockquote>
-<p>Tools-Options-Stylesheets-Markdownpad github.css-edit</p>
-</blockquote>
+    <content><![CDATA[<p>How to use Markdown.</p>
 <a id="more"></a>
 
+<h2 id="修改实时预览字体"><a href="#修改实时预览字体" class="headerlink" title="修改实时预览字体"></a>修改实时预览字体</h2><blockquote>
+<p>Tools-Options-Stylesheets-Markdownpad github.css-edit</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  min-width: 32em;</span><br><span class="line">  max-width: 52em;</span><br><span class="line">  margin: 10px;</span><br><span class="line">  zoom:2; #第一个body即可</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;font  更改语法&gt;   你的内容   &lt;/font&gt;</span><br></pre></td></tr></table></figure>
@@ -538,11 +548,6 @@ U2FsdGVkX1/AAVPwtRWTOkSbmwP7U2jiuJTfWxsHs56s/sNNhnJwpaFAGmOt1v3fzuQNod79quebfejZ
 </blockquote>
 <p><font color="#00ffff">字体改成蓝色了</font></p>
 <p><font color="#FF0000">字体改成红色了</font></p>
-<h2 id="查表"><a href="#查表" class="headerlink" title="查表"></a>查表</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">颜色名 十六进制颜色值 颜色</span><br><span class="line">AliceBlue   #F0F8FF rgb(240, 248, 255)</span><br><span class="line">AntiqueWhite    #FAEBD7 rgb(250, 235, 215)</span><br><span class="line">Aqua    #00FFFF rgb(0, 255, 255)</span><br><span class="line">Aquamarine  #7FFFD4 rgb(127, 255, 212)</span><br><span class="line">Azure   #F0FFFF rgb(240, 255, 255)</span><br><span class="line">Beige   #F5F5DC rgb(245, 245, 220)</span><br><span class="line">Bisque  #FFE4C4 rgb(255, 228, 196)</span><br><span class="line">Black   #000000 rgb(0, 0, 0)</span><br><span class="line">BlanchedAlmond  #FFEBCD rgb(255, 235, 205)</span><br><span class="line">Blue    #0000FF rgb(0, 0, 255)</span><br><span class="line">BlueViolet  #8A2BE2 rgb(138, 43, 226)</span><br><span class="line">Brown   #A52A2A rgb(165, 42, 42)</span><br><span class="line">BurlyWood   #DEB887 rgb(222, 184, 135)</span><br><span class="line">CadetBlue   #5F9EA0 rgb(95, 158, 160)</span><br><span class="line">Chartreuse  #7FFF00 rgb(127, 255, 0)</span><br><span class="line">Chocolate   #D2691E rgb(210, 105, 30)</span><br><span class="line">Coral   #FF7F50 rgb(255, 127, 80)</span><br><span class="line">CornflowerBlue  #6495ED rgb(100, 149, 237)</span><br><span class="line">Cornsilk    #FFF8DC rgb(255, 248, 220)</span><br><span class="line">Crimson #DC143C rgb(220, 20, 60)</span><br><span class="line">Cyan    #00FFFF rgb(0, 255, 255)</span><br><span class="line">DarkBlue    #00008B rgb(0, 0, 139)</span><br><span class="line">DarkCyan    #008B8B rgb(0, 139, 139)</span><br><span class="line">DarkGoldenRod   #B8860B rgb(184, 134, 11)</span><br><span class="line">DarkGray    #A9A9A9 rgb(169, 169, 169)</span><br><span class="line">DarkGreen   #006400 rgb(0, 100, 0)</span><br><span class="line">DarkKhaki   #BDB76B rgb(189, 183, 107)</span><br><span class="line">DarkMagenta #8B008B rgb(139, 0, 139)</span><br><span class="line">DarkOliveGreen  #556B2F rgb(85, 107, 47)</span><br><span class="line">Darkorange  #FF8C00 rgb(255, 140, 0)</span><br><span class="line">DarkOrchid  #9932CC rgb(153, 50, 204)</span><br><span class="line">DarkRed #8B0000 rgb(139, 0, 0)</span><br><span class="line">DarkSalmon  #E9967A rgb(233, 150, 122)</span><br><span class="line">DarkSeaGreen    #8FBC8F rgb(143, 188, 143)</span><br><span class="line">DarkSlateBlue   #483D8B rgb(72, 61, 139)</span><br><span class="line">DarkSlateGray   #2F4F4F rgb(47, 79, 79)</span><br><span class="line">DarkTurquoise   #00CED1 rgb(0, 206, 209)</span><br><span class="line">DarkViolet  #9400D3 rgb(148, 0, 211)</span><br><span class="line">DeepPink    #FF1493 rgb(255, 20, 147)</span><br><span class="line">DeepSkyBlue #00BFFF rgb(0, 191, 255)</span><br><span class="line">DimGray #696969 rgb(105, 105, 105)</span><br><span class="line">DodgerBlue  #1E90FF rgb(30, 144, 255)</span><br><span class="line">Feldspar    #D19275 rgb(209, 146, 117)</span><br><span class="line">FireBrick   #B22222 rgb(178, 34, 34)</span><br><span class="line">FloralWhite #FFFAF0 rgb(255, 250, 240)</span><br><span class="line">ForestGreen #228B22 rgb(34, 139, 34)</span><br><span class="line">Fuchsia #FF00FF rgb(255, 0, 255)</span><br><span class="line">Gainsboro   #DCDCDC rgb(220, 220, 220)</span><br><span class="line">GhostWhite  #F8F8FF rgb(248, 248, 255)</span><br><span class="line">Gold    #FFD700 rgb(255, 215, 0)</span><br><span class="line">GoldenRod   #DAA520 rgb(218, 165, 32)</span><br><span class="line">Gray    #808080 rgb(128, 128, 128)</span><br><span class="line">Green   #008000 rgb(0, 128, 0)</span><br><span class="line">GreenYellow #ADFF2F rgb(173, 255, 47)</span><br><span class="line">HoneyDew    #F0FFF0 rgb(240, 255, 240)</span><br><span class="line">HotPink #FF69B4 rgb(255, 105, 180)</span><br><span class="line">IndianRed   #CD5C5C rgb(205, 92, 92)</span><br><span class="line">Indigo  #4B0082 rgb(75, 0, 130)</span><br><span class="line">Ivory   #FFFFF0 rgb(255, 255, 240)</span><br><span class="line">Khaki   #F0E68C rgb(240, 230, 140)</span><br><span class="line">Lavender    #E6E6FA rgb(230, 230, 250)</span><br><span class="line">LavenderBlush   #FFF0F5 rgb(255, 240, 245)</span><br><span class="line">LawnGreen   #7CFC00 rgb(124, 252, 0)</span><br><span class="line">LemonChiffon    #FFFACD rgb(255, 250, 205)</span><br><span class="line">LightBlue   #ADD8E6 rgb(173, 216, 230)</span><br><span class="line">LightCoral  #F08080 rgb(240, 128, 128)</span><br><span class="line">LightCyan   #E0FFFF rgb(224, 255, 255)</span><br><span class="line">LightGoldenRodYellow    #FAFAD2 rgb(250, 250, 210)</span><br><span class="line">LightGrey   #D3D3D3 rgb(211, 211, 211)</span><br><span class="line">LightGreen  #90EE90 rgb(144, 238, 144)</span><br><span class="line">LightPink   #FFB6C1 rgb(255, 182, 193)</span><br><span class="line">LightSalmon #FFA07A rgb(255, 160, 122)</span><br><span class="line">LightSeaGreen   #20B2AA rgb(32, 178, 170)</span><br><span class="line">LightSkyBlue    #87CEFA rgb(135, 206, 250)</span><br><span class="line">LightSlateBlue  #8470FF rgb(132, 112, 255)</span><br><span class="line">LightSlateGray  #778899 rgb(119, 136, 153)</span><br><span class="line">LightSteelBlue  #B0C4DE rgb(176, 196, 222)</span><br><span class="line">LightYellow #FFFFE0 rgb(255, 255, 224)</span><br><span class="line">Lime    #00FF00 rgb(0, 255, 0)</span><br><span class="line">LimeGreen   #32CD32 rgb(50, 205, 50)</span><br><span class="line">Linen   #FAF0E6 rgb(250, 240, 230)</span><br><span class="line">Magenta #FF00FF rgb(255, 0, 255)</span><br><span class="line">Maroon  #800000 rgb(128, 0, 0)</span><br><span class="line">MediumAquaMarine    #66CDAA rgb(102, 205, 170)</span><br><span class="line">MediumBlue  #0000CD rgb(0, 0, 205)</span><br><span class="line">MediumOrchid    #BA55D3 rgb(186, 85, 211)</span><br><span class="line">MediumPurple    #9370D8 rgb(147, 112, 216)</span><br><span class="line">MediumSeaGreen  #3CB371 rgb(60, 179, 113)</span><br><span class="line">MediumSlateBlue #7B68EE rgb(123, 104, 238)</span><br><span class="line">MediumSpringGreen   #00FA9A rgb(0, 250, 154)</span><br><span class="line">MediumTurquoise #48D1CC rgb(72, 209, 204)</span><br><span class="line">MediumVioletRed #C71585 rgb(199, 21, 133)</span><br><span class="line">MidnightBlue    #191970 rgb(25, 25, 112)</span><br><span class="line">MintCream   #F5FFFA rgb(245, 255, 250)</span><br><span class="line">MistyRose   #FFE4E1 rgb(255, 228, 225)</span><br><span class="line">Moccasin    #FFE4B5 rgb(255, 228, 181)</span><br><span class="line">NavajoWhite #FFDEAD rgb(255, 222, 173)</span><br><span class="line">Navy    #000080 rgb(0, 0, 128)</span><br><span class="line">OldLace #FDF5E6 rgb(253, 245, 230)</span><br><span class="line">Olive   #808000 rgb(128, 128, 0)</span><br><span class="line">OliveDrab   #6B8E23 rgb(107, 142, 35)</span><br><span class="line">Orange  #FFA500 rgb(255, 165, 0)</span><br><span class="line">OrangeRed   #FF4500 rgb(255, 69, 0)</span><br><span class="line">Orchid  #DA70D6 rgb(218, 112, 214)</span><br><span class="line">PaleGoldenRod   #EEE8AA rgb(238, 232, 170)</span><br><span class="line">PaleGreen   #98FB98 rgb(152, 251, 152)</span><br><span class="line">PaleTurquoise   #AFEEEE rgb(175, 238, 238)</span><br><span class="line">PaleVioletRed   #D87093 rgb(216, 112, 147)</span><br><span class="line">PapayaWhip  #FFEFD5 rgb(255, 239, 213)</span><br><span class="line">PeachPuff   #FFDAB9 rgb(255, 218, 185)</span><br><span class="line">Peru    #CD853F rgb(205, 133, 63)</span><br><span class="line">Pink    #FFC0CB rgb(255, 192, 203)</span><br><span class="line">Plum    #DDA0DD rgb(221, 160, 221)</span><br><span class="line">PowderBlue  #B0E0E6 rgb(176, 224, 230)</span><br><span class="line">Purple  #800080 rgb(128, 0, 128)</span><br><span class="line">Red #FF0000 rgb(255, 0, 0)</span><br><span class="line">RosyBrown   #BC8F8F rgb(188, 143, 143)</span><br><span class="line">RoyalBlue   #4169E1 rgb(65, 105, 225)</span><br><span class="line">SaddleBrown #8B4513 rgb(139, 69, 19)</span><br><span class="line">Salmon  #FA8072 rgb(250, 128, 114)</span><br><span class="line">SandyBrown  #F4A460 rgb(244, 164, 96)</span><br><span class="line">SeaGreen    #2E8B57 rgb(46, 139, 87)</span><br><span class="line">SeaShell    #FFF5EE rgb(255, 245, 238)</span><br><span class="line">Sienna  #A0522D rgb(160, 82, 45)</span><br><span class="line">Silver  #C0C0C0 rgb(192, 192, 192)</span><br><span class="line">SkyBlue #87CEEB rgb(135, 206, 235)</span><br><span class="line">SlateBlue   #6A5ACD rgb(106, 90, 205)</span><br><span class="line">SlateGray   #708090 rgb(112, 128, 144)</span><br><span class="line">Snow    #FFFAFA rgb(255, 250, 250)</span><br><span class="line">SpringGreen #00FF7F rgb(0, 255, 127)</span><br><span class="line">SteelBlue   #4682B4 rgb(70, 130, 180)</span><br><span class="line">Tan #D2B48C rgb(210, 180, 140)</span><br><span class="line">Teal    #008080 rgb(0, 128, 128)</span><br><span class="line">Thistle #D8BFD8 rgb(216, 191, 216)</span><br><span class="line">Tomato  #FF6347 rgb(255, 99, 71)</span><br><span class="line">Turquoise   #40E0D0 rgb(64, 224, 208)</span><br><span class="line">Violet  #EE82EE rgb(238, 130, 238)</span><br><span class="line">VioletRed   #D02090 rgb(208, 32, 144)</span><br><span class="line">Wheat   #F5DEB3 rgb(245, 222, 179)</span><br><span class="line">White   #FFFFFF rgb(255, 255, 255)</span><br><span class="line">WhiteSmoke  #F5F5F5 rgb(245, 245, 245)</span><br><span class="line">Yellow  #FFFF00 rgb(255, 255, 0)</span><br><span class="line">YellowGreen #9ACD32 rgb(154, 205, 50)</span><br></pre></td></tr></table></figure>
-
-
-
-
 <h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><pre><code># 一级标题</code></pre><h2 id="二级"><a href="#二级" class="headerlink" title="二级"></a>二级</h2><pre><code>## 二级</code></pre><h3 id="三级"><a href="#三级" class="headerlink" title="三级"></a>三级</h3><pre><code>### 三级</code></pre><ul>
 <li>列表</li>
 <li>列表</li>
@@ -608,7 +613,10 @@ U2FsdGVkX1/AAVPwtRWTOkSbmwP7U2jiuJTfWxsHs56s/sNNhnJwpaFAGmOt1v3fzuQNod79quebfejZ
   <entry>
     <title>个性设置</title>
     <url>/2019/08/20/%E4%B8%AA%E6%80%A7%E8%AE%BE%E7%BD%AE/</url>
-    <content><![CDATA[<h1 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h1><ul>
+    <content><![CDATA[<p>Hexo Personalization</p>
+<a id="more"></a>
+
+<h1 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h1><ul>
 <li>\themes\next_config.yml</li>
 </ul>
 <h2 id="首页设置阅读全文"><a href="#首页设置阅读全文" class="headerlink" title="首页设置阅读全文"></a>首页设置阅读全文</h2><ul>
@@ -616,7 +624,6 @@ U2FsdGVkX1/AAVPwtRWTOkSbmwP7U2jiuJTfWxsHs56s/sNNhnJwpaFAGmOt1v3fzuQNod79quebfejZ
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto_excerpt（未成功）</span><br></pre></td></tr></table></figure>
 
-<a id="more"></a>
 <ul>
 <li>法二：</li>
 </ul>
@@ -739,8 +746,9 @@ U2FsdGVkX1/AAVPwtRWTOkSbmwP7U2jiuJTfWxsHs56s/sNNhnJwpaFAGmOt1v3fzuQNod79quebfejZ
         <category>介绍</category>
       </categories>
       <tags>
-        <tag>个性设置</tag>
+        <tag>Hexo</tag>
         <tag>主题</tag>
+        <tag>个性化</tag>
       </tags>
   </entry>
 </search>
