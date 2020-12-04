@@ -12,10 +12,13 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
 
-<h3 id="网速"><a href="#网速" class="headerlink" title="网速"></a>网速</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo lshw -numeric -class network</span><br><span class="line">sudo ip addr show</span><br><span class="line">sudo ip route show</span><br><span class="line">sudo tracepath forum.ubuntu.org.cn</span><br><span class="line">sudo apt-get install traceroute　　</span><br><span class="line">sudo traceroute forum.ubuntu.org.cn</span><br><span class="line">speedtest-cli</span><br></pre></td></tr></table></figure>
+<h3 id="网速"><a href="#网速" class="headerlink" title="网速"></a>网速</h3><ul>
+<li>若没有问题可跳过</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo lshw -numeric -class network</span><br><span class="line">sudo ip addr show</span><br><span class="line">sudo ip route show</span><br><span class="line">sudo tracepath forum.ubuntu.org.cn</span><br><span class="line">sudo apt-get install traceroute　　</span><br><span class="line">sudo traceroute forum.ubuntu.org.cn</span><br><span class="line">speedtest-cli</span><br></pre></td></tr></table></figure>
 
 <h3 id="VMwareTools"><a href="#VMwareTools" class="headerlink" title="VMwareTools"></a>VMwareTools</h3><ul>
-<li>安装之后可以拖拽文件来共享</li>
+<li>安装之后可以拖拽文件来共享(物理机可跳过)</li>
 </ul>
 <h3 id="WPS"><a href="#WPS" class="headerlink" title="WPS"></a>WPS</h3><ul>
 <li>卸载原生liboffice</li>
@@ -32,16 +35,24 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo mv wps_symbol_fonts.zip /usr/share/fonts</span><br><span class="line">cd /usr/share/fonts</span><br><span class="line">sudo unzip wps_symbol_fonts.zip</span><br><span class="line">sudo rm wps_symbol_fonts.zip</span><br><span class="line">sudo mkfontscale	#生成字体的索引信息</span><br><span class="line">sudo mkfontdir</span><br><span class="line">sudo fc-cache	#更新字体缓存</span><br></pre></td></tr></table></figure>
 
-<h3 id="Flashplayer"><a href="#Flashplayer" class="headerlink" title="Flashplayer"></a><a href="http://get.adobe.com/cn/flashplayer/" target="_blank" rel="noopener">Flashplayer</a></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd Downloads</span><br><span class="line">tar -zxvf &lt;example&gt;.tar.gz	#找不到命令就安装tar</span><br><span class="line">sudo cp libflashplayer.so /usr/lib/mozilla/plugins/</span><br><span class="line">sudo chmod 755 /usr/lib/mozilla/plugins/libflashplayer.so</span><br><span class="line">sudo cp -r ./usr/* /usr/</span><br></pre></td></tr></table></figure>
+<h3 id="Flashplayer"><a href="#Flashplayer" class="headerlink" title="Flashplayer"></a><a href="http://get.adobe.com/cn/flashplayer/" target="_blank" rel="noopener">Flashplayer</a></h3><ul>
+<li>使用Chrome浏览器无需安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd Downloads</span><br><span class="line">tar -zxvf &lt;example&gt;.tar.gz	#找不到命令就安装tar</span><br><span class="line">sudo cp libflashplayer.so /usr/lib/mozilla/plugins/</span><br><span class="line">sudo chmod 755 /usr/lib/mozilla/plugins/libflashplayer.so</span><br><span class="line">sudo cp -r ./usr/* /usr/</span><br></pre></td></tr></table></figure>
 
 <h3 id="搜狗输入法"><a href="#搜狗输入法" class="headerlink" title="搜狗输入法"></a>搜狗输入法</h3><ul>
-<li>下载安装包或者终端下载，软件安装都是默认位置</li>
+<li>键盘输入法系统中，没有“fcitx”选项时，<code>sudo apt-get install fcitx</code>，安装成功之后点击“应用到整个系统”</li>
+<li>下载<a href="https://pinyin.sogou.com/linux/" target="_blank" rel="noopener">搜狗输入法安装包</a>，再<code>sudo dpkg -i sogoupinyin_版本号_amd64.deb</code></li>
+<li>如果安装过程中提示缺少相关依赖<code>sudo apt -f install</code></li>
+<li>关闭窗口，重启电脑</li>
 </ul>
-<h3 id="SwitchyOmega"><a href="#SwitchyOmega" class="headerlink" title="SwitchyOmega"></a>SwitchyOmega</h3><ul>
-<li><a href="https://github.com/FelisCatus/SwitchyOmega/tags" target="_blank" rel="noopener">Chrome扩展插件</a></li>
+<h3 id="electron-ssr"><a href="#electron-ssr" class="headerlink" title="electron-ssr"></a>electron-ssr</h3><ul>
+<li><a href="https://github.com/qingshuisiyuan/electron-ssr-backup/blob/master/Ubuntu.md" target="_blank" rel="noopener">electron-ssr</a></li>
 </ul>
-<h3 id="g"><a href="#g" class="headerlink" title="g++"></a>g++</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">g++ --version</span><br><span class="line">sudo apt install g++	#安装</span><br><span class="line">sudo apt remove g++		#卸载</span><br></pre></td></tr></table></figure>
-
+<h3 id="Chrome"><a href="#Chrome" class="headerlink" title="Chrome"></a>Chrome</h3><ul>
+<li><code>wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</code></li>
+<li><code>sudo apt install ./google-chrome-stable_current_amd64.deb</code></li>
+</ul>
 <h2 id="个性化"><a href="#个性化" class="headerlink" title="个性化"></a>个性化</h2><ul>
 <li><code>sudo apt install gnome-tweak-tool</code></li>
 <li><code>sudo apt install gnome-shell-extensions</code></li>
@@ -460,7 +471,7 @@
 <div id="decryptionError" style="display: none;">Incorrect Password!</div>
 <div id="noContentError" style="display: none;">No content to display!</div>
 <div id="encrypt-blog" style="display:none">
-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
+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
 </div>
 <script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
       <categories>
