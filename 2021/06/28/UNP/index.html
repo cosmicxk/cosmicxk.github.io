@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/houselove32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/houselove16.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css">
+  <script src="//cdn.jsdelivr.net/npm/pace-js@1/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+
+
+
+</script>
+
+  <meta name="description" content="Learning UNP Record!!">
+<meta name="keywords" content="UNIX 网络编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UNP">
+<meta property="og:url" content="https://space.bilibili.com/34033362/#/bangumi/2021/06/28/UNP/index.html">
+<meta property="og:site_name" content="xingkong">
+<meta property="og:description" content="Learning UNP Record!!">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/configure.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/configure1.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/configure2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/configure3.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/configure4.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/configure5.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/socketfd.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/errno.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/daytimetcpcli.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/netstat_ni.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/3_10.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/3_10-1.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/bzero.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/inet_ntop.jpg">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/telnet.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/inet_pton_loose.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/connect.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/bind.jpg">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/Listen.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/bind_error.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/daytimetcpsrv1.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/daytimetcpcli3.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/5_1.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/SERV_PORT.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/9877.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpcli01.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/9877-2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/pts_0.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpcli01-2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/signal.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpser02.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpcli04.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpcli04-2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpser04.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpser04-2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpser04-3.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpser04-4.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpser08.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/str_cli09.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpcli09-1.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/tcpcli09-2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/recvfrom.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/recvfrom2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/recvfrom3.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/recvfrom4.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/recvfrom5.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/recvfrom6.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/free_coder.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/free_coder1.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/free_coder2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/free_coder3.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/free_coder4.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/opt_val_str.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/checkopts.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/checkopts1.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/rcvbuf.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/udpcli01.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/udpserv06.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/udpcli09.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/hostent2.png">
+<meta property="og:image" content="https://space.bilibili.com/pictrues/UNP/hostent2-1.png">
+<meta property="og:updated_time" content="2022-01-12T13:15:04.855Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UNP">
+<meta name="twitter:description" content="Learning UNP Record!!">
+<meta name="twitter:image" content="https://space.bilibili.com/pictrues/UNP/configure.png">
+  <link rel="canonical" href="https://space.bilibili.com/34033362/#/bangumi/2021/06/28/UNP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>UNP | xingkong</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"/>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+    <a href="https://github.com/cosmicxk" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xingkong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off" autocorrect="off" autocapitalize="none"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://space.bilibili.com/34033362/#/bangumi/2021/06/28/UNP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xingkang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/2.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xingkong">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">UNP
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2021-06-28 14:40:00" itemprop="dateCreated datePublished" datetime="2021-06-28T14:40:00+08:00">2021-06-28</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-12 21:15:04" itemprop="dateModified" datetime="2022-01-12T21:15:04+08:00">2022-01-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机网络/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/28/UNP/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2021/06/28/UNP/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Learning UNP Record!!</p>
+<a id="more"></a>
+
+<blockquote>
+<p>基本上就选择 TCP/UDP、一些常用的内容，什么 SCTP、IP 层的东西目前基本用不上的初学者就不看了！<br>因为代码比较多，就直接写在 Markdown 了</p>
+</blockquote>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><ul>
+<li>这是在 Linux 下配置的，<a href="http://www.unpbook.com/src.html" target="_blank" rel="noopener">源码地址</a><ul>
+<li>参照 <code>README</code> 进行编译进行编译的时候，第一步就出错</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/configure.png" alt title="./configure"></p>
+<ul>
+<li>一直在报错，找不到文件——我就纳闷了？后来是下载的版本问题，要下载源代码，而不是 GitHub 编译好的版本</li>
+</ul>
+<p><img src="/pictrues/UNP/configure1.png" alt title="./configure"></p>
+<ul>
+<li>源码下载好之后，解压缩 <code>tar zxvf unpv13e.tar.gz</code></li>
+<li>进入 <code>unpv13e</code> 文件目录，之后根据 <code>README</code> 文件进行编译</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ./unpv13e</span><br><span class="line">./configure </span><br><span class="line">cd lib</span><br><span class="line">make </span><br><span class="line">cd ../libfree </span><br><span class="line">make		//报错</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pictrues/UNP/configure2.png" alt title="make报错"></p>
+<ul>
+<li><code>libfree/inet_ntop.c</code> 中的第 60 行  <code>size_t</code>  改成  <code>socklen_t</code></li>
+<li><code>README</code> 后面两步 <code>make</code> 需要你的系统支持 4.4 BSD 和 XTI，Linux 系统直接跳过</li>
+<li>拷贝 <code>libunp.a</code>，文件在主目录下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ..</span><br><span class="line">sudo cp libunp.a /usr/lib</span><br><span class="line">sudo cp libunp.a /usr/lib64</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>unp.h</code> 文件，并拷贝 <code>unp.h</code> 和 <code>config.h</code> 文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd lib</span><br><span class="line">vim unp.h  //将 unp.h 中的 #include &quot;../config.h&quot; 改成 #include &quot;config.h&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pictrues/UNP/configure3.png" alt title="../config.h"></p>
+<p><img src="/pictrues/UNP/configure4.png" alt title="config.h"></p>
+<ul>
+<li>拷贝 unp.h 和 config.h 到 /usr/include</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp unp.h /usr/include</span><br><span class="line">cd ..</span><br><span class="line">sudo cp config.h /usr/include</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>为了防止文件名发生冲突，可以将 config.h 更名为 unp_config.h 后再进行拷贝，对应修改 unp.h</li>
+<li>测试用例</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd intro</span><br><span class="line">make daytimetcpcli</span><br><span class="line">./daytimetcpcli 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提示链接失败，<code>daytime</code> 服务没有打开<ul>
+<li>网上搜了下发现 <code>/etc</code> 下没有 <code>xinetd.d</code>，原以为是版本问题，却发现是需要安装的！</li>
+<li><code>sudo apt-get install xinetd</code></li>
+<li>端口号 <code>cat /etc/services | grep &quot;daytime&quot;</code></li>
+<li>启动服务 <code>sudo vim /etc/xinetd.d/daytime</code></li>
+<li>将 disable 配置项修改由 yes -&gt; no</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/configure5.png" alt title="daytime"></p>
+<ul>
+<li>重启服务 <code>sudo /etc/init.d/xinetd restart</code></li>
+<li>测试 <code>./daytimetcpcli 127.0.0.1</code></li>
+</ul>
+<ul>
+<li>以后在代码中添加 <code>#include &quot;unp.h&quot;</code>，就可以调用 unp.h；另外编译时，需要添加 <code>-lunp</code> 编译选项</li>
+</ul>
+<h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><blockquote>
+<p>make 是 gcc 的编译器，一定要安装</p>
+</blockquote>
+<h3 id="CentOS-安装-gcc、g"><a href="#CentOS-安装-gcc、g" class="headerlink" title="CentOS 安装 gcc、g++"></a>CentOS 安装 gcc、g++</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install gcc automake autoconf libtool make</span><br><span class="line">sudo yum install gcc gcc-c++ //安装g++</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CentOS 的 daytime 开启方式似乎不太一样</li>
+<li><code>/etc/xinetd.d/</code> 目录存在，但是里面是空的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install xinetd</span><br><span class="line">sudo vim /etc/xinetd.d/daytime-stream  # disable的yes改为no</span><br><span class="line">sudo vim /etc/xinetd.d/ daytime-dgram  # disable的yes改为no</span><br><span class="line">service xinetd restart  # 重启xinetd服务</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h1><ul>
+<li><code>socket</code> TCP 套接字</li>
+</ul>
+<p><img src="/pictrues/UNP/socketfd.png" alt title="socket"></p>
+<h2 id="包裹函数"><a href="#包裹函数" class="headerlink" title="包裹函数"></a>包裹函数</h2><ul>
+<li><p><code>unp.h</code> 声明了很多函数，但是没有定义</p>
+</li>
+<li><p>同在 <code>lib</code> 文件下的其余 <code>.c</code> 文件，是函数的定义，并不是写在一起的，而是分成了很多文件</p>
+<ul>
+<li>有的 <code>.c</code> 文件只有一个函数、有的有好几个</li>
+</ul>
+</li>
+<li><p>包裹函数就是首字母大写的同名函数，与原本的函数区别就是多了异常检测（也是自己定义的函数）</p>
+</li>
+<li><p><code>lib</code> 文件下还有一些其他的 <code>.lc</code>、<code>.lh</code> 文件，估计就是链接文件了，还有 <code>Makefile</code></p>
+<ul>
+<li>函数太多了，以至于不知道在哪个文件定义的，</li>
+</ul>
+</li>
+<li><p><code>errno</code> 在 <code>sys/errno.h</code> 定义，是全局变量（用来输出对应的错误信息），多线程的话全局变量就不合适了</p>
+<ul>
+<li>在网上找了下源码，用的是 <code>extern</code> 关键字</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/errno.png" alt title="errno"></p>
+<ul>
+<li>其他函数好多都是系统自带的库里面的，这个要注意！</li>
+</ul>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><ul>
+<li><p>书上的可以跑通，但是大佬写的硬是跑不通！</p>
+<ul>
+<li>搜了半天发现，<a href="https://blog.csdn.net/test1280/article/details/80642847" target="_blank" rel="noopener">监听套接字</a>这一部分有问题（大佬写的侦听地址还没有看！明天再搞），也跟防火墙有点关系（防火墙关了后，书上源码可以获取对应节点 IP 地址的时间，不限定 127.0.0.1 ）</li>
+<li>还有就是编译、链接没搞懂，<code>.o</code> 是目标文件，还不能运行，跟 <code>make</code> 关系也没有搞懂！</li>
+<li>记录下，自己的两个节点，防火墙都已经关闭</li>
+</ul>
+</li>
+<li><p>想获取时间，首先得关闭防火墙</p>
+</li>
+</ul>
+<h3 id="CentOS8-关闭防火墙"><a href="#CentOS8-关闭防火墙" class="headerlink" title="CentOS8 关闭防火墙"></a>CentOS8 关闭防火墙</h3><ul>
+<li>查看状态、打开防火墙、关闭防火墙、开启防火墙、禁用防火墙</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.service</span><br><span class="line">systemctl start firewalld.service</span><br><span class="line">systemctl stop firewalld.service</span><br><span class="line">systemctl enable firewalld.service</span><br><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译、链接"><a href="#编译、链接" class="headerlink" title="编译、链接"></a>编译、链接</h3><ul>
+<li>修改某个文件（头文件 <code>.c</code> ）后，不需要一个一个的编译<ul>
+<li>如 <code>gcc daytimetcpcli.c -o daytimetcpcli</code></li>
+</ul>
+</li>
+<li>而是直接 <code>make</code> 一下，全部搞定！！<ul>
+<li>下面就是根据习题修改后的输出——多了次数</li>
+<li>学习了 <code>Makefile</code> 一般要编译成目标文件的 <code>.c</code> 文件都有 <code>main</code> 函数</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/daytimetcpcli.png" alt></p>
+<h3 id="htons"><a href="#htons" class="headerlink" title="htons()"></a>htons()</h3><ul>
+<li>经过习题的测试，发现能不能连上，跟 <code>htons()</code> 函数里的数值有关！<ul>
+<li>客户端、服务端的获取时间程序中 <code>htons(9999)</code> 时，是可以对指定服务端进行获取程序的，但是不能对 <code>127.0.0.1</code> 有效</li>
+<li>之后将客户端改为 <code>htons(13)</code> 时，发现这是万能的，指定的服务端可以不用运行后台程序，之后再细细了解——为什么服务端不运行指定程序，照样可以获取到时间？</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络拓扑"><a href="#网络拓扑" class="headerlink" title="网络拓扑"></a>网络拓扑</h2><ul>
+<li>网络接口信息 <code>netstat -ni</code><ul>
+<li>lo —— 环回 loopback</li>
+<li>ens33 —— 以太网接口</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/netstat_ni.png" alt title="显示接口信息"></p>
+<ul>
+<li>展示路由表 <code>netstat -r</code></li>
+<li>接口的详细信息 <code>ifconfig ens33</code></li>
+</ul>
+<h1 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h1><ul>
+<li>基础知识，暂时先略过</li>
+</ul>
+<h1 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h1><ul>
+<li>得做好笔记，要不然容易忘</li>
+</ul>
+<h2 id="套接字地址结构"><a href="#套接字地址结构" class="headerlink" title="套接字地址结构"></a>套接字地址结构</h2><ul>
+<li><code>#define    SA    struct sockaddr</code> 这是通用的套接字地址结构<ul>
+<li>在调用 <code>bind()</code> 函数，要进行类型强制转换，因为是指针，所以得先取地址再转换</li>
+<li>有 5 种套接字地址结构 —— IPv4、IPv6、Unix 域、数据链路和存储 —— 长度不一样，所以也要传递长度这个参数</li>
+<li>长度：结构体的大小</li>
+</ul>
+</li>
+</ul>
+<h2 id="套接字函数-——-值-结果参数"><a href="#套接字函数-——-值-结果参数" class="headerlink" title="套接字函数 —— 值 - 结果参数"></a>套接字函数 —— 值 - 结果参数</h2><ul>
+<li><p>进程到内核</p>
+<ul>
+<li>bind、connect、sendto</li>
+</ul>
+</li>
+<li><p>内核到进程</p>
+<ul>
+<li>accept、recvfrom、getsockname、getpeername</li>
+</ul>
+</li>
+<li><p>套接字地址结构大小的类型 <code>socklen_t</code></p>
+</li>
+<li><p>上面两者区别是结构大小这个参数的类型不同，内核到进程是指针</p>
+</li>
+</ul>
+<h2 id="字节排序函数"><a href="#字节排序函数" class="headerlink" title="字节排序函数"></a>字节排序函数</h2><ul>
+<li>内存存储两字节的方法 —— 小端（低序字节在起始地址）、大端（高序字节在起始地址）<ul>
+<li>下面的例子已经编译好了</li>
+<li>字符类型与整数直接比较嘛，还有为什么一个是 1，一个是 2 呢<ul>
+<li>因为 0x0102 这个，16 位两个字节，但还是想不明白这两个变量为什么会有关联</li>
+<li><code>union</code> 允许在相同的内存位置存储不同的数据类型！所以任何时候只能有一个成员带有值</li>
+</ul>
+</li>
+<li>网络协议必须指定一个网络字节序<ul>
+<li>主机字节序 与 网络字节序 相互转换</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/3_10.png" alt></p>
+<p><img src="/pictrues/UNP/3_10-1.png" alt></p>
+<ul>
+<li>4 个函数，h:host、n:network、s:short、l:long<ul>
+<li>头文件 <code>&lt;netinet/in.h&gt;</code></li>
+<li>htons、htonl —— 返回网络字节序的值</li>
+<li>ntohs、ntohl —— 返回主机字节序的值</li>
+</ul>
+</li>
+</ul>
+<h2 id="bzreo"><a href="#bzreo" class="headerlink" title="bzreo"></a>bzreo</h2><ul>
+<li>头文件 <code>&lt;strings.h&gt;</code><ul>
+<li>目标字节串指定数目的字节置 0 </li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/bzero.png" alt></p>
+<h2 id="地址转换函数"><a href="#地址转换函数" class="headerlink" title="地址转换函数"></a>地址转换函数</h2><ul>
+<li><p>点分十进制数串 转为 32 位网络字节序二进制值</p>
+</li>
+<li><p>头文件 <code>&lt;arpa/inet.h&gt;</code></p>
+<ul>
+<li>inet_aton<ul>
+<li>返回类型 <code>int</code>，成功转换返回 1，否则 0</li>
+<li>两个参数，一个目标数串，另一个参数用来作为输出的结果 <code>in_addr</code> 指针类型</li>
+</ul>
+</li>
+<li>inet_addr<ul>
+<li>返回类型 <code>in_addr_t</code>，255.255.255.255 这个被占用，用来返回出错的，所以不能用来转为广播地址</li>
+<li>只有一个参数，即目标数串</li>
+<li>书上说已经被废弃……</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>32 位网络字节序二进制值 转为 点分十进制数串</p>
+<ul>
+<li>inet_ntoa<ul>
+<li><code>char *inet_ntoa(struct in_addr inaddr);</code></li>
+<li>参数不是指针</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>IPv4、IPv6 通用的两个函数</p>
+</li>
+<li><p>头文件也是 <code>&lt;arpa/inet.h&gt;</code></p>
+<ul>
+<li>inet_pton<ul>
+<li><code>inet_pton(AF_INET, argv[1], &amp;servaddr.sin_addr)</code> 成功返回 1，表达式无效返回 0，出错返回 -1</li>
+<li>第一个参数只能是 AF_INET、AF_INET6</li>
+<li><code>servaddr.sin_addr</code> 是输出的结果，是一个结构里的变量</li>
+</ul>
+</li>
+<li>inet_ntop<ul>
+<li><code>const char * inet_ntop(int family, const void *addrptr, char *strptr, size_t len)</code></li>
+<li><code>len</code> 参数要足以容纳结果</li>
+<li><code>strptr</code> 是返回的结果，即点分十进制数串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/inet_ntop.jpg" alt></p>
+<ul>
+<li>上面这张图里面，第二个参数，必须得对应 IPv4 或者 IPv6 这两个版本的结构体<ul>
+<li>书上自定义了一个函数 <code>sock_ntop()</code> ，用来转化对应的结构体</li>
+<li>还有其他的几个函数就不在这儿写了</li>
+</ul>
+</li>
+</ul>
+<h2 id="readn、writen、readline"><a href="#readn、writen、readline" class="headerlink" title="readn、writen、readline"></a>readn、writen、readline</h2><ul>
+<li><p>字节流套接字、缓冲区满了、非阻塞 —— read、write —— 不让实现返回一个不足的字节计数值</p>
+</li>
+<li><p><code>ssize_t    readn(int fd, void *vptr, size_t n)</code></p>
+<ul>
+<li>从一个描述符读 n 个字节</li>
+</ul>
+</li>
+<li><p><code>ssize_t    writen(int fd, const void *vptr, size_t n)</code></p>
+<ul>
+<li>往一个描述符写 n 个字节</li>
+</ul>
+</li>
+<li><p><code>ssize_t readline(int fd, void *vptr, size_t maxlen)</code></p>
+<ul>
+<li>从一个描述符读文本行，一次一字节</li>
+<li>这里用 read 太慢</li>
+<li>用 stdio 太危险，因为 stdio 的缓冲区不可见</li>
+<li>书上还提供了这个函数的改进版本，使用了内部缓冲区！并且使用 my_read 代替 read 函数<ul>
+<li>但是使用了静态变量，函数就变得不可重入、非线程安全了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>都有查找 EINTER 错误，详细在第五章</p>
+</li>
+</ul>
+<h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><ul>
+<li>前两题书上有答案，主要是第三题<ul>
+<li><code>telnet 0xe</code> 刚开始我还以为 <code>telnet</code> 是哪个文件里编译出来的呢，没想到是系统自带的</li>
+<li>Ubuntu 系统里有，Centos8 里没有</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/telnet.png" alt title="telnet 0xe"></p>
+<ul>
+<li>师兄大佬真的厉害，习题代码都给整出来了</li>
+</ul>
+<p><img src="/pictrues/UNP/inet_pton_loose.png" alt title="inet_pton_loose 0xe"></p>
+<h1 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h1><ul>
+<li>上一章的习题还没有完全看懂，只知道大致思路，一些指针指向的长度之类的没有细看，时间不等人，继续看下去</li>
+</ul>
+<h2 id="socket-函数"><a href="#socket-函数" class="headerlink" title="socket 函数"></a>socket 函数</h2><ul>
+<li>客户端、服务端都要用到这个函数</li>
+<li>头文件 <code>#include    &lt;sys/socket.h&gt;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// SOCK_STREAM 不知道什么类型</span><br><span class="line">if ( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) &lt; 0)</span><br><span class="line">	err_sys(&quot;socket error&quot;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>TCP 仅支持 SOCK_STREAM 套接字<ul>
+<li>sockfd 是返回值，若为负数，说明失败</li>
+<li>第一个参数基本上是以 AF_ 开头，很少出现 PF_</li>
+</ul>
+</li>
+</ul>
+<h2 id="connect-函数"><a href="#connect-函数" class="headerlink" title="connect 函数"></a>connect 函数</h2><ul>
+<li>TCP 客户端需要用到这个函数，服务器不需要！</li>
+<li>头文件也是 <code>#include    &lt;sys/socket.h&gt;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (connect(sockfd, (SA *) &amp;servaddr, sizeof(servaddr)) &lt; 0)</span><br><span class="line">		err_sys(&quot;connect error&quot;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>(SA *) 强制转换成通用类型结构，之前提到过<ul>
+<li>所以，套接字地址结构必须包含服务器的 IP 地址和端口号</li>
+<li>这个函数会激发 TCP 三次握手，出错的情况有三种<ul>
+<li>客户端没有接收到 SYN，超时，75s</li>
+<li>服务器对客户端的响应是 RST</li>
+<li>客户端显示目的地不可达（某个路由器）75s</li>
+</ul>
+</li>
+<li>127.0.0.1 原来是本地主机……难怪，有一种出错情况——超时——一直试不出来，噢，原来是等的时间太久了</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/connect.png" alt title="三种错误情况"></p>
+<ul>
+<li>三种错误<ul>
+<li>超时：不存在的一个 IP 地址，永远收不到 ARP 请求</li>
+<li>连接拒绝：服务器没有运行对应的获取时间程序</li>
+<li>路径不可达：IP 地址不可到达</li>
+</ul>
+</li>
+<li>每次 connect 失败后，都必须 close 当前的套接字描述符，并重新调用 socket，但是书上源码都是一报错直接返回错误信息</li>
+</ul>
+<h2 id="bind-函数"><a href="#bind-函数" class="headerlink" title="bind 函数"></a>bind 函数</h2><ul>
+<li><p>本地协议地址赋予一个套接字，这是服务器需要用到的！不对，客户端在 connect 之前，不必非得调用 bind 函数</p>
+</li>
+<li><p>头文件 <code>#include    &lt;sys/socket.h&gt;</code></p>
+</li>
+<li><p>bind 函数可以指定 IP 地址或者端口、可以两者都指定，可以都不指定</p>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/bind.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct sockaddr_in	servaddr;</span><br><span class="line">// 通配地址符 INADDR_ANY</span><br><span class="line">servaddr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line"></span><br><span class="line">// IPv6 需要用到 in6addr_any 结构体（全局的），书上 P83</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>htonl 按照主机字节序，对头文件 <code>&lt;netinet/in.h&gt;</code> 中的任何常数值都得应用<ul>
+<li>之后讨论了 内核选临时端口号、进程捆绑非通配 IP 地址</li>
+</ul>
+</li>
+</ul>
+<h2 id="listen-函数"><a href="#listen-函数" class="headerlink" title="listen 函数"></a>listen 函数</h2><ul>
+<li>仅由 TCP 服务器调用</li>
+<li>头文件 <code>#include    &lt;sys/socket.h&gt;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int listenfd = Socket(AF_INET, SOCK_STREAM, 0);</span><br><span class="line">// 大写表明是包裹函数，自带报错，LISTENQ 是环境变量</span><br><span class="line">Listen(listenfd, LISTENQ);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第二个参数是套接字排队的最大连接数<ul>
+<li>在 socket、bind 之后调用，在 accept 之前</li>
+<li>内核维护两个队列：已完成连接、未完成连接 —— 两个队列之和不超过最大连接数</li>
+<li>这个最大连接数的定义不明确，具体多少不清楚，包裹函数 Listen 优化了下，使用环境变量 LISTENQ 来覆盖调用者的值</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/Listen.png" alt title="Listen"></p>
+<h2 id="accept-函数"><a href="#accept-函数" class="headerlink" title="accept 函数"></a>accept 函数</h2><ul>
+<li>由 TCP 服务器调用</li>
+<li>头文件 <code>#include    &lt;sys/socket.h&gt;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int listenfd = Socket(AF_INET, SOCK_STREAM, 0);</span><br><span class="line">int connfd = Accept(listenfd, (SA *) NULL, NULL);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>第一个参数是 监听套接字，一般只有一个，并且在服务器的整个有效期内保持开放</p>
+<ul>
+<li>返回值是 已连接套接字，在循环内每次都会生成再关闭</li>
+<li>若对客户协议地址不感兴趣，后两个参数 置空</li>
+</ul>
+</li>
+<li><p>例子</p>
+<ul>
+<li>显示客户的 IP 地址、端口号</li>
+<li>不过我一直报错，<code>bind error: Address already in use</code>，书上没提到，上网搜一下<ul>
+<li>想到之前师兄大佬说的书上也有错误，然后比较了下 书上的源码 和 师兄的源码，服务端的程序确实不一样！</li>
+<li>下面这张图是在网上找的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/bind_error.png" alt title="bind error"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 这里应该就是释放端口的操作了，在 bind 之前</span><br><span class="line">if (setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &amp;val, sizeof(int)) == -1)</span><br><span class="line">		err_sys(&quot;setsockopt error&quot;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>所以得自己修改下源码<ul>
+<li>只修改 <code>vim daytimetcpsrv1.c</code> 试试看，之后再 <code>make</code> 一下</li>
+<li>改了之后发现问题出在 <code>htons(13)</code>，还是提示 地址已经被使用，都改成 <code>htons(12000)</code> 试试 —— 是客户端的 daytimetcpcli.c 和服务端的 daytimetcpsrv1.c 这两个文件</li>
+<li>成功了！</li>
+<li>13 是需要超级用户权限的，12000 不需要</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/daytimetcpsrv1.png" alt title="daytimetcpsrv1"></p>
+<h2 id="fork、exec-函数"><a href="#fork、exec-函数" class="headerlink" title="fork、exec 函数"></a>fork、exec 函数</h2><ul>
+<li>主要介绍了这两个函数的特点，以及参数</li>
+<li>头文件 <code>&lt;unistd.h&gt;</code><ul>
+<li>fork<ul>
+<li>返回值：子进程为 0，在父进程为子进程的 ID，若出错为 -1</li>
+<li>一个进程创建自身的副本 —— 网络服务器</li>
+<li>一个进程想要执行另一个程序</li>
+</ul>
+</li>
+<li>exec<ul>
+<li>居然有 6 个函数！</li>
+<li>都是把当前进程映像替换成新的程序文件</li>
+<li>具体的区别书上 P91</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="并发服务器"><a href="#并发服务器" class="headerlink" title="并发服务器"></a>并发服务器</h2><ul>
+<li>同时服务多个客户，而不是只服务一个！<ul>
+<li>有个点需要注意下，connfd 的引用计数，类似于智能指针，只有当引用计数为 0 时，<code>Close(connfd)</code> 才会关闭与客户的连接</li>
+<li>循环里，调用子进程去服务客户端时，这时父进程不会等子进程执行完再去执行下面的，而是继续执行最后一行的 <code>Close(connfd)</code> </li>
+<li>调用子进程时，connfd 的引用计数会加一变成 2，所以就算父进程关闭 connfd 后，也不会断开连接，而是继续侦听</li>
+<li>监听套接字是进入子进程时关闭</li>
+</ul>
+</li>
+</ul>
+<h2 id="close-函数"><a href="#close-函数" class="headerlink" title="close 函数"></a>close 函数</h2><ul>
+<li>关闭套接字</li>
+<li>头文件 <code>&lt;unistd.h&gt;</code><ul>
+<li>由 close 关闭的套接字，不能再被进程使用，也就不能作为 read 和 write 的第一个参数</li>
+<li>若不关闭套接字，连接会一直保持，并且可用描述符会耗尽</li>
+</ul>
+</li>
+</ul>
+<h2 id="getsockname、getpeername-函数"><a href="#getsockname、getpeername-函数" class="headerlink" title="getsockname、getpeername 函数"></a>getsockname、getpeername 函数</h2><ul>
+<li><p>头文件 <code>&lt;sys/socket.h&gt;</code></p>
+</li>
+<li><p><code>getsockname(sockfd, (SA *) &amp;ss, &amp;len)</code></p>
+<ul>
+<li>客户端、服务端都可以用</li>
+<li>服务端（通配 IP 地址调用 bind 的 TCP 服务器），连接建立后，套接字必须是已连接的描述符，返回内核赋予的本地 IP 地址</li>
+<li>客户端（没有调用 bind 的 TCP 客户），连接建立后，返回内核赋予的本地 IP 地址和本地端口号</li>
+<li>客户端（端口号 0 调用 bind），返回内核赋予的本地端口号</li>
+</ul>
+</li>
+<li><p><code>getsockname(sockfd, (SA *) &amp;ss, &amp;len)</code></p>
+<ul>
+<li>服务器（Telnet）获取客户的身份</li>
+</ul>
+</li>
+<li><p>sockaddr_storage 支持任何套接字地址结构</p>
+</li>
+</ul>
+<h2 id="习题-1"><a href="#习题-1" class="headerlink" title="习题"></a>习题</h2><ul>
+<li>4.2 源码就是 /intro/daytimetcpcli3.c<ul>
+<li><code>Getsockname(sockfd, (SA *) &amp;cliaddr, &amp;len);</code></li>
+<li>len 是值-结果参数，调用之前必须初始化 <code>socklen_t len = sizeof(cliaddr)</code></li>
+<li>要显示点分十进制就调用 sock_ntop 函数</li>
+<li>端口号的范围 1 ~ 65535</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/daytimetcpcli3.png" alt title="daytimetcpcli3"></p>
+<ul>
+<li>若服务器不 listen 那么 accept 返回 EINVAL 因为第一个参数不是监听套接字描述符</li>
+<li>若服务器不 bind 那么 listen 会赋予监听套接字一个临时端口</li>
+</ul>
+<h1 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h1><ul>
+<li>这章就开始正儿八经的开始回射（不只是时间，而是任意文本发送再返回）！<ul>
+<li>要想自定义，只需修改处理来自客户的输入</li>
+<li>要考虑若干边界条件</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/5_1.png" alt title="回射"></p>
+<h2 id="TCP-服务器-main-函数"><a href="#TCP-服务器-main-函数" class="headerlink" title="TCP 服务器 main 函数"></a>TCP 服务器 main 函数</h2><ul>
+<li>这是并发的，跟之前的 fork 有点像，把子进程的处理变为了 str_echo</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include	&quot;unp.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	int					listenfd, connfd;</span><br><span class="line">	pid_t				childpid;</span><br><span class="line">	socklen_t			clilen;</span><br><span class="line">	struct sockaddr_in	cliaddr, servaddr;</span><br><span class="line">	// 都得先创建套接字</span><br><span class="line">	listenfd = Socket(AF_INET, SOCK_STREAM, 0);</span><br><span class="line"></span><br><span class="line">	bzero(&amp;servaddr, sizeof(servaddr));</span><br><span class="line">	// 网际套接字地址结构、通配地址、众所周知的服务器端口 SERV_PORT == 9877</span><br><span class="line">	servaddr.sin_family      = AF_INET;</span><br><span class="line">	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">	servaddr.sin_port        = htons(SERV_PORT);</span><br><span class="line"></span><br><span class="line">	Bind(listenfd, (SA *) &amp;servaddr, sizeof(servaddr));</span><br><span class="line">	// 把套接字转为监听套接字</span><br><span class="line">	Listen(listenfd, LISTENQ);</span><br><span class="line"></span><br><span class="line">	for ( ; ; ) &#123;</span><br><span class="line">		clilen = sizeof(cliaddr);</span><br><span class="line">		// 服务器在这里阻塞，等待客户连接</span><br><span class="line">		connfd = Accept(listenfd, (SA *) &amp;cliaddr, &amp;clilen);</span><br><span class="line"></span><br><span class="line">		if ( (childpid = Fork()) == 0) &#123;	/* child process */</span><br><span class="line">			Close(listenfd);	/* close listening socket */</span><br><span class="line">			str_echo(connfd);	/* process the request */</span><br><span class="line">			exit(0);</span><br><span class="line">		&#125;</span><br><span class="line">		Close(connfd);			/* parent closes connected socket */</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pictrues/UNP/SERV_PORT.png" alt title="SERV_PORT"></p>
+<h2 id="str-echo-函数"><a href="#str-echo-函数" class="headerlink" title="str_echo 函数"></a>str_echo 函数</h2><ul>
+<li>这里居然用到了 <code>goto</code> <ul>
+<li>只要 writen 即可，就可以发送，而不管 buf 在主函数还是子进程里</li>
+<li>上面这句说的不对，buf 是 read 函数要用到的，先保存下来，再进行发送</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include	&quot;unp.h&quot;</span><br><span class="line"></span><br><span class="line">void str_echo(int sockfd)</span><br><span class="line">&#123;</span><br><span class="line">	ssize_t		n;</span><br><span class="line">	char		buf[MAXLINE];</span><br><span class="line"></span><br><span class="line">again:</span><br><span class="line">	while ( (n = read(sockfd, buf, MAXLINE)) &gt; 0)</span><br><span class="line">		Writen(sockfd, buf, n);</span><br><span class="line"></span><br><span class="line">	if (n &lt; 0 &amp;&amp; errno == EINTR)</span><br><span class="line">		goto again;</span><br><span class="line">	else if (n &lt; 0)</span><br><span class="line">		err_sys(&quot;str_echo: read error&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="TCP-客户-main-函数"><a href="#TCP-客户-main-函数" class="headerlink" title="TCP 客户 main 函数"></a>TCP 客户 main 函数</h2><ul>
+<li>客户端要在连接成功后，进行输入操作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include	&quot;unp.h&quot;</span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">	int					sockfd;</span><br><span class="line">	struct sockaddr_in	servaddr;</span><br><span class="line"></span><br><span class="line">	if (argc != 2)</span><br><span class="line">		err_quit(&quot;usage: tcpcli &lt;IPaddress&gt;&quot;);</span><br><span class="line"></span><br><span class="line">	sockfd = Socket(AF_INET, SOCK_STREAM, 0);</span><br><span class="line"></span><br><span class="line">	bzero(&amp;servaddr, sizeof(servaddr));</span><br><span class="line">	servaddr.sin_family = AF_INET;</span><br><span class="line">	servaddr.sin_port = htons(SERV_PORT);</span><br><span class="line">	// argv[1] 手动输入的服务器 IP 地址，点分十进制</span><br><span class="line">	Inet_pton(AF_INET, argv[1], &amp;servaddr.sin_addr);</span><br><span class="line"></span><br><span class="line">	Connect(sockfd, (SA *) &amp;servaddr, sizeof(servaddr));</span><br><span class="line">	// 这里用到了 FILE 指针参数，用来输入</span><br><span class="line">	str_cli(stdin, sockfd);		/* do it all */</span><br><span class="line"></span><br><span class="line">	exit(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>书上的这些文件，放置的太分散了，Makefile 比较复杂！</li>
+</ul>
+<h2 id="str-cli-函数"><a href="#str-cli-函数" class="headerlink" title="str_cli 函数"></a>str_cli 函数</h2><ul>
+<li>包裹函数 <code>char    *Fgets(char *, int, FILE *);</code>、<code>void     Fputs(const char *, FILE *);</code><ul>
+<li>while 循环是用来输入文本的，之后开始发给服务器，再从服务器接收，最后输出在屏幕上</li>
+<li>这里要注意，并不是发完就开始读的，而是阻塞？</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include	&quot;unp.h&quot;</span><br><span class="line"></span><br><span class="line">void str_cli(FILE *fp, int sockfd)</span><br><span class="line">&#123;</span><br><span class="line">	char	sendline[MAXLINE], recvline[MAXLINE];</span><br><span class="line"></span><br><span class="line">	while (Fgets(sendline, MAXLINE, fp) != NULL) &#123;</span><br><span class="line"></span><br><span class="line">		Writen(sockfd, sendline, strlen(sendline));</span><br><span class="line"></span><br><span class="line">		if (Readline(sockfd, recvline, MAXLINE) == 0)</span><br><span class="line">			err_quit(&quot;str_cli: server terminated prematurely&quot;);</span><br><span class="line"></span><br><span class="line">		Fputs(recvline, stdout);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行-1"><a href="#运行-1" class="headerlink" title="运行"></a>运行</h2><ul>
+<li>至此一个非常简陋的例子写好了，但是没有考虑极端情况，不够健壮！<ul>
+<li>先运行下试试</li>
+<li>先启动服务器，再 netstat -a 查看监听套接字的状态</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/9877.png" alt title="正在监听的套接字"></p>
+<ul>
+<li>也可以直接在服务器上运行客户程序，地址写 127.0.0.1 即可，也可在另一个虚拟机运行客户程序</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpcli01.png" alt title="tcpcli01"></p>
+<p><img src="/pictrues/UNP/9877-2.png" alt title="正在监听的套接字"></p>
+<ul>
+<li>师兄大佬写的代码也很厉害！</li>
+<li>终于知道书上是怎么显示子进程的状态了<ul>
+<li><code>ps -t pts/0 -o pid,ppid,tty,stat,args,wchan</code></li>
+<li>这个 pts/0 就是伪终端的编号，我是用了 SSH 来连接，那么只打开一个 session 终端就会显示 pts/0，如果再打开一个终端（之后在本地主机上测试会用到）就会显示 pts/1</li>
+<li>tty 终端设备的统称</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/pts_0.png" alt title="pts/0"></p>
+<ul>
+<li>所以要测试进程的僵死状态，只需开两个终端就行<ul>
+<li>在另一个终端运行 客户端 程序，之后结束，查看信息即可，我这里运行了三次，所以会有 3 个僵死进程，僵死进程会占用内核空间！</li>
+<li>之后的信号处理，就要根据信号来关闭子进程以免僵死</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpcli01-2.png" alt title="Z 表示僵死状态"></p>
+<h2 id="POSIX-信号"><a href="#POSIX-信号" class="headerlink" title="POSIX 信号"></a>POSIX 信号</h2><ul>
+<li>这一小节可能就不太好理解了<ul>
+<li>说成 软件中断 异步 就好理解了</li>
+<li>基本上信号都可以被捕获，只有两个不行 SIGKILL 和 SIGSTOP；捕获信号之后进行处理，没有返回值，只有一个整型参数</li>
+</ul>
+</li>
+</ul>
+<h3 id="signal-函数"><a href="#signal-函数" class="headerlink" title="signal 函数"></a>signal 函数</h3><ul>
+<li>这个函数历史悠久，这个是自己定义的<ul>
+<li>书上源码有个 <code>struct sigaction</code> 不知道什么结构，代码就不放了吧，反正也看不懂 0.0</li>
+<li>要想根据信号来处理，首先得捕获信号 SIGCHLD，之后再 wait（对应 fork）</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/signal.png" alt title="Signal"></p>
+<ul>
+<li>这个信号处理函数的第二个参数、返回值都是一个函数指针<ul>
+<li>这是定义 <code>Sigfunc *Signal(int, Sigfunc *);</code>，定义在 lib/signal.c </li>
+<li>因为 sig_chld 函数里有输出，所以子进程结束的时候，父进程会输出对应的信息<ul>
+<li>输出不建议用 printf 之后会提到！</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpser02.png" alt title="tcpser02"></p>
+<h3 id="处理被中断的系统调用"><a href="#处理被中断的系统调用" class="headerlink" title="处理被中断的系统调用"></a>处理被中断的系统调用</h3><ul>
+<li>首先系统调用是会被其他程序中断的<ul>
+<li>有的内核会自动重启被中断返回的系统调用，但不是所有内核</li>
+<li>被中断后（如并发服务器，多个客户端同时运行），系统调用可能返回 EINTR 错误（全局变量 errno）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 这里不是包裹函数，而是自己处理错误！</span><br><span class="line">	if ( (connfd = accept(listenfd, (SA *) &amp;cliaddr, &amp;clilen)) &lt; 0) &#123;</span><br><span class="line">		if (errno == EINTR)</span><br><span class="line">			continue;		/* back to for() */</span><br><span class="line">		else</span><br><span class="line">			err_sys(&quot;accept error&quot;);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="wait、waitpid-函数"><a href="#wait、waitpid-函数" class="headerlink" title="wait、waitpid 函数"></a>wait、waitpid 函数</h2><ul>
+<li><p>头文件 <code>&lt;sys/wait.h&gt;</code></p>
+</li>
+<li><p>这节读完了，有几个问题，先整理下思路</p>
+<ul>
+<li>wait</li>
+<li><code>pid_t wait(int *statloc)</code><ul>
+<li>返回两个值，一个是返回终止子进程的进程 ID 号，一个就是输入的指针参数，会变为子进程终止状态（整数）</li>
+<li>wait 会阻塞，有一个或多个子进程仍在运行没有终止，知道出现第一个子进程终止，这是固定的，不可变；waitpid 可以加上 WHOHANG 选项，告诉内核不要阻塞</li>
+</ul>
+</li>
+<li>waitpid</li>
+<li><code>pid_t waitpid(pid_t pid, int *statloc, int options)</code></li>
+</ul>
+</li>
+<li><p>运行了书上的例子</p>
+<ul>
+<li>同时连接 5 个客户端的那个</li>
+<li>为什么 5 个信号都在信号处理函数之前产生？<ul>
+<li>信号处理要在 fork 子进程之前</li>
+<li>只要有特定信号发生就会被调用……捕获信号</li>
+<li>信号处理一旦安装，会一直安装</li>
+<li>已捕获的信号是会被阻塞的，若信号在阻塞期间产生了多次，再被解阻塞后只能递交一次</li>
+<li>捕获信号时，要处理被中断的系统调用 —— accept 函数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpcli04.png" alt></p>
+<p><img src="/pictrues/UNP/tcpcli04-2.png" alt></p>
+<ul>
+<li>这两个图，只有 3 个僵死进程，释放了两个，但是书上只释放了一个</li>
+<li>解决方法<ul>
+<li>在循环内调用 waitpid，获取所有已终止子进程的状态，至于 wait 循不循环都一样，因为子进程没有终止时会阻塞</li>
+<li>看了书上源码，调用 wait 和 waitpid 函数名、参数都一样，是怎么区分的呢？先运行下看看</li>
+<li>师兄的代码是把 信号处理函数 直接写在对应的 main 之上，这样就不会冲突了</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpser04.png" alt title="tcpser04"></p>
+<ul>
+<li>运行没问题，哦哦，原来是 Makefile 来加以区分</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpser04-2.png" alt title="Makefile"></p>
+<h2 id="各种终止"><a href="#各种终止" class="headerlink" title="各种终止"></a>各种终止</h2><ul>
+<li>这里讨论各种突发情况</li>
+</ul>
+<h3 id="accept-返回前连接终止"><a href="#accept-返回前连接终止" class="headerlink" title="accept 返回前连接终止"></a>accept 返回前连接终止</h3><ul>
+<li>除了中断要重启，还有一例，但是这里说的不够详细，在 16 章会再次讨论</li>
+<li>TCP 连接建立后，客户却发了一个 RST</li>
+</ul>
+<h3 id="服务器进程终止"><a href="#服务器进程终止" class="headerlink" title="服务器进程终止"></a>服务器进程终止</h3><ul>
+<li>书上说的很详细</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpser04-3.png" alt title="连接正常"></p>
+<ul>
+<li>关闭服务器子进程后</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpser04-4.png" alt title="连接正常"></p>
+<ul>
+<li>服务器进程终止，向客户端发送 FIN<ul>
+<li>客户端收到后，正阻塞于 fgets 函数，还是可以单独向服务器发送，只是服务器不在发送，半关闭</li>
+<li>TCP 服务器收到客户的数据时，发送 RST</li>
+<li>客户进程看不到 RST，因为 writen 之后立即调用 readline，由于之前的 FIN 返回 0</li>
+<li>下一章会学习 select 和 poll 函数</li>
+</ul>
+</li>
+</ul>
+<h3 id="SIGPIPE-信号"><a href="#SIGPIPE-信号" class="headerlink" title="SIGPIPE 信号"></a>SIGPIPE 信号</h3><ul>
+<li>这里不理会 readline 函数返回的错误（这里的错误应该是 RST）<ul>
+<li>一个进程 向 已收到 RST 的套接字 执行写操作，内核会向该进程发送 SIFPIPE 信号 —— 默认终止进程</li>
+<li>这里书上提到，第一次写引发 RST 第二次写引发 SIGPIPE 信号</li>
+<li>writen 函数被拆成两段，中间停顿 1 s</li>
+<li>这节主要讲如何处理 SIGPIPE 信号</li>
+</ul>
+</li>
+</ul>
+<h3 id="服务器主机崩溃"><a href="#服务器主机崩溃" class="headerlink" title="服务器主机崩溃"></a>服务器主机崩溃</h3><ul>
+<li>这里是从网络上断开服务器（客户端在另一个主机上）<ul>
+<li>断网后，服务器不会发送任何数据</li>
+<li>客户阻塞与 readline 调用，并且持续重传数据分节，等待接收 ACK</li>
+<li>9 分钟后才会放弃重传，报错 —— 超时 或者 不可达</li>
+<li>这里后面会提到两个点<ul>
+<li>一是客户端想早点知道服务端崩溃，而不是等 9 分钟</li>
+<li>二是客户端不主动发送数据也想检测出服务器崩溃</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="服务器主机崩溃后重启"><a href="#服务器主机崩溃后重启" class="headerlink" title="服务器主机崩溃后重启"></a>服务器主机崩溃后重启</h3><ul>
+<li>服务器崩溃重启后，TCP 连接信息会全部丢失，收到客户数据会响应 RST<ul>
+<li>客户正阻塞 readline 函数，返回 ECONNRESET 错误（跟之前进程终止有点不太一样）</li>
+</ul>
+</li>
+</ul>
+<h3 id="服务器主机关机"><a href="#服务器主机关机" class="headerlink" title="服务器主机关机"></a>服务器主机关机</h3><ul>
+<li>这里关机与之前的断开网络（后重启）不一样<ul>
+<li>关机时，init 进程给所有运行的进程发送 SIGTERM 信号（可被捕获），等待十几秒（留给进程处理），之后发送 SIGKILL 并终止</li>
+<li>客户使用 select 和 poll 函数，可以检测服务器这一终止过程</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h2><ul>
+<li>上个例子服务器只管读入直到换行符的数据</li>
+</ul>
+<h3 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h3><ul>
+<li>这里改成由空格隔开的两个整数，然后返回整数的和<ul>
+<li>所有修改都在 str_echo 函数，里面多了两个函数 —— sscanf、snprintf</li>
+<li><code>%1d\n</code>：数字表示如果输出的内容位数不足将会在左边补足空格</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpser08.png" alt title="tcpser08"></p>
+<ul>
+<li>sscanf 函数，这里只能包含空格和两个整数！不能包含字母，因为有 <code>%1d%1d</code><ul>
+<li>这个例子不管客户、服务器的主机字节序是否一样，因为不影响</li>
+</ul>
+</li>
+</ul>
+<h3 id="传递二进制"><a href="#传递二进制" class="headerlink" title="传递二进制"></a>传递二进制</h3><ul>
+<li>这个例子没有 snprintf 转为文本串<ul>
+<li>在 sscanf 转为二进制后（不是转为长整数么）直接 writen<ul>
+<li>说是二进制，其实就是数字，只不过不是文本串，而且确实跟二进制字节序有关</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/str_cli09.png" alt title="str_cli09"></p>
+<ul>
+<li>上面这个图不太清楚，1080p 分辨率</li>
+<li>下面两个图，一个在同一主机，一个在 Ubuntu 和 CentOS8</li>
+</ul>
+<p><img src="/pictrues/UNP/tcpcli09-1.png" alt title="同一个主机"></p>
+<p><img src="/pictrues/UNP/tcpcli09-2.png" alt title="不同主机"></p>
+<ul>
+<li>解决方法之一就是把所有的数据转为文本串来传递</li>
+</ul>
+<h2 id="小结、习题"><a href="#小结、习题" class="headerlink" title="小结、习题"></a>小结、习题</h2><ul>
+<li><p>每一端都得指定连接的套接字对：本地 IP 地址、本地端口、外地 IP 地址、外地端口</p>
+<ul>
+<li>外地 IP 地址、外地端口必须在客户调用 connect 时指定，这里会将命令行的 IP 地址（服务器的地址）作为参数</li>
+</ul>
+</li>
+<li><p>题目太多了，要不要记呢？</p>
+<ul>
+<li>第一题：终止客户，然后每隔 5 s 用 netstat 查看 TIME_WAIT 状态何时结束</li>
+<li>第二题：标准输入重定向一个二进制文件<ul>
+<li>输入不再是命令行手动了，而是一个二进制文件，这里不是很懂，为什么前三个字节为二进制 1、0、一个换行符 —— strlen 返回 1（只计到一个空字节）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="第六章"><a href="#第六章" class="headerlink" title="第六章"></a>第六章</h1><ul>
+<li><p>感觉看这章之前要把 通用的 I/O 模型 过一遍</p>
+<ul>
+<li>顺便赶赶系统编程进度</li>
+<li>APUE 要不要跟 UNP 一样，写个博客？还是手撕代码？手撕代码吧，这样印象更深，顺便加深下 Makefile 语法</li>
+<li>感觉别人的 思维导图 比我的还详细，我觉得自己写的就是一坨……</li>
+</ul>
+</li>
+<li><p>回归正题</p>
+<ul>
+<li>上一章 TCP 客户端是同时处理两个描述符——标准输入、套接字，有点自顾不暇了</li>
+<li>要腾出手来，即 I/O 复用</li>
+</ul>
+</li>
+</ul>
+<h2 id="I-O-模型"><a href="#I-O-模型" class="headerlink" title="I/O 模型"></a>I/O 模型</h2><ul>
+<li>输入操作包含两个阶段<ul>
+<li>等待数据准备好</li>
+<li>内核向进程复制数据</li>
+<li>下面这几个模型都是后面会详细讲，这里先简要概括下</li>
+</ul>
+</li>
+</ul>
+<h3 id="阻塞式-I-O-模型"><a href="#阻塞式-I-O-模型" class="headerlink" title="阻塞式 I/O 模型"></a>阻塞式 I/O 模型</h3><ul>
+<li>这是最流行的<ul>
+<li>下图 recvfrom 是会在应用进程空间和内核空间来回切换的</li>
+<li>开始调用 recvfrom 到返回这段时间内是阻塞的，成功返回后，应用进程开始处理数据报</li>
+<li>所有的套接字都是阻塞的</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/recvfrom.png" alt title="recvfrom"></p>
+<ul>
+<li>所以这个模型主要跟 recvfrom 函数有关？</li>
+</ul>
+<h3 id="非阻塞式-I-O-模型"><a href="#非阻塞式-I-O-模型" class="headerlink" title="非阻塞式 I/O 模型"></a>非阻塞式 I/O 模型</h3><ul>
+<li>poll 原来是轮询的意思<ul>
+<li>就是不停地调用 recvfrom 函数，直到数据准备好，否则返回 EWOULDBLOCK 错误（返回错误后，继续调用，否则怎么叫做轮询呢）</li>
+<li>文件描述符为非阻塞</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/recvfrom2.png" alt title="recvfrom"></p>
+<ul>
+<li>轮询会耗费 CPU 的大量时间，</li>
+</ul>
+<h3 id="I-O-复用模型"><a href="#I-O-复用模型" class="headerlink" title="I/O 复用模型"></a>I/O 复用模型</h3><ul>
+<li>在模型下这个使用 select 或者 poll 函数<ul>
+<li>进程不再选择阻塞在 I/O 函数身上而是阻塞在向 select、poll 和 epoll 调用上。</li>
+<li>当描述符变得可用时上述的函数会成功返回，并告知用户进程哪些描述符变得可用，之后再调用系统函数 recvfrom 复制数据报</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/recvfrom3.png" alt title="recvfrom"></p>
+<ul>
+<li>这个模型跟 多线程使用阻塞式 I/O 很像，每个文件描述符一个线程</li>
+</ul>
+<h3 id="信号驱动式-I-O-模型"><a href="#信号驱动式-I-O-模型" class="headerlink" title="信号驱动式 I/O 模型"></a>信号驱动式 I/O 模型</h3><ul>
+<li>描述符准备就绪时，内核发送 SIGIO 信号<ul>
+<li>进程不再会为描述符是否准备好而阻塞进程，因为信号处理函数会立即返回，进程继续工作</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/recvfrom4.png" alt title="recvfrom"></p>
+<ul>
+<li>但该模式的主要缺点在于：若用户进程在使用多个描述符，当信号 SIGIO 到来时用户很难知道到底是哪一个描述符变得可用</li>
+</ul>
+<h3 id="异步-I-O-模型"><a href="#异步-I-O-模型" class="headerlink" title="异步 I/O 模型"></a>异步 I/O 模型</h3><ul>
+<li>这个模型跟信号驱动式 I/O 模型有点像<ul>
+<li>信号驱动式 I/O 模型是由内核通知何时可以启动一个 I/O 操作</li>
+<li>这个是内核通知一个 I/O 操作何时完成</li>
+<li>aio_read 负主要责任、用户进程不需要进入阻塞状态</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/recvfrom5.png" alt title="recvfrom"></p>
+<h3 id="五种模型的区别"><a href="#五种模型的区别" class="headerlink" title="五种模型的区别"></a>五种模型的区别</h3><p><img src="/pictrues/UNP/recvfrom6.png" alt title="五种模型的区别"></p>
+<h2 id="IO-多路复用-select-poll-epoll-介绍"><a href="#IO-多路复用-select-poll-epoll-介绍" class="headerlink" title="IO 多路复用 select/poll/epoll 介绍"></a>IO 多路复用 select/poll/epoll 介绍</h2><h3 id="简单粗暴"><a href="#简单粗暴" class="headerlink" title="简单粗暴"></a>简单粗暴</h3><ul>
+<li><p><a href="https://www.bilibili.com/video/BV1qJ411w7du" target="_blank" rel="noopener">IO 多路复用 select/poll/epoll 介绍</a></p>
+</li>
+<li><p>参考这个视频</p>
+</li>
+<li><p>高并发的一个解决方案——多线程</p>
+<ul>
+<li>缺点：上下文切换，客户越多，代价就越高</li>
+</ul>
+</li>
+<li><p>单线程处理大量客户端连接</p>
+<ul>
+<li>DMA 控制器专门处理 I/O 控制器，在另一个客户请求连接时确保不丢失</li>
+<li>简单粗暴的一种方法</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/free_coder.png" alt title="简单粗暴的一种方法"></p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><ul>
+<li>select<ul>
+<li>前半段是套接字、准备描述符</li>
+<li>select 函数最关键的是 读入文件描述符（第二个参数），即 rset 是将 fds[] 整数数组转为 bitmap （哪一位文件描述符被占用就置 1，其余置 0）一般是 1024 位</li>
+<li>判断是否有数据，是先复制到内核，再由内核来判断；与上面简单粗暴方法不同的是 select 是将所有描述符一起复制到内核，而不是复制一个判断一个</li>
+<li>为什么要内核来判断，因为内核判断比用户态判断效率高</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/free_coder1.png" alt title="select 函数"></p>
+<ul>
+<li><p>没数据时 select 函数阻塞，有数据内核将 FD 置位（rset 对应的那一位），然后 select 返回（不再阻塞）</p>
+<ul>
+<li>返回后，判断哪一位置位了，然后进行读取、处理</li>
+</ul>
+</li>
+<li><p>select 第一个参数为 max + 1（max 是最大的描述符），为什么加一，因为 bitmap 是从 0 开始的，这样写的好处就是不用 1024 位都复制，而是用到多少就到多少</p>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/free_coder2.png" alt title="max + 1"></p>
+<ul>
+<li>缺点<ul>
+<li>bitmap 虽然可以限制大小，但上限是不变的</li>
+<li>FD_SET 不可重用，每次 while 循环都要重新初始化（导致一部分开销）</li>
+<li>rset 即 bitmap 虽然是整体拷贝，但是从用户态到内核态仍有一个开销</li>
+<li>select 在返回的时候，肯定至少有一个是被置位的，但是不知道是哪一个，仍然要遍历所有的描述符（开销）</li>
+</ul>
+</li>
+</ul>
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><ul>
+<li><p>poll</p>
+<ul>
+<li><code>poll(pollfds, 5, 50000)</code> 相比 select 传入的参数少了几个</li>
+<li>pollfds（数组）自带的数据结构；5 代表 5 个元素；最后一个是超时时间</li>
+<li>关键点在于用 pollfd 取代 bitmap</li>
+</ul>
+</li>
+<li><p>置位是给 pollfd.revents 置位（一开始为 0，这个是一个反馈）成 POLLIN</p>
+<ul>
+<li>然后 poll 函数返回（之前阻塞）</li>
+<li>接着判断 pollfds[i].revents 是否被置位、读数据、处理数据</li>
+<li>这里只更改 revents，结构体的其余数据不变，也就是说只需初始化一次即可</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/free_coder3.png" alt title="poll 函数"></p>
+<ul>
+<li>解决了 select 的几个缺点<ul>
+<li>bitmap 被替换为 pollfd，上限不止 1024</li>
+<li>只需初始化一次，可重用</li>
+<li>另外两点还是一样的，没有变化</li>
+</ul>
+</li>
+</ul>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><ul>
+<li><p>epoll</p>
+<ul>
+<li>这个函数目前比较新，首先使用 <code>epoll_create()</code>（这里面的参数没多大意义）来创建 epfd（int），理解成一个白板</li>
+<li><code>epoll_ctl()</code> 类似于在白板上写字</li>
+<li>epoll_event 结构体类似于 pollfd，但是没有 revent 字段</li>
+<li>代码分为两段</li>
+<li>epoll_wait 函数里，用户态和内核态是共享 epfd 内存的，即不用复制（省去一部分开销）</li>
+</ul>
+</li>
+<li><p>没数据阻塞，有数据——也会“置位”，即重排（跟之前不一样，把有数据的放在前面），然后返回（有返回值）</p>
+<ul>
+<li>返回的是有数据的个数，之后遍历按照这个个数来</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/free_coder4.png" alt title="epoll 函数"></p>
+<ul>
+<li><p>解决了最后两个缺点</p>
+<ul>
+<li>不用复制</li>
+<li>复杂度不再是 O(n)</li>
+</ul>
+</li>
+<li><p>redis、nginx、javaNIO(Linux) 都使用了 epoll</p>
+</li>
+<li><p>提出了几个问题</p>
+<ul>
+<li>固态硬盘（SSD）为什么比机械硬盘快</li>
+<li>哪些数据库（DB）对固态硬盘进行了优化</li>
+<li>上面的优化原理是什么</li>
+</ul>
+</li>
+<li><p>看评论说上面的 epoll 有争议，我目前比较菜，以后有机会再完善</p>
+<ul>
+<li>好像在共享内存那边，实际上并没有共享？</li>
+<li>这样更能加深理解</li>
+</ul>
+</li>
+</ul>
+<h2 id="select-函数"><a href="#select-函数" class="headerlink" title="select 函数"></a>select 函数</h2><ul>
+<li>头文件 <code>&lt;sys/select.h&gt;</code></li>
+<li>关于 sd_set 整数数组，书上说的有点绕口！</li>
+<li>这里主要讲 select、poll、epoll 函数，我记得有个 UP 主讲的很好，先看下视频，那就先放在前面<ul>
+<li>书上对函数的四个参数说的很详细</li>
+<li>若中间三个参数都为空指针，那就变成了一个计时器！哈哈哈哈哈哈哈</li>
+</ul>
+</li>
+</ul>
+<h3 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h3><ul>
+<li>select 函数（和 poll）只工作在描述符上！</li>
+<li>这几节的笔记好多！感觉没什么时间来记了<ul>
+<li>最后一个时间参数需要用到头文件 <code>&lt;sys/time.h&gt;</code></li>
+<li>重点是第二个读描述符 fd_set<ul>
+<li>这个结构对应几个函数用来初始化、对应位置位、判断对应位是否置位；很奇怪这些函数名字母为什么都是大写？哦哦哦，原来是宏！</li>
+</ul>
+</li>
+<li>第一个是参数是最大描述符 + 1，因为从 0 开始数</li>
+</ul>
+</li>
+</ul>
+<h3 id="描述符就绪条件"><a href="#描述符就绪条件" class="headerlink" title="描述符就绪条件"></a>描述符就绪条件</h3><ul>
+<li>准备好读<ul>
+<li>该套接字接收缓冲区的数据字节数 ≧ 套接字接收缓冲区低水位标记的当前大小</li>
+<li>该连接的读 半部关闭</li>
+<li>该套接字是一个监听套接字且内核 TCP 维护的已完成连接队列不为空</li>
+<li>有一个套接字有错误待处理</li>
+</ul>
+</li>
+</ul>
+<h2 id="pselect-函数"><a href="#pselect-函数" class="headerlink" title="pselect 函数"></a>pselect 函数</h2><ul>
+<li>头文件 <code>&lt;sys/select.h&gt;</code><ul>
+<li>时间参数的结构体变了，这个新结构可以指定纳秒级！</li>
+<li>还增加了第六个参数，用来屏蔽一些信号</li>
+<li>这节没有细讲</li>
+</ul>
+</li>
+</ul>
+<h2 id="poll-函数"><a href="#poll-函数" class="headerlink" title="poll 函数"></a>poll 函数</h2><ul>
+<li>终于看到这个函数了！</li>
+<li>emmmmmm 书上就一两页纸，头文件 <code>&lt;poll.h&gt;</code><ul>
+<li>第一个参数是数组指针，每个数组元素都是 pollfd 结构</li>
+</ul>
+</li>
+</ul>
+<h2 id="习题-2"><a href="#习题-2" class="headerlink" title="习题"></a>习题</h2><ul>
+<li>1：C 语言允许结构跨等号赋值</li>
+<li>2：select 返回可写时，必须把套接字设置成非阻塞</li>
+<li>3：这里问的 if else 是判断两个描述符的，不能加 else ，因为这两个描述符必须要一个一个的判断！</li>
+<li>4：这题没读懂……</li>
+<li>5：这题的意思是端口号是跟某个服务有关</li>
+<li>6：close 只在描述符引用计数为 1 的情况下，才发送 FIN</li>
+</ul>
+<h1 id="第七章"><a href="#第七章" class="headerlink" title="第七章"></a>第七章</h1><ul>
+<li>套接字选项<ul>
+<li>这章里面的 SCTP 先不看</li>
+</ul>
+</li>
+</ul>
+<h2 id="getsockopt、setsockopt-函数"><a href="#getsockopt、setsockopt-函数" class="headerlink" title="getsockopt、setsockopt 函数"></a>getsockopt、setsockopt 函数</h2><ul>
+<li><p>头文件 <code>&lt;sys/socket.h&gt;</code></p>
+<ul>
+<li>我发现书上说的值 - 结果参数就是某个类型的指针</li>
+<li>两个函数成功则返回 0 出错返回 -1</li>
+<li>两个函数里的 *optval 有点不太理解<ul>
+<li>对于 getsockopt() 而言是用来指向获取到套接字选项当前值欲被存放的内存起始地址</li>
+<li>对于 setsockopt() 函数而言是用来指向套接字选项欲设置值的地址</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>下面开始检查选项是否受支持</p>
+<ul>
+<li>如果没有定义某个选项，那么对应的函数指针为空</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/opt_val_str.png" alt title="checkopts"></p>
+<ul>
+<li>再好好记忆下 snprintf 函数<ul>
+<li>头文件 <code>&lt;cstdio&gt;</code></li>
+<li><code>int snprintf ( char * s, size_t n, const char * format, ... );</code></li>
+<li>雾草，书上的源码编译报错了！错误原因很简单，加上 #ifdef 即可</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/checkopts.png" alt title="SO_USELOOPBACK"></p>
+<p><img src="/pictrues/UNP/checkopts1.png" alt title="编译成功！"></p>
+<ul>
+<li>虽说是跑起来了，但是还有几个结构体还不清楚</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">union val &#123;</span><br><span class="line">	int					i_val;</span><br><span class="line">	long				l_val;</span><br><span class="line">	struct linger		linger_val;</span><br><span class="line">	struct timeval		timeval_val;</span><br><span class="line">&#125; val;</span><br></pre></td></tr></table></figure>
+
+<h2 id="套接字状态"><a href="#套接字状态" class="headerlink" title="套接字状态"></a>套接字状态</h2><ul>
+<li>这这这，，，太多了吧，先大致过一遍！<ul>
+<li>还是得记住常用的！</li>
+</ul>
+</li>
+</ul>
+<h3 id="SO-LINGER"><a href="#SO-LINGER" class="headerlink" title="SO_LINGER"></a>SO_LINGER</h3><ul>
+<li>这个套接字用到了 <code>struct linger</code>，头文件 <code>&lt;sys/socket.h&gt;</code></li>
+<li>这个用途是在 close 函数之后，不是立即返回，而是将留在套接字发送缓冲区的残留数据发给对方<ul>
+<li>结构体有两个参数可以自己调</li>
+</ul>
+</li>
+</ul>
+<h2 id="fcntl-函数"><a href="#fcntl-函数" class="headerlink" title="fcntl 函数"></a>fcntl 函数</h2><ul>
+<li><p>就是 file control</p>
+<ul>
+<li>唉，这第一章记的笔记有点拉跨啊，中间跳过了很多套接字选项</li>
+</ul>
+</li>
+<li><p>书上没找到这个函数的例子</p>
+</li>
+<li><p>头文件 <code>&lt;fcntl.h&gt;</code></p>
+<ul>
+<li>出错返回 -1，至于成功取决于第二个参数 cmd</li>
+<li>整型与标志符进行位运算</li>
+</ul>
+</li>
+</ul>
+<h2 id="习题-3"><a href="#习题-3" class="headerlink" title="习题"></a>习题</h2><ul>
+<li>第一题题解给出了接收缓冲区的大小<ul>
+<li>要用到 getsockopt 函数，之前看的都忘了，参数还用到了 SOL_SOCKET、SO_RCVBUF、IPPROTO_TCP、TCP_MAXSEG 这四个</li>
+<li>下面还是用的 13 端口来获取服务端时间</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/rcvbuf.png" alt title="rcvbuf 程序"></p>
+<ul>
+<li><p>MSS 是 TCP 一端的最大分节大小</p>
+<ul>
+<li>这里 MSS 会在连接后变大</li>
+</ul>
+</li>
+<li><p>第二题与第一题类似，MSS 为什么会变化</p>
+<ul>
+<li>在不是本地服务器运行时间程序时（CentOS 8）总是显示 bind 错误，于是换了个端口号 12000</li>
+<li>无论是本地还是非本地，MSS 的值都会变</li>
+</ul>
+</li>
+<li><p>第四题设置 SO_REUSEADDR 套接字选项</p>
+<ul>
+<li>多个用户调用 bind 会出现 EADDRINUSE 错误，因为当前服务端监听套接字正在处理其他客户的连接，这样只需多次调用 bind 即可</li>
+</ul>
+</li>
+<li><p>sock 程序编译出错，有个函数明明声明了，却显示没有声明有点纳闷，关键是后面好几个习题都跟这个 sock 有关！先看下一章吧</p>
+</li>
+</ul>
+<h1 id="第八章"><a href="#第八章" class="headerlink" title="第八章"></a>第八章</h1><ul>
+<li>客户不与服务器建立连接，创建套接字之后直接 sendto 给指定服务器发送数据报</li>
+<li>服务器不接受客户的连接，先创建套接字、bind，然后 recvfrom 客户的数据</li>
+<li>客户端与 TCP 区别在于没有 connect 函数</li>
+</ul>
+<h2 id="recvfrom、sendto-函数"><a href="#recvfrom、sendto-函数" class="headerlink" title="recvfrom、sendto 函数"></a>recvfrom、sendto 函数</h2><ul>
+<li><p>头文件 <code>sys/socket.h</code></p>
+<ul>
+<li>前三个参数分别是描述符、缓冲区指针、读写字节数</li>
+<li>第四个参数 int flags 暂时置 0</li>
+<li>第五个参数都是通用地址结构指针</li>
+<li>最后一个 recvfrom 是地址结构长度指针，而 sendto 是整型</li>
+<li>返回值都是读写数据的长度</li>
+</ul>
+</li>
+<li><p>因为是 UDP</p>
+<ul>
+<li>所以是 <code>sockfd = Socket(AF_INET, SOCK_DGRAM, 0);</code> SOCK_DGRAM</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/udpcli01.png" alt title="udpcli01"></p>
+<h2 id="dg-echo-函数"><a href="#dg-echo-函数" class="headerlink" title="dg_echo 函数"></a>dg_echo 函数</h2><ul>
+<li>服务端处理程序</li>
+<li>这个函数永不终止，读完直接发送<ul>
+<li>书上说这个服务器是迭代的，有点理解了，相当于队列，先入先出，无论几个 UDP 客户端，迭代读取对应的数据报即可</li>
+</ul>
+</li>
+</ul>
+<h2 id="dg-cli-函数"><a href="#dg-cli-函数" class="headerlink" title="dg_cli 函数"></a>dg_cli 函数</h2><ul>
+<li>这里有个注意点，在接收服务端数据后返回的是成功的字节数 n，要把缓冲区第 n 个位置置 0，然后再输出屏幕，手动终止<ul>
+<li>两个函数都是协议无关的</li>
+</ul>
+</li>
+</ul>
+<h2 id="验证接收到的响应"><a href="#验证接收到的响应" class="headerlink" title="验证接收到的响应"></a>验证接收到的响应</h2><ul>
+<li><p>这里没太看明白，再过一遍</p>
+<ul>
+<li>SERV_PORT 是 9877，这里直接用了 7 号端口，说是可以使用任何运行标准回射服务器的主机</li>
+<li>memcmp 用来比较两个地址块是否相同</li>
+<li>有个问题，这里客户端端口号改成了 7 那么对应的服务端程序是哪个呢？</li>
+<li>这里运行没有成功 —— 没有显示 reply from …</li>
+</ul>
+</li>
+<li><p>下一节讨论了 UDP 套接字的异步错误 —— 目的地不可达 ICMP 错误</p>
+<ul>
+<li>但是这个错误不会返回给进程，除非 UDP 套接字已连接</li>
+</ul>
+</li>
+</ul>
+<h2 id="connect-函数-1"><a href="#connect-函数-1" class="headerlink" title="connect 函数"></a>connect 函数</h2><ul>
+<li><p>本来是没有的或者可有可无</p>
+<ul>
+<li>由 connect 函数连接好指定的 IP 地址和端口号后，不能用 sendto 了，而是直接 read 或者 write</li>
+<li>异步错误会返回所在的进程</li>
+</ul>
+</li>
+<li><p>UDP 套接字可以多次调用 connect 而 TCP 只能一次</p>
+<ul>
+<li>多次调用是为了断开链接</li>
+</ul>
+</li>
+</ul>
+<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><ul>
+<li>UDP 没有流量控制是不可靠的，若接收缓冲区满了，容易丢失数据<ul>
+<li>UDP 默认接收缓冲区大小是 42080 字节</li>
+<li>SO_RCVBUF 可以修改默认值</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/udpserv06.png" alt title="udpserv06"></p>
+<ul>
+<li>获取本地的 IP 地址以及端口号</li>
+</ul>
+<p><img src="/pictrues/UNP/udpcli09.png" alt title="udpcli09"></p>
+<h2 id="TCP、UDP-回射服务器程序"><a href="#TCP、UDP-回射服务器程序" class="headerlink" title="TCP、UDP 回射服务器程序"></a>TCP、UDP 回射服务器程序</h2><ul>
+<li>使用 select 函数</li>
+<li>步骤<ul>
+<li>先创建两个套接字，但是得一个一个来，因为创建套接字之后，还需要赋值 IP 结构地址，之后要进行绑定和监听</li>
+<li>其中 IP 结构地址是复用的，因为前面已经创建了套接字并且监听，不影响后面的</li>
+</ul>
+</li>
+</ul>
+<h1 id="第十一章"><a href="#第十一章" class="headerlink" title="第十一章"></a>第十一章</h1><ul>
+<li>这里的 DNS 在之前计算机网络自顶向下接触过<ul>
+<li>这里更为详细</li>
+<li>不使用 DNS 可以用静态主机文件 /etc/hosts </li>
+</ul>
+</li>
+</ul>
+<h2 id="gethostbyname、gethostbyaddr-函数"><a href="#gethostbyname、gethostbyaddr-函数" class="headerlink" title="gethostbyname、gethostbyaddr 函数"></a>gethostbyname、gethostbyaddr 函数</h2><ul>
+<li><p>头文件 <code>&lt;netdb.h&gt;</code></p>
+<ul>
+<li>输入参数只有一个，就是命令行的字符指针</li>
+<li>返回值是指向 hostent 结构的指针，里面是所有的 IPv4 地址</li>
+<li>这个结构里由指针也有指针的指针，输出的时候需要注意</li>
+<li><code>hstrerror(h_errno)</code> 用来返回错误相关信息；<code>const char *hstrerror(int err)</code></li>
+</ul>
+</li>
+<li><p>gethostbyaddr</p>
+<ul>
+<li>正好相反，根据地址找名字</li>
+<li>我得把系统调用的信息输出好好看看，各种 error functions</li>
+</ul>
+</li>
+</ul>
+<h2 id="getservbyname、getservbyport-函数"><a href="#getservbyname、getservbyport-函数" class="headerlink" title="getservbyname、getservbyport 函数"></a>getservbyname、getservbyport 函数</h2><ul>
+<li><p>服务靠名字来认知</p>
+</li>
+<li><p>头文件 <code>&lt;netdb.h&gt;</code></p>
+<ul>
+<li>返回值是指向 servent 结构的指针，不是 hostent 了</li>
+<li>不过输入参数有两个，第二个参数是协议指针，如 “tcp”、”udp”</li>
+<li>servent 端口号是网络字节序，不能调用 htons</li>
+</ul>
+</li>
+<li><p>getservbyport 根据端口号和协议来查找服务</p>
+<ul>
+<li>第一个 int port 参数必须是网络字节序</li>
+</ul>
+</li>
+</ul>
+<h2 id="getaddrinfo-函数"><a href="#getaddrinfo-函数" class="headerlink" title="getaddrinfo 函数"></a>getaddrinfo 函数</h2><ul>
+<li>头文件 <code>&lt;netdb.h&gt;</code><ul>
+<li>返回 int 类型，0 成功，否则失败</li>
+<li>值-结果参数，addrinfo 结构指针</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>TODO</p>
+</blockquote>
+<h2 id="习题-4"><a href="#习题-4" class="headerlink" title="习题"></a>习题</h2><ul>
+<li><p>前面还没看的章节先省略，主要知识点字数比较多，又有现成的 Xmind 文件，节省时间，目前主要记录下做习题的过程</p>
+</li>
+<li><p>1</p>
+<ul>
+<li>一开始以为源码写错了，因为 <code>hptr-&gt;h_addrtype</code> 只能是 AF_INET，书上却把他放在了 <code>case AF_INET6:</code> 下</li>
+<li>不过改完之后 <code>./hostent2 cnn.com</code> 还是 <code>gethostbyaddr failed</code></li>
+<li>为什么呢，难道时间太过久远了？</li>
+<li>跑了一下师兄的代码，也是同样的问题显示不出主机名</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/UNP/hostent2.png" alt title="hostent2"></p>
+<p><img src="/pictrues/UNP/hostent2-1.png" alt title="师兄的代码"></p>
+<ul>
+<li><p><code>hptr = gethostbyaddr((const void*)*pptr, sizeof(struct in_addr), AF_INET);</code></p>
+</li>
+<li><p><code>hptr = gethostbyaddr(*pptr, hptr-&gt;h_length, hptr-&gt;h_addrtype)</code></p>
+<ul>
+<li>这两个都返回的是 NULL</li>
+<li>不过这题的关键点在于那两个函数公用一个 hostent 结构</li>
+<li>gethostbyaddr 会把之前的其余 IP 地址给覆盖掉，所以正确答案应该是只显示一个 IP 地址和一个主机名</li>
+</ul>
+</li>
+<li><p>2</p>
+<ul>
+<li>修复 1 的问题</li>
+<li>可重入性，那两个函数变为以 _r 结尾的函数</li>
+<li>说是在调用 gethostbyaddr 之前复制 hostent 结构，但是就算复制了，也实现不了，因为 gethostbyaddr 返回 NULL，主机名都显示不出来，纳闷</li>
+</ul>
+</li>
+<li><p>3</p>
+<ul>
+<li>这里只是改了服务名，然后再运行下，但是我连不上 unable to connect </li>
+</ul>
+</li>
+<li><p>4</p>
+<ul>
+<li>首先判断主机名是 IP 地址还是名字，用了 inet_pton 而不是 inet_aton 来判断</li>
+<li>之后判断第二个参数是端口号还是服务名字<ul>
+<li>端口号要先 atoi 变为整数 n 若报错就当成名字用 getservbyname 再判断一次</li>
+<li>记得端口号要转为网络字节序 <code>servaddr.sin_port = htons(n)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>5</p>
+<ul>
+<li>还是得修改，不过要支持 IPv6，得用 getaddrinfo 函数</li>
+<li>不过书上源码没有使用 getaddrinfo，而是继续判断 AF_INET 还是 AF_INET6；然后自定义了函数设置端口和地址，从而实现协议无关性。</li>
+<li>师兄的代码是将 getaddrinfo 函数放入 tcp_connect 函数里，根据 &lt;IPaddress/hostname&gt; 和 &lt;server/port&gt; 来建立连接并返回已连接套接字，之后用 getpeername 获取地址并 sock_ntop 显示</li>
+</ul>
+</li>
+<li><p>6</p>
+<ul>
+<li>反向查找 DNS ……</li>
+<li>这里跟 recvfrom 似乎没有关系</li>
+</ul>
+</li>
+<li><p>7</p>
+<ul>
+<li>如果不为空，那么会执行 <code>*addrlenp = res-&gt;ai_addrlen;</code> 来得到协议地址的大小</li>
+<li>如果为空还是得用 getsockname 不过事先得分配一个足够大的缓冲区来存放地址</li>
+</ul>
+</li>
+<li><p>8</p>
+<ul>
+<li>getnameinfo ……</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">本文结束<i class="fa fa-hand-peace-o" aria-hidden="true"></i></i> 转载请注明出处</div>
+    
+</div>
+      
+    </div>
+    
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>如果喜欢，请多多支持！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/pay2.jpg" alt="xingkang 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/pay.png" alt="xingkang 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/UNIX-网络编程/" rel="tag"> <i class="fa fa-location-arrow" aria-hidden="true"></i> UNIX 网络编程</a>
+
+            
+          </div>
+        
+
+        
+
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2021/03/25/Machine-Learning/" rel="next" title="Machine Learning">
+                  <i class="fa fa-chevron-left"></i> Machine Learning
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2021/07/12/Cpp-Projects/" rel="prev" title="Cpp Projects">
+                  Cpp Projects <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/2.png"
+      alt="xingkang">
+  <p class="site-author-name" itemprop="name">xingkang</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://space.bilibili.com/34033362" title="BiliBili &rarr; https://space.bilibili.com/34033362"><i class="fa fa-fw fa-globe"></i>BiliBili</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/cosmicxk" title="GitHub &rarr; https://github.com/cosmicxk" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.njupt.edu.cn/" title="http://www.njupt.edu.cn/" rel="noopener" target="_blank">University</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu"><span class="nav-number">1.1.</span> <span class="nav-text">Ubuntu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS"><span class="nav-number">1.2.</span> <span class="nav-text">CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-安装-gcc、g"><span class="nav-number">1.2.1.</span> <span class="nav-text">CentOS 安装 gcc、g++</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章"><span class="nav-number">2.</span> <span class="nav-text">第一章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包裹函数"><span class="nav-number">2.1.</span> <span class="nav-text">包裹函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行"><span class="nav-number">2.2.</span> <span class="nav-text">运行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS8-关闭防火墙"><span class="nav-number">2.2.1.</span> <span class="nav-text">CentOS8 关闭防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译、链接"><span class="nav-number">2.2.2.</span> <span class="nav-text">编译、链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#htons"><span class="nav-number">2.2.3.</span> <span class="nav-text">htons()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络拓扑"><span class="nav-number">2.3.</span> <span class="nav-text">网络拓扑</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章"><span class="nav-number">3.</span> <span class="nav-text">第二章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章"><span class="nav-number">4.</span> <span class="nav-text">第三章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#套接字地址结构"><span class="nav-number">4.1.</span> <span class="nav-text">套接字地址结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#套接字函数-——-值-结果参数"><span class="nav-number">4.2.</span> <span class="nav-text">套接字函数 —— 值 - 结果参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字节排序函数"><span class="nav-number">4.3.</span> <span class="nav-text">字节排序函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bzreo"><span class="nav-number">4.4.</span> <span class="nav-text">bzreo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地址转换函数"><span class="nav-number">4.5.</span> <span class="nav-text">地址转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#readn、writen、readline"><span class="nav-number">4.6.</span> <span class="nav-text">readn、writen、readline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#习题"><span class="nav-number">4.7.</span> <span class="nav-text">习题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章"><span class="nav-number">5.</span> <span class="nav-text">第四章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#socket-函数"><span class="nav-number">5.1.</span> <span class="nav-text">socket 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connect-函数"><span class="nav-number">5.2.</span> <span class="nav-text">connect 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind-函数"><span class="nav-number">5.3.</span> <span class="nav-text">bind 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#listen-函数"><span class="nav-number">5.4.</span> <span class="nav-text">listen 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#accept-函数"><span class="nav-number">5.5.</span> <span class="nav-text">accept 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fork、exec-函数"><span class="nav-number">5.6.</span> <span class="nav-text">fork、exec 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发服务器"><span class="nav-number">5.7.</span> <span class="nav-text">并发服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#close-函数"><span class="nav-number">5.8.</span> <span class="nav-text">close 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getsockname、getpeername-函数"><span class="nav-number">5.9.</span> <span class="nav-text">getsockname、getpeername 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#习题-1"><span class="nav-number">5.10.</span> <span class="nav-text">习题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章"><span class="nav-number">6.</span> <span class="nav-text">第五章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-服务器-main-函数"><span class="nav-number">6.1.</span> <span class="nav-text">TCP 服务器 main 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-echo-函数"><span class="nav-number">6.2.</span> <span class="nav-text">str_echo 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-客户-main-函数"><span class="nav-number">6.3.</span> <span class="nav-text">TCP 客户 main 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str-cli-函数"><span class="nav-number">6.4.</span> <span class="nav-text">str_cli 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行-1"><span class="nav-number">6.5.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POSIX-信号"><span class="nav-number">6.6.</span> <span class="nav-text">POSIX 信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#signal-函数"><span class="nav-number">6.6.1.</span> <span class="nav-text">signal 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理被中断的系统调用"><span class="nav-number">6.6.2.</span> <span class="nav-text">处理被中断的系统调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wait、waitpid-函数"><span class="nav-number">6.7.</span> <span class="nav-text">wait、waitpid 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种终止"><span class="nav-number">6.8.</span> <span class="nav-text">各种终止</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#accept-返回前连接终止"><span class="nav-number">6.8.1.</span> <span class="nav-text">accept 返回前连接终止</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器进程终止"><span class="nav-number">6.8.2.</span> <span class="nav-text">服务器进程终止</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SIGPIPE-信号"><span class="nav-number">6.8.3.</span> <span class="nav-text">SIGPIPE 信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器主机崩溃"><span class="nav-number">6.8.4.</span> <span class="nav-text">服务器主机崩溃</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器主机崩溃后重启"><span class="nav-number">6.8.5.</span> <span class="nav-text">服务器主机崩溃后重启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器主机关机"><span class="nav-number">6.8.6.</span> <span class="nav-text">服务器主机关机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据格式"><span class="nav-number">6.9.</span> <span class="nav-text">数据格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两数之和"><span class="nav-number">6.9.1.</span> <span class="nav-text">两数之和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传递二进制"><span class="nav-number">6.9.2.</span> <span class="nav-text">传递二进制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结、习题"><span class="nav-number">6.10.</span> <span class="nav-text">小结、习题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章"><span class="nav-number">7.</span> <span class="nav-text">第六章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-模型"><span class="nav-number">7.1.</span> <span class="nav-text">I/O 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞式-I-O-模型"><span class="nav-number">7.1.1.</span> <span class="nav-text">阻塞式 I/O 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非阻塞式-I-O-模型"><span class="nav-number">7.1.2.</span> <span class="nav-text">非阻塞式 I/O 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O-复用模型"><span class="nav-number">7.1.3.</span> <span class="nav-text">I/O 复用模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号驱动式-I-O-模型"><span class="nav-number">7.1.4.</span> <span class="nav-text">信号驱动式 I/O 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步-I-O-模型"><span class="nav-number">7.1.5.</span> <span class="nav-text">异步 I/O 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五种模型的区别"><span class="nav-number">7.1.6.</span> <span class="nav-text">五种模型的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO-多路复用-select-poll-epoll-介绍"><span class="nav-number">7.2.</span> <span class="nav-text">IO 多路复用 select/poll/epoll 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单粗暴"><span class="nav-number">7.2.1.</span> <span class="nav-text">简单粗暴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">7.2.2.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll"><span class="nav-number">7.2.3.</span> <span class="nav-text">poll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">7.2.4.</span> <span class="nav-text">epoll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-函数"><span class="nav-number">7.3.</span> <span class="nav-text">select 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数参数"><span class="nav-number">7.3.1.</span> <span class="nav-text">函数参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述符就绪条件"><span class="nav-number">7.3.2.</span> <span class="nav-text">描述符就绪条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pselect-函数"><span class="nav-number">7.4.</span> <span class="nav-text">pselect 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#poll-函数"><span class="nav-number">7.5.</span> <span class="nav-text">poll 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#习题-2"><span class="nav-number">7.6.</span> <span class="nav-text">习题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第七章"><span class="nav-number">8.</span> <span class="nav-text">第七章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#getsockopt、setsockopt-函数"><span class="nav-number">8.1.</span> <span class="nav-text">getsockopt、setsockopt 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#套接字状态"><span class="nav-number">8.2.</span> <span class="nav-text">套接字状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SO-LINGER"><span class="nav-number">8.2.1.</span> <span class="nav-text">SO_LINGER</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fcntl-函数"><span class="nav-number">8.3.</span> <span class="nav-text">fcntl 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#习题-3"><span class="nav-number">8.4.</span> <span class="nav-text">习题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章"><span class="nav-number">9.</span> <span class="nav-text">第八章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#recvfrom、sendto-函数"><span class="nav-number">9.1.</span> <span class="nav-text">recvfrom、sendto 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dg-echo-函数"><span class="nav-number">9.2.</span> <span class="nav-text">dg_echo 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dg-cli-函数"><span class="nav-number">9.3.</span> <span class="nav-text">dg_cli 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证接收到的响应"><span class="nav-number">9.4.</span> <span class="nav-text">验证接收到的响应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connect-函数-1"><span class="nav-number">9.5.</span> <span class="nav-text">connect 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流量控制"><span class="nav-number">9.6.</span> <span class="nav-text">流量控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP、UDP-回射服务器程序"><span class="nav-number">9.7.</span> <span class="nav-text">TCP、UDP 回射服务器程序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第十一章"><span class="nav-number">10.</span> <span class="nav-text">第十一章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gethostbyname、gethostbyaddr-函数"><span class="nav-number">10.1.</span> <span class="nav-text">gethostbyname、gethostbyaddr 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getservbyname、getservbyport-函数"><span class="nav-number">10.2.</span> <span class="nav-text">getservbyname、getservbyport 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getaddrinfo-函数"><span class="nav-number">10.3.</span> <span class="nav-text">getaddrinfo 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#习题-4"><span class="nav-number">10.4.</span> <span class="nav-text">习题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xingkang</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        <span>0%</span>
+      </div>
+
+    
+
+  </div>
+
+  
+    
+    
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script defer src="//cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/three.min.js"></script>
+  <script defer src="//cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/three-waves.min.js"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
+
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'sRNVqcnF35U8nhpCJgDOwolP-gzGzoHsz',
+    appKey: 'XhlTNU47NOUz6faJnfb6bfxJ',
+    placeholder: '发表点什么吧^-^',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+
+
+
+</body>
+
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+
