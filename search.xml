@@ -266,78 +266,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Computer Network</title>
-    <url>/2019/08/25/Computer-Network/</url>
-    <content><![CDATA[<p>Three handshake and four waves between the server and the client.</p>
-<a id="more"></a>
-<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><h3 id="第一次握手"><a href="#第一次握手" class="headerlink" title="第一次握手"></a>第一次握手</h3><ul>
-<li>客户端处于closed状态，服务器处于listen状态。此时由客户端发送SYN报文，并确认自己的初始化序列号ISN，之后客户端处于SYN-send状态。</li>
-<li>SYN： 同步序列编号(Synchronize Sequence Numbers)</li>
-</ul>
-<h3 id="第二次握手"><a href="#第二次握手" class="headerlink" title="第二次握手"></a>第二次握手</h3><ul>
-<li>服务器接受到报文后，将自己的SYN作为应答，并指定了自己的序列号ISN，同时把客户端序列号+1作为ACK的值发送，之后服务器处于SYN-received状态。</li>
-</ul>
-<p><img src="/pictrues/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" alt="三次握手"></p>
-<h3 id="第三次握手"><a href="#第三次握手" class="headerlink" title="第三次握手"></a>第三次握手</h3><ul>
-<li>客户端接受到SYN报文后，会发送ACK报文，当然，也是一样把服务器的 ISN + 1 作为 ACK 的值，表示已经收到了服务端的 SYN 报文，此时客户端处于 establised 状态。</li>
-<li>服务器收到 ACK 报文之后，也处于 establised 状态，此时，双方已建立起了链接。</li>
-</ul>
-<h3 id="三次握手的作用"><a href="#三次握手的作用" class="headerlink" title="三次握手的作用"></a>三次握手的作用</h3><ul>
-<li>确认双方的接受能力、发送能力是否正常。</li>
-<li>指定自己的初始化序列号，为后面的可靠传送做准备。</li>
-<li>对于 HTTPS 协议，三次握手这个过程，会进行数字证书的验证以及加密密钥的生成。</li>
-</ul>
-<hr>
-<hr>
-<p><strong><em>注意事项</em></strong></p>
-<pre><code>1.ISN不是固定的
-    ISN的作用是让对方知道接下来接收数据的时候如何按序列号组装数据。
-    如果 ISN 是固定的，攻击者很容易猜出后续的确认号，因此 ISN 是动态生成的。
-
-2.半连接队列
-    在第一次握手时，服务器收到客户端发来的报文，但两者还没有建立链接，服务器会把这种请求放入一个队
-    列里，这队列就叫半链接队列。
-
-3.携带数据
-    第三次握手可以携带数据，第一次和第二次不可以。
-    如果前两次可以携带数据，那么攻击者就会不停地发送SYN报文加大量垃圾数据给服务器，服务器就会不停地
-    分配资源来处理数据。
-    总而言之，资源是有限的。第三次客户端已经处于establised，对于客户端来说，服务器的接受、发送能力
-    都正常，所以可以携带数据。</code></pre><hr>
-<hr>
-<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p><img src="/pictrues/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="四次挥手"></p>
-<h3 id="第一次挥手"><a href="#第一次挥手" class="headerlink" title="第一次挥手"></a>第一次挥手</h3><ul>
-<li>刚开始双方都处于 establised 状态，假如是客户端先发起关闭请求</li>
-<li>客户端发送一个 FIN 报文，报文中会指定一个序列号。此时客户端处于 FIN_WAIT1 状态。</li>
-</ul>
-<h3 id="第二次挥手"><a href="#第二次挥手" class="headerlink" title="第二次挥手"></a>第二次挥手</h3><ul>
-<li>服务端收到 FIN 之后，将客户端的序列号值 +1 作为 ACK 报文发送，表明已经收到客户端的报文了，此时服务端处于 CLOSE_WAIT 状态。</li>
-</ul>
-<h3 id="第三次挥手"><a href="#第三次挥手" class="headerlink" title="第三次挥手"></a>第三次挥手</h3><ul>
-<li>如果服务端也想断开连接了，也会发给客户端FIN 报文，且指定一个序列号。此时服务端处于 LAST_ACK 的状态。</li>
-</ul>
-<h3 id="第四次挥手"><a href="#第四次挥手" class="headerlink" title="第四次挥手"></a>第四次挥手</h3><ul>
-<li>客户端收到 FIN 之后，一样发送一个 ACK 报文作为应答，且把服务端的序列号值 +1 作为自己 ACK 报文的序列号值，此时客户端处于 TIME_WAIT 状态。</li>
-<li>需要过一阵子以确保服务端收到自己的 ACK 报文之后才会进入 CLOSED 状态</li>
-<li>服务端收到 ACK 报文之后，就关闭连接，处于 CLOSED 状态。</li>
-</ul>
-<hr>
-<hr>
-<p><strong><em>注意事项</em></strong></p>
-<pre><code>第四次挥手时，客户端要等一段时间才会关闭链接，因为要确保服务器是否已经收到了我们的 ACK 报文，
-如果没有收到的话，服务器会重新发 FIN 报文给客户端，客户端再次收到 ACK 报文之后，就知道之前
-的 ACK 报文丢失了，然后再次发送 ACK 报文。
-
-至于 TIME_WAIT 持续的时间至少是一个报文的来回时间。过了这段时间没有再次收到 FIN 报文，则代
-表对方成功接收ACK 报文，此时处于 CLOSED 状态。</code></pre>]]></content>
-      <categories>
-        <category>Computer Network</category>
-      </categories>
-      <tags>
-        <tag>TCP/IP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Cpp Projects</title>
     <url>/2021/07/12/Cpp-Projects/</url>
     <content><![CDATA[<p>Learning C++ Projects Record!!</p>
@@ -827,6 +755,20 @@
 </ul>
 </li>
 </ul>
+<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><ul>
+<li>不占用控制终端。不随用户的注销而结束、退出。</li>
+</ul>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><ul>
+<li>fork 子进程， 父进程 exit</li>
+<li>子进程调用 <code>setsid()</code> 创建新会话，成为会长。进程组组长、子进程 pid</li>
+</ul>
+<h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><ul>
+<li>成 一系列 shell 命令，组织到一个文件中，统一运行。</li>
+<li>第一行： 指定解析器。  <code>#！/bin/bash   /bin/shell</code></li>
+<li><code>awk</code> 处理列、<code>sed</code> 处理行 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/bash</span></span><br><span class="line"></span><br><span class="line">userN=`whoami`</span><br><span class="line"></span><br><span class="line">mypid=`ps -u <span class="variable">$&#123;userN&#125;</span> | grep keymngserver | awk <span class="string">'&#123;print $1&#125;'</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="variable">$&#123;mypid&#125;</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"The process is not started."</span></span><br><span class="line">        <span class="built_in">exit</span> 1;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> -9 <span class="variable">$&#123;mypid&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"kill keymngserver successful"</span></span><br></pre></td></tr></table></figure>
+
 <hr>
 <h1 id="异步日志库"><a href="#异步日志库" class="headerlink" title="异步日志库"></a>异步日志库</h1><ul>
 <li><p>日志还是很重要的，上面这几个项目都用到了日志库</p>
@@ -924,6 +866,78 @@
       </categories>
       <tags>
         <tag>C++ Projects</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Computer Network</title>
+    <url>/2019/08/25/Computer-Network/</url>
+    <content><![CDATA[<p>Three handshake and four waves between the server and the client.</p>
+<a id="more"></a>
+<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><h3 id="第一次握手"><a href="#第一次握手" class="headerlink" title="第一次握手"></a>第一次握手</h3><ul>
+<li>客户端处于closed状态，服务器处于listen状态。此时由客户端发送SYN报文，并确认自己的初始化序列号ISN，之后客户端处于SYN-send状态。</li>
+<li>SYN： 同步序列编号(Synchronize Sequence Numbers)</li>
+</ul>
+<h3 id="第二次握手"><a href="#第二次握手" class="headerlink" title="第二次握手"></a>第二次握手</h3><ul>
+<li>服务器接受到报文后，将自己的SYN作为应答，并指定了自己的序列号ISN，同时把客户端序列号+1作为ACK的值发送，之后服务器处于SYN-received状态。</li>
+</ul>
+<p><img src="/pictrues/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" alt="三次握手"></p>
+<h3 id="第三次握手"><a href="#第三次握手" class="headerlink" title="第三次握手"></a>第三次握手</h3><ul>
+<li>客户端接受到SYN报文后，会发送ACK报文，当然，也是一样把服务器的 ISN + 1 作为 ACK 的值，表示已经收到了服务端的 SYN 报文，此时客户端处于 establised 状态。</li>
+<li>服务器收到 ACK 报文之后，也处于 establised 状态，此时，双方已建立起了链接。</li>
+</ul>
+<h3 id="三次握手的作用"><a href="#三次握手的作用" class="headerlink" title="三次握手的作用"></a>三次握手的作用</h3><ul>
+<li>确认双方的接受能力、发送能力是否正常。</li>
+<li>指定自己的初始化序列号，为后面的可靠传送做准备。</li>
+<li>对于 HTTPS 协议，三次握手这个过程，会进行数字证书的验证以及加密密钥的生成。</li>
+</ul>
+<hr>
+<hr>
+<p><strong><em>注意事项</em></strong></p>
+<pre><code>1.ISN不是固定的
+    ISN的作用是让对方知道接下来接收数据的时候如何按序列号组装数据。
+    如果 ISN 是固定的，攻击者很容易猜出后续的确认号，因此 ISN 是动态生成的。
+
+2.半连接队列
+    在第一次握手时，服务器收到客户端发来的报文，但两者还没有建立链接，服务器会把这种请求放入一个队
+    列里，这队列就叫半链接队列。
+
+3.携带数据
+    第三次握手可以携带数据，第一次和第二次不可以。
+    如果前两次可以携带数据，那么攻击者就会不停地发送SYN报文加大量垃圾数据给服务器，服务器就会不停地
+    分配资源来处理数据。
+    总而言之，资源是有限的。第三次客户端已经处于establised，对于客户端来说，服务器的接受、发送能力
+    都正常，所以可以携带数据。</code></pre><hr>
+<hr>
+<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p><img src="/pictrues/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="四次挥手"></p>
+<h3 id="第一次挥手"><a href="#第一次挥手" class="headerlink" title="第一次挥手"></a>第一次挥手</h3><ul>
+<li>刚开始双方都处于 establised 状态，假如是客户端先发起关闭请求</li>
+<li>客户端发送一个 FIN 报文，报文中会指定一个序列号。此时客户端处于 FIN_WAIT1 状态。</li>
+</ul>
+<h3 id="第二次挥手"><a href="#第二次挥手" class="headerlink" title="第二次挥手"></a>第二次挥手</h3><ul>
+<li>服务端收到 FIN 之后，将客户端的序列号值 +1 作为 ACK 报文发送，表明已经收到客户端的报文了，此时服务端处于 CLOSE_WAIT 状态。</li>
+</ul>
+<h3 id="第三次挥手"><a href="#第三次挥手" class="headerlink" title="第三次挥手"></a>第三次挥手</h3><ul>
+<li>如果服务端也想断开连接了，也会发给客户端FIN 报文，且指定一个序列号。此时服务端处于 LAST_ACK 的状态。</li>
+</ul>
+<h3 id="第四次挥手"><a href="#第四次挥手" class="headerlink" title="第四次挥手"></a>第四次挥手</h3><ul>
+<li>客户端收到 FIN 之后，一样发送一个 ACK 报文作为应答，且把服务端的序列号值 +1 作为自己 ACK 报文的序列号值，此时客户端处于 TIME_WAIT 状态。</li>
+<li>需要过一阵子以确保服务端收到自己的 ACK 报文之后才会进入 CLOSED 状态</li>
+<li>服务端收到 ACK 报文之后，就关闭连接，处于 CLOSED 状态。</li>
+</ul>
+<hr>
+<hr>
+<p><strong><em>注意事项</em></strong></p>
+<pre><code>第四次挥手时，客户端要等一段时间才会关闭链接，因为要确保服务器是否已经收到了我们的 ACK 报文，
+如果没有收到的话，服务器会重新发 FIN 报文给客户端，客户端再次收到 ACK 报文之后，就知道之前
+的 ACK 报文丢失了，然后再次发送 ACK 报文。
+
+至于 TIME_WAIT 持续的时间至少是一个报文的来回时间。过了这段时间没有再次收到 FIN 报文，则代
+表对方成功接收ACK 报文，此时处于 CLOSED 状态。</code></pre>]]></content>
+      <categories>
+        <category>Computer Network</category>
+      </categories>
+      <tags>
+        <tag>TCP/IP</tag>
       </tags>
   </entry>
   <entry>
@@ -1169,7 +1183,7 @@
 <ul>
 <li>安装 Hexo，<code>npm install hexo-cli -g</code> 默认安装到 C 盘</li>
 <li>新建文件夹，并运行 <code>hexo init</code> <strong>不要在备份的文件夹中使用</strong><ul>
-<li>替换默认的 _config.yml、theme/、source/、scaffolds/、packagejson、.gitignore</li>
+<li>替换默认的 _config.yml、themes/、source/、scaffolds/、packagejson、.gitignore</li>
 </ul>
 </li>
 <li>查看 hexo 版本 <code>hexo -v</code><ul>
@@ -1506,6 +1520,247 @@
       <tags>
         <tag>Python3</tag>
         <tag>TensorFlow</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Markdown</title>
+    <url>/2019/08/20/Markdown/</url>
+    <content><![CDATA[<p>How to use Markdown.</p>
+<a id="more"></a>
+
+<h2 id="修改实时预览字体"><a href="#修改实时预览字体" class="headerlink" title="修改实时预览字体"></a>修改实时预览字体</h2><blockquote>
+<p>Tools-Options-Stylesheets-Markdownpad github.css-edit</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  min-width: 32em;</span><br><span class="line">  max-width: 52em;</span><br><span class="line">  margin: 10px;</span><br><span class="line">  zoom:2; #第一个body即可</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;font  更改语法&gt;   你的内容   &lt;/font&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>具体用法</p>
+</blockquote>
+<ul>
+<li><font color="#00ffff">字体改成蓝色了</font><br><code>&lt;font color=#00ffff&gt;字体改成蓝色了&lt;/font&gt;</code></li>
+<li><font color="#FF0000">字体改成红色了</font><br><code>&lt;font color=#FF0000&gt;字体改成红色了&lt;/font&gt;</code></li>
+</ul>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">color=#0099ff   更改字体颜色</span><br><span class="line">face=&quot;黑体&quot;   更改字体</span><br><span class="line">size= 7     更改字体大小</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;黑体&quot;&gt;我是黑体字&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;微软雅黑&quot;&gt;我是微软雅黑&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;STCAIYUN&quot;&gt;我是华文彩云&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=#0099ff size=5 face=&quot;黑体&quot;&gt;color=#0099ff size=5 face=&quot;黑体&quot;&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=#00ffff size=5&gt;color=#00ffff&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=gray size=5&gt;color=gray&lt;/font&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><pre><code># 一级标题</code></pre><h2 id="二级"><a href="#二级" class="headerlink" title="二级"></a>二级</h2><pre><code>## 二级</code></pre><h3 id="三级"><a href="#三级" class="headerlink" title="三级"></a>三级</h3><pre><code>### 三级</code></pre><ul>
+<li>列表</li>
+<li>列表</li>
+</ul>
+<h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![图片名字](图片地址 &quot;图片title&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1.png" alt="卡哇伊" title="卡哇伊"></p>
+<p><img src="/images/5.jpg" alt="四月是你的谎言" title="四月是你的谎言"></p>
+<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><hr>
+<hr>
+<h2 id="斜字体"><a href="#斜字体" class="headerlink" title="斜字体"></a><em>斜字体</em></h2><pre><code>*xingkong*</code></pre><h2 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a><strong>加粗</strong></h2><pre><code>**xingkong**</code></pre><h2 id="加粗斜体"><a href="#加粗斜体" class="headerlink" title="加粗斜体"></a><strong><em>加粗斜体</em></strong></h2><pre><code>***xingkong***</code></pre><h2 id="加删除线"><a href="#加删除线" class="headerlink" title="加删除线"></a><del>加删除线</del></h2><pre><code>~~xingkong~~</code></pre><h2 id="插入单行代码"><a href="#插入单行代码" class="headerlink" title="插入单行代码"></a>插入单行代码</h2><p><code>import *</code></p>
+<h2 id="插入多行代码"><a href="#插入多行代码" class="headerlink" title="插入多行代码"></a>插入多行代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><pre><code>&gt;</code></pre><blockquote>
+<p>引用内容</p>
+<blockquote>
+<p>2333</p>
+<blockquote>
+<p>66666</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p><a href="https://space.bilibili.com/34033362">bilibili</a></p>
+<pre><code>[超链接名](超链接地址 &quot;超链接title&quot;)  </code></pre><h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2><pre><code>1.列表内容
+    二级
+2.列表内容
+    二级
+3.列表内容
+    二级</code></pre><h2 id="列表嵌套"><a href="#列表嵌套" class="headerlink" title="列表嵌套"></a>列表嵌套</h2><pre><code>上一级和下一级之间敲四个空格即可</code></pre><h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><pre><code>姓名|技能|排行
+--|:--:|--:
+刘备|哭|大哥</code></pre><table>
+<thead>
+<tr>
+<th>姓名</th>
+<th align="center">技能</th>
+<th align="right">排行</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>刘备</td>
+<td align="center">哭</td>
+<td align="right">大哥</td>
+</tr>
+<tr>
+<td>关羽</td>
+<td align="center">打</td>
+<td align="right">二哥</td>
+</tr>
+<tr>
+<td>张飞</td>
+<td align="center">骂</td>
+<td align="right">三弟</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>介绍</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Preference</title>
+    <url>/2019/08/20/Preference/</url>
+    <content><![CDATA[<p>Hexo Personalization</p>
+<a id="more"></a>
+
+<h1 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h1><ul>
+<li>\themes\next\ _config.yml</li>
+</ul>
+<h2 id="首页设置阅读全文"><a href="#首页设置阅读全文" class="headerlink" title="首页设置阅读全文"></a>首页设置阅读全文</h2><ul>
+<li>法一：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto_excerpt（未成功）</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>法二：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- more --&gt;写在文章里</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加评论功能"><a href="#添加评论功能" class="headerlink" title="添加评论功能"></a>添加评论功能</h2><p>More info: <a href="https://leancloud.cn/dashboard/applist.html#/apps" target="_blank" rel="noopener">LeanCloud</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">valine</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置网站图标"><a href="#设置网站图标" class="headerlink" title="设置网站图标"></a>设置网站图标</h2><ul>
+<li><p><em>图片分16 16、32 32</em></p>
+</li>
+<li><p><a href="https://www.easyicon.net/1149904-house_icon.html" target="_blank" rel="noopener">house</a>                </p>
+</li>
+<li><p><a href="https://www.easyicon.net/1192949-house_icon.html" target="_blank" rel="noopener">houselove</a></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">favicon</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加主题背景"><a href="#添加主题背景" class="headerlink" title="添加主题背景"></a>添加主题背景</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">canvas</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问数、记录"><a href="#访问数、记录" class="headerlink" title="访问数、记录"></a>访问数、记录</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">busuanzi_count</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加加载效果"><a href="#添加加载效果" class="headerlink" title="添加加载效果"></a>添加加载效果</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pace</span><br></pre></td></tr></table></figure>
+
+<h2 id="开启订阅公众号"><a href="#开启订阅公众号" class="headerlink" title="开启订阅公众号"></a>开启订阅公众号</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wechat</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置打赏"><a href="#设置打赏" class="headerlink" title="设置打赏"></a>设置打赏</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reward</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建社交链接"><a href="#创建社交链接" class="headerlink" title="创建社交链接"></a>创建社交链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">social</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">avatar</span><br></pre></td></tr></table></figure>
+
+<h2 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">blog rolls (  links   )</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<ul>
+<li>_config.yml</li>
+</ul>
+<h2 id="文档加密"><a href="#文档加密" class="headerlink" title="文档加密"></a>文档加密</h2><ul>
+<li>安装encrypt</li>
+<li><code>npm install --save hexo-blog-encrypt</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Security</span><br><span class="line">encrypt: # hexo-blog-encrypt</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置网站名字"><a href="#设置网站名字" class="headerlink" title="设置网站名字"></a>设置网站名字</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置主题"><a href="#设置主题" class="headerlink" title="设置主题"></a>设置主题</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">theme</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line"></span><br><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br><span class="line"></span><br><span class="line">local_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<ul>
+<li>\themes\next\source\css_common\components\sidebar\sidebar-author.styl</li>
+</ul>
+<h2 id="设置头像为圆形可旋转"><a href="#设置头像为圆形可旋转" class="headerlink" title="设置头像为圆形可旋转"></a>设置头像为圆形可旋转</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">border-radius: 50%;</span><br><span class="line">transition: 2s all;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.site-author-image:hover&#123;</span><br><span class="line">  transform: rotate(360deg)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>\themes\next\layout_layout.swig</li>
+</ul>
+<h2 id="右上角添加github图标"><a href="#右上角添加github图标" class="headerlink" title="右上角添加github图标"></a>右上角添加github图标</h2><ul>
+<li>More info: <a href="http://tholman.com/github-corners" target="_blank" rel="noopener">github图标</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div class=&quot;headband&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<ul>
+<li>\themes\next\source\css_common\components\post\post.styl</li>
+</ul>
+<h2 id="设置文章内链接样式"><a href="#设置文章内链接样式" class="headerlink" title="设置文章内链接样式"></a>设置文章内链接样式</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.post-body p a&#123;</span><br><span class="line">  color: #345;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  &amp;:hover&#123;</span><br><span class="line">    color: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<ul>
+<li>\themes\next\layout_macro\post.swig</li>
+</ul>
+<h2 id="带-号的标签"><a href="#带-号的标签" class="headerlink" title="带#号的标签"></a>带#号的标签</h2><p>More info: <a href="https://fontawesome.com/v4.7.0/icons" target="_blank" rel="noopener">图标网址</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(tag.path) &#125;&#125;&quot; rel=&quot;tag&quot;&gt; &#123;&#123; tag_indicate &#125;&#125; &#123;&#123; tag.name &#125;&#125;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;a href=&quot;&#123;&#123; url_for(tag.path) &#125;&#125;&quot; rel=&quot;tag&quot;&gt; &lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt; &#123;&#123; tag.name &#125;&#125;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;a href=&quot;&#123;&#123; url_for(tag.path) &#125;&#125;&quot; rel=&quot;tag&quot;&gt; &lt;i class=&quot;fa fa-location-arrow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; &#123;&#123; tag.name &#125;&#125;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>\themes\next\layout_partials\footer.swig</li>
+</ul>
+<h2 id="隐藏强力驱动"><a href="#隐藏强力驱动" class="headerlink" title="隐藏强力驱动"></a>隐藏强力驱动</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!--&#123;%- if theme.footer.powered.enable %&#125;</span><br><span class="line">  &lt;div class=&quot;powered-by&quot;&gt;&#123;#</span><br><span class="line">  #&#125;&#123;&#123; __(&apos;footer.powered&apos;, next_url(&apos;https://hexo.io&apos;, &apos;Hexo&apos;, &#123;class: &apos;theme-link&apos;&#125;)) &#125;&#125;&#123;#</span><br><span class="line">  #&#125;&#123;%- if theme.footer.powered.version %&#125; v&#123;&#123; hexo_env(&apos;version&apos;) &#125;&#125;&#123;%- endif %&#125;&#123;#</span><br><span class="line"> #&#125;&lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;%- if theme.footer.powered.enable and theme.footer.theme.enable %&#125;</span><br><span class="line">  &lt;span class=&quot;post-meta-divider&quot;&gt;|&lt;/span&gt;</span><br><span class="line">&#123;%- endif %&#125;--&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="字数统计和阅读时长"><a href="#字数统计和阅读时长" class="headerlink" title="字数统计和阅读时长"></a>字数统计和阅读时长</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-wordcount --save</span><br><span class="line"></span><br><span class="line">countword</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<ul>
+<li>\themes\next\layout_macro\新建文件passage-end-tag.swig</li>
+</ul>
+<h2 id="在每篇文章末尾统一添加“本文结束”标记"><a href="#在每篇文章末尾统一添加“本文结束”标记" class="headerlink" title="在每篇文章末尾统一添加“本文结束”标记"></a>在每篇文章末尾统一添加“本文结束”标记</h2><ul>
+<li>More info: <a href="https://fontawesome.com/v4.7.0/icons" target="_blank" rel="noopener">图标网址</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &#123;% if not is_index %&#125;</span><br><span class="line">        &lt;div style=&quot;text-align:center;color: #ccc;font-size:14px;&quot;&gt;本文结束&lt;i class=&quot;fa fa-hand-peace-o&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/i&gt;&lt;/div&gt;</span><br><span class="line">    &#123;% endif %&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>\themes\next\layout_macro\post.swig</li>
+<li>在post-body 之后， post-footer 之前添加如下代码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;% if not is_index %&#125;</span><br><span class="line">    &#123;% include &apos;passage-end-tag.swig&apos; %&#125;</span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<ul>
+<li>\themes\next\source\css_custom\custom.styl</li>
+</ul>
+<h2 id="自定义鼠标样式（0-0）"><a href="#自定义鼠标样式（0-0）" class="headerlink" title="自定义鼠标样式（0.0）"></a>自定义鼠标样式（0.0）</h2><ul>
+<li><a href="https://www.lixint.me/hexo-theme-diy.html" target="_blank" rel="noopener">个性设置</a></li>
+<li><em>图片分16 16、32 32</em></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">     cursor: url(&quot;/images/xxx.ico&quot;),auto!important</span><br><span class="line"> &#125;</span><br><span class="line"> :active &#123;</span><br><span class="line">     cursor: url(&quot;/images/xxx.ico&quot;),auto!important</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<ul>
+<li>\themes\next\source\js\新建文件clicklove.js</li>
+<li>\themes\next\layout_layout.swig</li>
+</ul>
+<h2 id="鼠标点击出现桃心"><a href="#鼠标点击出现桃心" class="headerlink" title="鼠标点击出现桃心"></a>鼠标点击出现桃心</h2><ul>
+<li>rgb是255位，本博客改为（0，0，0） </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">!function(e,t,a)&#123;function n()&#123;c(&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &apos;&apos;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;),o(),r()&#125;function r()&#123;for(var e=0;e&lt;d.length;e++)d[e].alpha&lt;=0?(t.body.removeChild(d[e].el),d.splice(e,1)):(d[e].y--,d[e].scale+=.004,d[e].alpha-=.013,d[e].el.style.cssText=&quot;left:&quot;+d[e].x+&quot;px;top:&quot;+d[e].y+&quot;px;opacity:&quot;+d[e].alpha+&quot;;transform:scale(&quot;+d[e].scale+&quot;,&quot;+d[e].scale+&quot;) rotate(45deg);background:&quot;+d[e].color+&quot;;z-index:99999&quot;);requestAnimationFrame(r)&#125;function o()&#123;var t=&quot;function&quot;==typeof e.onclick&amp;&amp;e.onclick;e.onclick=function(e)&#123;t&amp;&amp;t(),i(e)&#125;&#125;function i(e)&#123;var a=t.createElement(&quot;div&quot;);a.className=&quot;heart&quot;,d.push(&#123;el:a,x:e.clientX-5,y:e.clientY-5,scale:1,alpha:1,color:s()&#125;),t.body.appendChild(a)&#125;function c(e)&#123;var a=t.createElement(&quot;style&quot;);a.type=&quot;text/css&quot;;try&#123;a.appendChild(t.createTextNode(e))&#125;catch(t)&#123;a.styleSheet.cssText=e&#125;t.getElementsByTagName(&quot;head&quot;)[0].appendChild(a)&#125;function s()&#123;return&quot;rgb(&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;)&quot;&#125;var d=[];e.requestAnimationFrame=function()&#123;return e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||function(e)&#123;setTimeout(e,1e3/60)&#125;&#125;(),n()&#125;(window,document);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 页面点击小红心 --&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/clicklove.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="萌萌的（todo）"><a href="#萌萌的（todo）" class="headerlink" title="萌萌的（todo）"></a>萌萌的（todo）</h2><ul>
+<li><a href="https://www.lixint.me/hexo-theme-diy.html#%E7%BD%91%E7%AB%99%E6%A0%87%E9%A2%98%E6%A0%8F%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2" target="_blank" rel="noopener">模型</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>介绍</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>主题</tag>
+        <tag>个性化</tag>
       </tags>
   </entry>
   <entry>
@@ -3032,25 +3287,18 @@
 <p>TODO</p>
 </blockquote>
 <h3 id="mkcert"><a href="#mkcert" class="headerlink" title="mkcert"></a>mkcert</h3><ul>
-<li><p>上面视频里给出方法暂时没有成功</p>
-<ul>
-<li>接下来用下我朋友（欣）提到的这个工具</li>
-</ul>
-</li>
-<li><p><a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener">mkcert 源码链接</a></p>
-<ul>
+<li>上面视频里给出方法暂时没有成功</li>
+<li><a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener">mkcert 源码链接</a><ul>
 <li>Go 语言写的</li>
 <li>不建议在本地使用签名证书，会导致信任错误，而是应该生成本地信任的证书……这话怎么有点绕呢</li>
 </ul>
 </li>
-<li><p>系统配置</p>
-<ul>
+<li>系统配置<ul>
 <li>Go 1.13+（不过下面好像没有用到）、root</li>
 <li>证书数据库工具（Certutil）</li>
 </ul>
 </li>
-<li><p>按照下面来一步一步安装</p>
-</li>
+<li>按照下面来一步一步安装</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 更新安装工具</span><br><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line"># 首先安装证书数据库工具 Certutil （有多个方法，这里只写第一个）</span><br><span class="line">sudo apt install libnss3-tools</span><br><span class="line"></span><br><span class="line"># 使用 Linuxbrew 进行安装 mkcert 时，报错找不到 brew 命令（要不安装下？）</span><br><span class="line"># 下面这行代码可以成功，下载的二进制文件</span><br><span class="line">export VER=&quot;v1.3.0&quot; &amp;&amp; wget -O mkcert https://github.com/FiloSottile/mkcert/releases/download/$&#123;VER&#125;/mkcert-$&#123;VER&#125;-linux-amd64</span><br><span class="line"></span><br><span class="line"># 之后给 mkcert 增加可执行权限，并且放置在全局变量文件夹中</span><br><span class="line">chmod +x  mkcert</span><br><span class="line">sudo mv mkcert /usr/local/bin</span><br></pre></td></tr></table></figure>
 
@@ -3190,265 +3438,6 @@
       <tags>
         <tag>Linux</tag>
         <tag>Ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Markdown</title>
-    <url>/2019/08/20/Markdown/</url>
-    <content><![CDATA[<p>How to use Markdown.</p>
-<a id="more"></a>
-
-<h2 id="修改实时预览字体"><a href="#修改实时预览字体" class="headerlink" title="修改实时预览字体"></a>修改实时预览字体</h2><blockquote>
-<p>Tools-Options-Stylesheets-Markdownpad github.css-edit</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  min-width: 32em;</span><br><span class="line">  max-width: 52em;</span><br><span class="line">  margin: 10px;</span><br><span class="line">  zoom:2; #第一个body即可</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;font  更改语法&gt;   你的内容   &lt;/font&gt;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>具体用法</p>
-</blockquote>
-<ul>
-<li><font color="#00ffff">字体改成蓝色了</font><br><code>&lt;font color=#00ffff&gt;字体改成蓝色了&lt;/font&gt;</code></li>
-<li><font color="#FF0000">字体改成红色了</font><br><code>&lt;font color=#FF0000&gt;字体改成红色了&lt;/font&gt;</code></li>
-</ul>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">color=#0099ff   更改字体颜色</span><br><span class="line">face=&quot;黑体&quot;   更改字体</span><br><span class="line">size= 7     更改字体大小</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;黑体&quot;&gt;我是黑体字&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;微软雅黑&quot;&gt;我是微软雅黑&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;STCAIYUN&quot;&gt;我是华文彩云&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=#0099ff size=5 face=&quot;黑体&quot;&gt;color=#0099ff size=5 face=&quot;黑体&quot;&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=#00ffff size=5&gt;color=#00ffff&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=gray size=5&gt;color=gray&lt;/font&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><pre><code># 一级标题</code></pre><h2 id="二级"><a href="#二级" class="headerlink" title="二级"></a>二级</h2><pre><code>## 二级</code></pre><h3 id="三级"><a href="#三级" class="headerlink" title="三级"></a>三级</h3><pre><code>### 三级</code></pre><ul>
-<li>列表</li>
-<li>列表</li>
-</ul>
-<h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![图片名字](图片地址 &quot;图片title&quot;)</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1.png" alt="卡哇伊" title="卡哇伊"></p>
-<p><img src="/images/5.jpg" alt="四月是你的谎言" title="四月是你的谎言"></p>
-<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><hr>
-<hr>
-<h2 id="斜字体"><a href="#斜字体" class="headerlink" title="斜字体"></a><em>斜字体</em></h2><pre><code>*xingkong*</code></pre><h2 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a><strong>加粗</strong></h2><pre><code>**xingkong**</code></pre><h2 id="加粗斜体"><a href="#加粗斜体" class="headerlink" title="加粗斜体"></a><strong><em>加粗斜体</em></strong></h2><pre><code>***xingkong***</code></pre><h2 id="加删除线"><a href="#加删除线" class="headerlink" title="加删除线"></a><del>加删除线</del></h2><pre><code>~~xingkong~~</code></pre><h2 id="插入单行代码"><a href="#插入单行代码" class="headerlink" title="插入单行代码"></a>插入单行代码</h2><p><code>import *</code></p>
-<h2 id="插入多行代码"><a href="#插入多行代码" class="headerlink" title="插入多行代码"></a>插入多行代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><pre><code>&gt;</code></pre><blockquote>
-<p>引用内容</p>
-<blockquote>
-<p>2333</p>
-<blockquote>
-<p>66666</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p><a href="https://space.bilibili.com/34033362">bilibili</a></p>
-<pre><code>[超链接名](超链接地址 &quot;超链接title&quot;)  </code></pre><h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2><pre><code>1.列表内容
-    二级
-2.列表内容
-    二级
-3.列表内容
-    二级</code></pre><h2 id="列表嵌套"><a href="#列表嵌套" class="headerlink" title="列表嵌套"></a>列表嵌套</h2><pre><code>上一级和下一级之间敲四个空格即可</code></pre><h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><pre><code>姓名|技能|排行
---|:--:|--:
-刘备|哭|大哥</code></pre><table>
-<thead>
-<tr>
-<th>姓名</th>
-<th align="center">技能</th>
-<th align="right">排行</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>刘备</td>
-<td align="center">哭</td>
-<td align="right">大哥</td>
-</tr>
-<tr>
-<td>关羽</td>
-<td align="center">打</td>
-<td align="right">二哥</td>
-</tr>
-<tr>
-<td>张飞</td>
-<td align="center">骂</td>
-<td align="right">三弟</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>介绍</category>
-      </categories>
-      <tags>
-        <tag>Markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2022/01/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Preference</title>
-    <url>/2019/08/20/Preference/</url>
-    <content><![CDATA[<p>Hexo Personalization</p>
-<a id="more"></a>
-
-<h1 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h1><ul>
-<li>\themes\next\ _config.yml</li>
-</ul>
-<h2 id="首页设置阅读全文"><a href="#首页设置阅读全文" class="headerlink" title="首页设置阅读全文"></a>首页设置阅读全文</h2><ul>
-<li>法一：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto_excerpt（未成功）</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>法二：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- more --&gt;写在文章里</span><br></pre></td></tr></table></figure>
-
-<h2 id="添加评论功能"><a href="#添加评论功能" class="headerlink" title="添加评论功能"></a>添加评论功能</h2><p>More info: <a href="https://leancloud.cn/dashboard/applist.html#/apps" target="_blank" rel="noopener">LeanCloud</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">valine</span><br></pre></td></tr></table></figure>
-
-<h2 id="设置网站图标"><a href="#设置网站图标" class="headerlink" title="设置网站图标"></a>设置网站图标</h2><ul>
-<li><p><em>图片分16 16、32 32</em></p>
-</li>
-<li><p><a href="https://www.easyicon.net/1149904-house_icon.html" target="_blank" rel="noopener">house</a>                </p>
-</li>
-<li><p><a href="https://www.easyicon.net/1192949-house_icon.html" target="_blank" rel="noopener">houselove</a></p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">favicon</span><br></pre></td></tr></table></figure>
-
-<h2 id="添加主题背景"><a href="#添加主题背景" class="headerlink" title="添加主题背景"></a>添加主题背景</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">canvas</span><br></pre></td></tr></table></figure>
-
-<h2 id="访问数、记录"><a href="#访问数、记录" class="headerlink" title="访问数、记录"></a>访问数、记录</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">busuanzi_count</span><br></pre></td></tr></table></figure>
-
-<h2 id="添加加载效果"><a href="#添加加载效果" class="headerlink" title="添加加载效果"></a>添加加载效果</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pace</span><br></pre></td></tr></table></figure>
-
-<h2 id="开启订阅公众号"><a href="#开启订阅公众号" class="headerlink" title="开启订阅公众号"></a>开启订阅公众号</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wechat</span><br></pre></td></tr></table></figure>
-
-<h2 id="设置打赏"><a href="#设置打赏" class="headerlink" title="设置打赏"></a>设置打赏</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reward</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建社交链接"><a href="#创建社交链接" class="headerlink" title="创建社交链接"></a>创建社交链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">social</span><br></pre></td></tr></table></figure>
-
-<h2 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">avatar</span><br></pre></td></tr></table></figure>
-
-<h2 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">blog rolls (  links   )</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<ul>
-<li>_config.yml</li>
-</ul>
-<h2 id="文档加密"><a href="#文档加密" class="headerlink" title="文档加密"></a>文档加密</h2><ul>
-<li>安装encrypt</li>
-<li><code>npm install --save hexo-blog-encrypt</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Security</span><br><span class="line">encrypt: # hexo-blog-encrypt</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
-
-<h2 id="设置网站名字"><a href="#设置网站名字" class="headerlink" title="设置网站名字"></a>设置网站名字</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title</span><br></pre></td></tr></table></figure>
-
-<h2 id="设置主题"><a href="#设置主题" class="headerlink" title="设置主题"></a>设置主题</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">theme</span><br></pre></td></tr></table></figure>
-
-<h2 id="添加搜索功能"><a href="#添加搜索功能" class="headerlink" title="添加搜索功能"></a>添加搜索功能</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line"></span><br><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br><span class="line"></span><br><span class="line">local_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<ul>
-<li>\themes\next\source\css_common\components\sidebar\sidebar-author.styl</li>
-</ul>
-<h2 id="设置头像为圆形可旋转"><a href="#设置头像为圆形可旋转" class="headerlink" title="设置头像为圆形可旋转"></a>设置头像为圆形可旋转</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">border-radius: 50%;</span><br><span class="line">transition: 2s all;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.site-author-image:hover&#123;</span><br><span class="line">  transform: rotate(360deg)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>\themes\next\layout_layout.swig</li>
-</ul>
-<h2 id="右上角添加github图标"><a href="#右上角添加github图标" class="headerlink" title="右上角添加github图标"></a>右上角添加github图标</h2><ul>
-<li>More info: <a href="http://tholman.com/github-corners" target="_blank" rel="noopener">github图标</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div class=&quot;headband&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<ul>
-<li>\themes\next\source\css_common\components\post\post.styl</li>
-</ul>
-<h2 id="设置文章内链接样式"><a href="#设置文章内链接样式" class="headerlink" title="设置文章内链接样式"></a>设置文章内链接样式</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.post-body p a&#123;</span><br><span class="line">  color: #345;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  &amp;:hover&#123;</span><br><span class="line">    color: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<ul>
-<li>\themes\next\layout_macro\post.swig</li>
-</ul>
-<h2 id="带-号的标签"><a href="#带-号的标签" class="headerlink" title="带#号的标签"></a>带#号的标签</h2><p>More info: <a href="https://fontawesome.com/v4.7.0/icons" target="_blank" rel="noopener">图标网址</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(tag.path) &#125;&#125;&quot; rel=&quot;tag&quot;&gt; &#123;&#123; tag_indicate &#125;&#125; &#123;&#123; tag.name &#125;&#125;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;a href=&quot;&#123;&#123; url_for(tag.path) &#125;&#125;&quot; rel=&quot;tag&quot;&gt; &lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt; &#123;&#123; tag.name &#125;&#125;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;a href=&quot;&#123;&#123; url_for(tag.path) &#125;&#125;&quot; rel=&quot;tag&quot;&gt; &lt;i class=&quot;fa fa-location-arrow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; &#123;&#123; tag.name &#125;&#125;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>\themes\next\layout_partials\footer.swig</li>
-</ul>
-<h2 id="隐藏强力驱动"><a href="#隐藏强力驱动" class="headerlink" title="隐藏强力驱动"></a>隐藏强力驱动</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!--&#123;%- if theme.footer.powered.enable %&#125;</span><br><span class="line">  &lt;div class=&quot;powered-by&quot;&gt;&#123;#</span><br><span class="line">  #&#125;&#123;&#123; __(&apos;footer.powered&apos;, next_url(&apos;https://hexo.io&apos;, &apos;Hexo&apos;, &#123;class: &apos;theme-link&apos;&#125;)) &#125;&#125;&#123;#</span><br><span class="line">  #&#125;&#123;%- if theme.footer.powered.version %&#125; v&#123;&#123; hexo_env(&apos;version&apos;) &#125;&#125;&#123;%- endif %&#125;&#123;#</span><br><span class="line"> #&#125;&lt;/div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;%- if theme.footer.powered.enable and theme.footer.theme.enable %&#125;</span><br><span class="line">  &lt;span class=&quot;post-meta-divider&quot;&gt;|&lt;/span&gt;</span><br><span class="line">&#123;%- endif %&#125;--&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="字数统计和阅读时长"><a href="#字数统计和阅读时长" class="headerlink" title="字数统计和阅读时长"></a>字数统计和阅读时长</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-wordcount --save</span><br><span class="line"></span><br><span class="line">countword</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<ul>
-<li>\themes\next\layout_macro\新建文件passage-end-tag.swig</li>
-</ul>
-<h2 id="在每篇文章末尾统一添加“本文结束”标记"><a href="#在每篇文章末尾统一添加“本文结束”标记" class="headerlink" title="在每篇文章末尾统一添加“本文结束”标记"></a>在每篇文章末尾统一添加“本文结束”标记</h2><ul>
-<li>More info: <a href="https://fontawesome.com/v4.7.0/icons" target="_blank" rel="noopener">图标网址</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &#123;% if not is_index %&#125;</span><br><span class="line">        &lt;div style=&quot;text-align:center;color: #ccc;font-size:14px;&quot;&gt;本文结束&lt;i class=&quot;fa fa-hand-peace-o&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/i&gt;&lt;/div&gt;</span><br><span class="line">    &#123;% endif %&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>\themes\next\layout_macro\post.swig</li>
-<li>在post-body 之后， post-footer 之前添加如下代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;% if not is_index %&#125;</span><br><span class="line">    &#123;% include &apos;passage-end-tag.swig&apos; %&#125;</span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<ul>
-<li>\themes\next\source\css_custom\custom.styl</li>
-</ul>
-<h2 id="自定义鼠标样式（0-0）"><a href="#自定义鼠标样式（0-0）" class="headerlink" title="自定义鼠标样式（0.0）"></a>自定义鼠标样式（0.0）</h2><ul>
-<li><a href="https://www.lixint.me/hexo-theme-diy.html" target="_blank" rel="noopener">个性设置</a></li>
-<li><em>图片分16 16、32 32</em></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">     cursor: url(&quot;/images/xxx.ico&quot;),auto!important</span><br><span class="line"> &#125;</span><br><span class="line"> :active &#123;</span><br><span class="line">     cursor: url(&quot;/images/xxx.ico&quot;),auto!important</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<hr>
-<ul>
-<li>\themes\next\source\js\新建文件clicklove.js</li>
-<li>\themes\next\layout_layout.swig</li>
-</ul>
-<h2 id="鼠标点击出现桃心"><a href="#鼠标点击出现桃心" class="headerlink" title="鼠标点击出现桃心"></a>鼠标点击出现桃心</h2><ul>
-<li>rgb是255位，本博客改为（0，0，0） </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">!function(e,t,a)&#123;function n()&#123;c(&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &apos;&apos;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;),o(),r()&#125;function r()&#123;for(var e=0;e&lt;d.length;e++)d[e].alpha&lt;=0?(t.body.removeChild(d[e].el),d.splice(e,1)):(d[e].y--,d[e].scale+=.004,d[e].alpha-=.013,d[e].el.style.cssText=&quot;left:&quot;+d[e].x+&quot;px;top:&quot;+d[e].y+&quot;px;opacity:&quot;+d[e].alpha+&quot;;transform:scale(&quot;+d[e].scale+&quot;,&quot;+d[e].scale+&quot;) rotate(45deg);background:&quot;+d[e].color+&quot;;z-index:99999&quot;);requestAnimationFrame(r)&#125;function o()&#123;var t=&quot;function&quot;==typeof e.onclick&amp;&amp;e.onclick;e.onclick=function(e)&#123;t&amp;&amp;t(),i(e)&#125;&#125;function i(e)&#123;var a=t.createElement(&quot;div&quot;);a.className=&quot;heart&quot;,d.push(&#123;el:a,x:e.clientX-5,y:e.clientY-5,scale:1,alpha:1,color:s()&#125;),t.body.appendChild(a)&#125;function c(e)&#123;var a=t.createElement(&quot;style&quot;);a.type=&quot;text/css&quot;;try&#123;a.appendChild(t.createTextNode(e))&#125;catch(t)&#123;a.styleSheet.cssText=e&#125;t.getElementsByTagName(&quot;head&quot;)[0].appendChild(a)&#125;function s()&#123;return&quot;rgb(&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;)&quot;&#125;var d=[];e.requestAnimationFrame=function()&#123;return e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||function(e)&#123;setTimeout(e,1e3/60)&#125;&#125;(),n()&#125;(window,document);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- 页面点击小红心 --&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;/js/clicklove.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="萌萌的（todo）"><a href="#萌萌的（todo）" class="headerlink" title="萌萌的（todo）"></a>萌萌的（todo）</h2><ul>
-<li><a href="https://www.lixint.me/hexo-theme-diy.html#%E7%BD%91%E7%AB%99%E6%A0%87%E9%A2%98%E6%A0%8F%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2" target="_blank" rel="noopener">模型</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>介绍</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>主题</tag>
-        <tag>个性化</tag>
       </tags>
   </entry>
   <entry>
