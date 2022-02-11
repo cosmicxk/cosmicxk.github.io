@@ -266,6 +266,78 @@
       </tags>
   </entry>
   <entry>
+    <title>Computer Network</title>
+    <url>/2019/08/25/Computer-Network/</url>
+    <content><![CDATA[<p>Three handshake and four waves between the server and the client.</p>
+<a id="more"></a>
+<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><h3 id="第一次握手"><a href="#第一次握手" class="headerlink" title="第一次握手"></a>第一次握手</h3><ul>
+<li>客户端处于closed状态，服务器处于listen状态。此时由客户端发送SYN报文，并确认自己的初始化序列号ISN，之后客户端处于SYN-send状态。</li>
+<li>SYN： 同步序列编号(Synchronize Sequence Numbers)</li>
+</ul>
+<h3 id="第二次握手"><a href="#第二次握手" class="headerlink" title="第二次握手"></a>第二次握手</h3><ul>
+<li>服务器接受到报文后，将自己的SYN作为应答，并指定了自己的序列号ISN，同时把客户端序列号+1作为ACK的值发送，之后服务器处于SYN-received状态。</li>
+</ul>
+<p><img src="/pictrues/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" alt="三次握手"></p>
+<h3 id="第三次握手"><a href="#第三次握手" class="headerlink" title="第三次握手"></a>第三次握手</h3><ul>
+<li>客户端接受到SYN报文后，会发送ACK报文，当然，也是一样把服务器的 ISN + 1 作为 ACK 的值，表示已经收到了服务端的 SYN 报文，此时客户端处于 establised 状态。</li>
+<li>服务器收到 ACK 报文之后，也处于 establised 状态，此时，双方已建立起了链接。</li>
+</ul>
+<h3 id="三次握手的作用"><a href="#三次握手的作用" class="headerlink" title="三次握手的作用"></a>三次握手的作用</h3><ul>
+<li>确认双方的接受能力、发送能力是否正常。</li>
+<li>指定自己的初始化序列号，为后面的可靠传送做准备。</li>
+<li>对于 HTTPS 协议，三次握手这个过程，会进行数字证书的验证以及加密密钥的生成。</li>
+</ul>
+<hr>
+<hr>
+<p><strong><em>注意事项</em></strong></p>
+<pre><code>1.ISN不是固定的
+    ISN的作用是让对方知道接下来接收数据的时候如何按序列号组装数据。
+    如果 ISN 是固定的，攻击者很容易猜出后续的确认号，因此 ISN 是动态生成的。
+
+2.半连接队列
+    在第一次握手时，服务器收到客户端发来的报文，但两者还没有建立链接，服务器会把这种请求放入一个队
+    列里，这队列就叫半链接队列。
+
+3.携带数据
+    第三次握手可以携带数据，第一次和第二次不可以。
+    如果前两次可以携带数据，那么攻击者就会不停地发送SYN报文加大量垃圾数据给服务器，服务器就会不停地
+    分配资源来处理数据。
+    总而言之，资源是有限的。第三次客户端已经处于establised，对于客户端来说，服务器的接受、发送能力
+    都正常，所以可以携带数据。</code></pre><hr>
+<hr>
+<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p><img src="/pictrues/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="四次挥手"></p>
+<h3 id="第一次挥手"><a href="#第一次挥手" class="headerlink" title="第一次挥手"></a>第一次挥手</h3><ul>
+<li>刚开始双方都处于 establised 状态，假如是客户端先发起关闭请求</li>
+<li>客户端发送一个 FIN 报文，报文中会指定一个序列号。此时客户端处于 FIN_WAIT1 状态。</li>
+</ul>
+<h3 id="第二次挥手"><a href="#第二次挥手" class="headerlink" title="第二次挥手"></a>第二次挥手</h3><ul>
+<li>服务端收到 FIN 之后，将客户端的序列号值 +1 作为 ACK 报文发送，表明已经收到客户端的报文了，此时服务端处于 CLOSE_WAIT 状态。</li>
+</ul>
+<h3 id="第三次挥手"><a href="#第三次挥手" class="headerlink" title="第三次挥手"></a>第三次挥手</h3><ul>
+<li>如果服务端也想断开连接了，也会发给客户端FIN 报文，且指定一个序列号。此时服务端处于 LAST_ACK 的状态。</li>
+</ul>
+<h3 id="第四次挥手"><a href="#第四次挥手" class="headerlink" title="第四次挥手"></a>第四次挥手</h3><ul>
+<li>客户端收到 FIN 之后，一样发送一个 ACK 报文作为应答，且把服务端的序列号值 +1 作为自己 ACK 报文的序列号值，此时客户端处于 TIME_WAIT 状态。</li>
+<li>需要过一阵子以确保服务端收到自己的 ACK 报文之后才会进入 CLOSED 状态</li>
+<li>服务端收到 ACK 报文之后，就关闭连接，处于 CLOSED 状态。</li>
+</ul>
+<hr>
+<hr>
+<p><strong><em>注意事项</em></strong></p>
+<pre><code>第四次挥手时，客户端要等一段时间才会关闭链接，因为要确保服务器是否已经收到了我们的 ACK 报文，
+如果没有收到的话，服务器会重新发 FIN 报文给客户端，客户端再次收到 ACK 报文之后，就知道之前
+的 ACK 报文丢失了，然后再次发送 ACK 报文。
+
+至于 TIME_WAIT 持续的时间至少是一个报文的来回时间。过了这段时间没有再次收到 FIN 报文，则代
+表对方成功接收ACK 报文，此时处于 CLOSED 状态。</code></pre>]]></content>
+      <categories>
+        <category>Computer Network</category>
+      </categories>
+      <tags>
+        <tag>TCP/IP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Cpp Projects</title>
     <url>/2021/07/12/Cpp-Projects/</url>
     <content><![CDATA[<p>Learning C++ Projects Record!!</p>
@@ -504,7 +576,17 @@
 <li>动态库内存释放：遵循一个原则：谁分配，谁释放。</li>
 <li>调用动态库函数分配的内存，也一定要调用动态库函数来释放内存。</li>
 </ul>
-<h2 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<h2 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h2><ul>
+<li>gcc 和 make 应该是一起自带的</li>
+<li>这里装个 cmake（CentOS8）<ul>
+<li>官网下载 xx.xx.tar.gz 然后解压</li>
+<li><code>cd xx.xx</code> 进入目录运行 <code>./bootstrap</code>，若报错找不到 openssl 则运行 </li>
+<li><code>yum install  -y openssl  openssl-devel</code></li>
+<li>然后 <code>gmake</code>、<code>gmake install</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
 <li>若不用动态库，直接将所有的 .h、.c 文件放在同一目录下<ul>
 <li><code>gcc *.c -o a.out</code> 这样也是可以运行的！</li>
 <li>若直接写成这样的 makefile 那么修改一个文件，所有的文件都需要重新编译！</li>
@@ -761,14 +843,38 @@
 <h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><ul>
 <li>fork 子进程， 父进程 exit</li>
 <li>子进程调用 <code>setsid()</code> 创建新会话，成为会长。进程组组长、子进程 pid</li>
+<li>可以调用宏 <code>#define CREATE_DAEMON if(fork() &gt; 0) exit(1); setsid();</code><ul>
+<li>但是不能 ctrl + c 关闭，所以得用脚本来维护。</li>
+</ul>
+</li>
 </ul>
 <h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><ul>
 <li>成 一系列 shell 命令，组织到一个文件中，统一运行。</li>
 <li>第一行： 指定解析器。  <code>#！/bin/bash   /bin/shell</code></li>
 <li><code>awk</code> 处理列、<code>sed</code> 处理行 </li>
+<li>注意点<ul>
+<li>win、unix 编码问题，\r\n 以及 \n 不同，最好直接在 vim 里编写，而不是在 win10 写再复制到 linux</li>
+<li>若报错，就在 vim 里设置 <code>:set ff=unix</code></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/bash</span></span><br><span class="line"></span><br><span class="line">userN=`whoami`</span><br><span class="line"></span><br><span class="line">mypid=`ps -u <span class="variable">$&#123;userN&#125;</span> | grep keymngserver | awk <span class="string">'&#123;print $1&#125;'</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="variable">$&#123;mypid&#125;</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"The process is not started."</span></span><br><span class="line">        <span class="built_in">exit</span> 1;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> -9 <span class="variable">$&#123;mypid&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"kill keymngserver successful"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/bash</span></span><br><span class="line"></span><br><span class="line">userN=`whoami`</span><br><span class="line"></span><br><span class="line">mypid=`ps -u <span class="variable">$&#123;userN&#125;</span> | grep keymngserver | awk <span class="string">'&#123;print $1&#125;'</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="variable">$&#123;mypid&#125;</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"The process is not started."</span></span><br><span class="line">        <span class="built_in">exit</span> 1;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> -10 <span class="variable">$&#123;mypid&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"kill keymngserver successful"</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><ul>
+<li>Oracle 没有方便的对外接口来访问数据库，需要自己手动实现，这里就用了 MySQL 来代替</li>
+<li>除了基础的 MySQl 安装包之外还需额外安装 mysql-community-devel-8.0.28-1.el8.x86_64.rpm<ul>
+<li>这里面有需要的动态库 libmysqlclient.so</li>
+<li>安装之后可以找一下这个动态库所在的位置 <code>sudo find / -name libmysqlclient.so</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>还有就是 .c 文件<ul>
+<li>导入包用 <code>#include &lt;mysql/mysql.h&gt;</code></li>
+<li>编译的时候会出现找不到动态库的情况，这里顺便复习下动态库的几种访问路径或者直接在编译的时候加入 <code>-L xx/xx/</code> 参数</li>
+</ul>
+</li>
+</ul>
 <hr>
 <h1 id="异步日志库"><a href="#异步日志库" class="headerlink" title="异步日志库"></a>异步日志库</h1><ul>
 <li><p>日志还是很重要的，上面这几个项目都用到了日志库</p>
@@ -869,78 +975,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Computer Network</title>
-    <url>/2019/08/25/Computer-Network/</url>
-    <content><![CDATA[<p>Three handshake and four waves between the server and the client.</p>
-<a id="more"></a>
-<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><h3 id="第一次握手"><a href="#第一次握手" class="headerlink" title="第一次握手"></a>第一次握手</h3><ul>
-<li>客户端处于closed状态，服务器处于listen状态。此时由客户端发送SYN报文，并确认自己的初始化序列号ISN，之后客户端处于SYN-send状态。</li>
-<li>SYN： 同步序列编号(Synchronize Sequence Numbers)</li>
-</ul>
-<h3 id="第二次握手"><a href="#第二次握手" class="headerlink" title="第二次握手"></a>第二次握手</h3><ul>
-<li>服务器接受到报文后，将自己的SYN作为应答，并指定了自己的序列号ISN，同时把客户端序列号+1作为ACK的值发送，之后服务器处于SYN-received状态。</li>
-</ul>
-<p><img src="/pictrues/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" alt="三次握手"></p>
-<h3 id="第三次握手"><a href="#第三次握手" class="headerlink" title="第三次握手"></a>第三次握手</h3><ul>
-<li>客户端接受到SYN报文后，会发送ACK报文，当然，也是一样把服务器的 ISN + 1 作为 ACK 的值，表示已经收到了服务端的 SYN 报文，此时客户端处于 establised 状态。</li>
-<li>服务器收到 ACK 报文之后，也处于 establised 状态，此时，双方已建立起了链接。</li>
-</ul>
-<h3 id="三次握手的作用"><a href="#三次握手的作用" class="headerlink" title="三次握手的作用"></a>三次握手的作用</h3><ul>
-<li>确认双方的接受能力、发送能力是否正常。</li>
-<li>指定自己的初始化序列号，为后面的可靠传送做准备。</li>
-<li>对于 HTTPS 协议，三次握手这个过程，会进行数字证书的验证以及加密密钥的生成。</li>
-</ul>
-<hr>
-<hr>
-<p><strong><em>注意事项</em></strong></p>
-<pre><code>1.ISN不是固定的
-    ISN的作用是让对方知道接下来接收数据的时候如何按序列号组装数据。
-    如果 ISN 是固定的，攻击者很容易猜出后续的确认号，因此 ISN 是动态生成的。
-
-2.半连接队列
-    在第一次握手时，服务器收到客户端发来的报文，但两者还没有建立链接，服务器会把这种请求放入一个队
-    列里，这队列就叫半链接队列。
-
-3.携带数据
-    第三次握手可以携带数据，第一次和第二次不可以。
-    如果前两次可以携带数据，那么攻击者就会不停地发送SYN报文加大量垃圾数据给服务器，服务器就会不停地
-    分配资源来处理数据。
-    总而言之，资源是有限的。第三次客户端已经处于establised，对于客户端来说，服务器的接受、发送能力
-    都正常，所以可以携带数据。</code></pre><hr>
-<hr>
-<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p><img src="/pictrues/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt="四次挥手"></p>
-<h3 id="第一次挥手"><a href="#第一次挥手" class="headerlink" title="第一次挥手"></a>第一次挥手</h3><ul>
-<li>刚开始双方都处于 establised 状态，假如是客户端先发起关闭请求</li>
-<li>客户端发送一个 FIN 报文，报文中会指定一个序列号。此时客户端处于 FIN_WAIT1 状态。</li>
-</ul>
-<h3 id="第二次挥手"><a href="#第二次挥手" class="headerlink" title="第二次挥手"></a>第二次挥手</h3><ul>
-<li>服务端收到 FIN 之后，将客户端的序列号值 +1 作为 ACK 报文发送，表明已经收到客户端的报文了，此时服务端处于 CLOSE_WAIT 状态。</li>
-</ul>
-<h3 id="第三次挥手"><a href="#第三次挥手" class="headerlink" title="第三次挥手"></a>第三次挥手</h3><ul>
-<li>如果服务端也想断开连接了，也会发给客户端FIN 报文，且指定一个序列号。此时服务端处于 LAST_ACK 的状态。</li>
-</ul>
-<h3 id="第四次挥手"><a href="#第四次挥手" class="headerlink" title="第四次挥手"></a>第四次挥手</h3><ul>
-<li>客户端收到 FIN 之后，一样发送一个 ACK 报文作为应答，且把服务端的序列号值 +1 作为自己 ACK 报文的序列号值，此时客户端处于 TIME_WAIT 状态。</li>
-<li>需要过一阵子以确保服务端收到自己的 ACK 报文之后才会进入 CLOSED 状态</li>
-<li>服务端收到 ACK 报文之后，就关闭连接，处于 CLOSED 状态。</li>
-</ul>
-<hr>
-<hr>
-<p><strong><em>注意事项</em></strong></p>
-<pre><code>第四次挥手时，客户端要等一段时间才会关闭链接，因为要确保服务器是否已经收到了我们的 ACK 报文，
-如果没有收到的话，服务器会重新发 FIN 报文给客户端，客户端再次收到 ACK 报文之后，就知道之前
-的 ACK 报文丢失了，然后再次发送 ACK 报文。
-
-至于 TIME_WAIT 持续的时间至少是一个报文的来回时间。过了这段时间没有再次收到 FIN 报文，则代
-表对方成功接收ACK 报文，此时处于 CLOSED 状态。</code></pre>]]></content>
-      <categories>
-        <category>Computer Network</category>
-      </categories>
-      <tags>
-        <tag>TCP/IP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Database</title>
     <url>/2021/10/11/Database/</url>
     <content><![CDATA[<p>Learning Database Record!!</p>
@@ -977,26 +1011,51 @@
 <p>还有一种方法是直接命令行下载，不过我没有成功，就不献丑了！</p>
 </blockquote>
 <h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><ul>
-<li><p>这里得选 RedHat Linux 版本，还是一样，继续下载 RPM 捆绑包</p>
+<li>这里得选 RedHat Linux 版本，还是一样，继续下载 RPM 捆绑包</li>
+<li>查询是否安装 <code>rpm -qa | grep mysql</code><ul>
+<li>若有多余的安装，可以卸载 <code>yum -y remove xx.xx</code></li>
+<li>再查找根目录 <code>sudo find / -name mysql</code> 若有文件则 <code>rm -rf xx</code></li>
+<li>给足权限 <code>sudo chmod 777 /tmp</code></li>
+<li>查看依赖 <code>rpm -qa | grep libaio</code>、<code>rpm -qa | grep net-tools</code> 正常都有</li>
+</ul>
 </li>
-<li><p>查询是否安装 <code>rpm -qa | grep mysql</code></p>
-</li>
-<li><p>解压 <code>tar -xvf mysql-8.0.27-1.el8.x86_64.rpm-bundle.tar</code></p>
-<ul>
+<li>解压 <code>tar -xvf mysql-8.0.27-1.el8.x86_64.rpm-bundle.tar</code><ul>
 <li>这里注意 <code>-xvf</code> </li>
 </ul>
 </li>
-<li><p>用 <code>rpm -ivh</code> 进行安装</p>
-<ul>
+<li>用 <code>rpm -ivh</code> 进行安装<ul>
 <li>需要啥安装啥，这里就不一一列出了</li>
 </ul>
 </li>
 </ul>
 <p><img src="/pictrues/Database/MySQL.png" alt title="安装"></p>
+<p><img src="/pictrues/Database/install.png" alt title="安装"></p>
 <ul>
 <li>因为安装包很全面，就不需要在线安装命令了 <code>yum</code></li>
 </ul>
-<h3 id="更改密码"><a href="#更改密码" class="headerlink" title="更改密码"></a>更改密码</h3><ul>
+<h3 id="更改密码"><a href="#更改密码" class="headerlink" title="更改密码"></a>更改密码</h3><blockquote>
+<p>法一</p>
+</blockquote>
+<ul>
+<li>初始化 <code>sudo mysqld --initialize --user=mysql</code><ul>
+<li>为 root 用户生成一个密码并标记为过期</li>
+</ul>
+</li>
+<li>查看密码 <code>sudo cat /var/log/mysqld.log</code></li>
+<li>查看服务 <code>systemctl status mysqld.service</code> 并启动 <code>sudo systemctl start mysqld.service</code></li>
+<li>自启动 <code>systemctl list-unit-files | grep mysqld.service</code><ul>
+<li>若不是 enabled 则 <code>sudo systemctl enable mysqld.service</code></li>
+</ul>
+</li>
+<li>更改密码 <code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;xing&#39;;</code><ul>
+<li>退出 <code>quit</code> 重登</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>法二</p>
+</blockquote>
+<ul>
 <li><p>安装好后设置下权限 <code>chown -R mysql:mysql /var/lib/mysql</code></p>
 <ul>
 <li>启动服务 <code>systemctl start mysqld.service</code></li>
@@ -1030,11 +1089,21 @@
 </li>
 </ul>
 <h3 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h3><ul>
-<li>用的是小海豚 SQLyog<ul>
+<li><p>用的是小海豚 SQLyog</p>
+<ul>
 <li>有点小问题，IP 地址的结尾不能是 0</li>
 <li>连接的时候首先要关闭防火墙 <code>systemctl stop firewalld.service</code></li>
 <li>然后进入 mysql 修改 user 表 <code>use mysql;</code>、<code>update user set host = &#39;%&#39; where user = &#39;root&#39;;</code></li>
 <li>之后再重启下</li>
+</ul>
+</li>
+<li><p>之后还是会报错，因为密码加密的问题</p>
+</li>
+</ul>
+<p><img src="/pictrues/Database/SQLyog.png" alt title="报错"></p>
+<ul>
+<li>解决方法<ul>
+<li><code>ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;xing&#39;</code></li>
 </ul>
 </li>
 </ul>
@@ -1045,6 +1114,28 @@
 </ul>
 </li>
 <li>查看状态 <code>select host,user,plugin from user;</code></li>
+</ul>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><ul>
+<li><p>这里就以 CentOS 为例吧，Ubuntu 很少用了</p>
+</li>
+<li><p>需要 gcc</p>
+</li>
+<li><p>官网下载安装包、解压 <code>tar -zxvf xx.xx.tar.gz</code>、进入目录</p>
+<ul>
+<li><code>make</code></li>
+<li><code>make install</code></li>
+<li>默认安装目录 <code>/usr/local/bin</code></li>
+</ul>
+</li>
+<li><p>后台启动</p>
+<ul>
+<li><code>cp /xx/redis-x.x.x/redis.conf  /etc/redis.conf</code></li>
+<li><code>vim /etc/redis.conf</code> daemonize no -&gt; yes</li>
+<li><code>redis-server /etc/redis.conf</code> 启动</li>
+<li><code>redis-cli</code> 访问</li>
+<li><code>shutdown</code> 关闭再 <code>exit</code></li>
+</ul>
+</li>
 </ul>
 ]]></content>
       <categories>
