@@ -543,7 +543,18 @@
 </ul>
 </li>
 </ul>
-<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><ul>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><blockquote>
+<p>这里写的有点问题，CentOS8 下死活找不到动态库除非手动 <code>-L xx/xx</code> 指定路径<br> 应该是 LD_LIBRARY_PATH 的问题，可以改成 LIBRARY_PATH 这两个不一样需要注意</p>
+</blockquote>
+<ul>
+<li>LIBRARY_PATH 是程序 编译 期间查找动态链接库时指定查找共享库的路径</li>
+<li>LD_LIBRARY_PATH 是程序 加载 运行期间查找动态链接库时指定除了系统默认路径之外的其他路径<ul>
+<li>制作动态库之后，需要加载，就会用到 LD_LIBRARY_PATH</li>
+<li><code>gcc main.c -o a.out -L ./lib/ -lmymsg -I ./inc/</code> -I 是头文件路径</li>
+</ul>
+</li>
+</ul>
+<ul>
 <li><p>这里之前对网络（系统）编程那边有过接触动态库的制作</p>
 <ul>
 <li><code>-fPIC</code> 生成与位置无关的代码 <code>gcc -c *.c -fPIC</code></li>
@@ -861,10 +872,27 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#! /bin/bash</span></span><br><span class="line"></span><br><span class="line">userN=`whoami`</span><br><span class="line"></span><br><span class="line">mypid=`ps -u <span class="variable">$&#123;userN&#125;</span> | grep keymngserver | awk <span class="string">'&#123;print $1&#125;'</span>`</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="variable">$&#123;mypid&#125;</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"The process is not started."</span></span><br><span class="line">        <span class="built_in">exit</span> 1;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> -10 <span class="variable">$&#123;mypid&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"kill keymngserver successful"</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><ul>
-<li>Oracle 没有方便的对外接口来访问数据库，需要自己手动实现，这里就用了 MySQL 来代替</li>
-<li>除了基础的 MySQl 安装包之外还需额外安装 mysql-community-devel-8.0.28-1.el8.x86_64.rpm<ul>
+<li><p>Oracle 没有方便的对外接口来访问数据库，需要自己手动实现，这里就用了 MySQL 来代替</p>
+</li>
+<li><p>除了基础的 MySQl 安装包之外还需额外安装 mysql-community-devel-8.0.28-1.el8.x86_64.rpm</p>
+<ul>
 <li>这里面有需要的动态库 libmysqlclient.so</li>
 <li>安装之后可以找一下这个动态库所在的位置 <code>sudo find / -name libmysqlclient.so</code></li>
+<li>安装会有提示需要 openssl 依赖，当时忘记记录了。。。唉，重新记录下<ul>
+<li>再次提一下，若虚拟机连接的网换了，在网络编辑器还原默认即可</li>
+<li>当时应该是强制安装的 <code>rpm -ivh xxx.rpm --force --nodeps</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>记录下如何安装 openssl 依赖、gdb</p>
+<ul>
+<li><code>sudo yum openssl</code>、<code>sudo yum openssl-devel</code> 都会下载失败，得先下载离线安装包</li>
+<li>官网下载(<a href="http://www.openssl.org/soure/" target="_blank" rel="noopener">http://www.openssl.org/soure/</a>) 或者直接命令行下载最新的 <code>sudo wget http://www.openssl.org/source/openssl-3.0.1.tar.gz</code></li>
+<li>最新的会出现问题，还是换成 1.1.1m 版本吧。。。</li>
+<li><code>tar -xzf xxx.tar.gz</code> 解压后，进入目录，创建路径 <code>sudo mkdir /usr/local/openssl</code></li>
+<li>配置 <code>./config --prefix=/usr/local/openssl</code>、<code>make</code>、<code>make install</code></li>
+<li>有什么问题再继续补充(cnblogs.com/shmily3929/p/9965327.html)</li>
 </ul>
 </li>
 </ul>
@@ -872,6 +900,16 @@
 <li>还有就是 .c 文件<ul>
 <li>导入包用 <code>#include &lt;mysql/mysql.h&gt;</code></li>
 <li>编译的时候会出现找不到动态库的情况，这里顺便复习下动态库的几种访问路径或者直接在编译的时候加入 <code>-L xx/xx/</code> 参数</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>之后为了方便应该把用到的动态库文件统一放在 ~/lib/ 下，再修改下配置文件即可</li>
+<li>关于 MySQL 游标<ul>
+<li>使用 NOT FOUND 来结束游标当其他查询没有返回结果都会触发造成提前结束</li>
+<li>可以先将游标的总记录数查询出来，然后用记录数来确定循环次数就可以了。</li>
+<li>对于 MySQL 应该没有那么麻烦，直接 <code>mysql_fetch_row()</code> 就可以一行一行读取了，所有的结果集都在 <code>result</code> 里就很方便</li>
+<li>所以这些数据库有关的代码都大大简化了，连接池还是得继续用，事务开启以及关闭要继续使用，显得逻辑清晰</li>
 </ul>
 </li>
 </ul>
