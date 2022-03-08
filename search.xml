@@ -6,6 +6,9 @@
     <content><![CDATA[<p>Continually Updated.(Just Kidding)</p>
 <a id="more"></a>
 
+<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><ul>
+<li>检测循环依赖的</li>
+</ul>
 <h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><ul>
 <li><p>学习下</p>
 </li>
@@ -335,6 +338,178 @@
       </categories>
       <tags>
         <tag>TCP/IP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Database</title>
+    <url>/2021/10/11/Database/</url>
+    <content><![CDATA[<p>Learning Database Record!!</p>
+<a id="more"></a>
+
+<blockquote>
+<p>虚拟机拍摄快照功能还是很好用的，方便备份恢复^-^！</p>
+</blockquote>
+<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><ul>
+<li>下载更新时，将中科大源换成了阿里源！</li>
+</ul>
+<h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><ul>
+<li>先在官网 <a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">MySQL</a> 下载 DEB Bundle 捆绑包，然后解压会有各种安装包。</li>
+<li><code>sudo apt-get update</code></li>
+<li>除了测试包其余都装上，需要依赖就安装依赖<ul>
+<li><code>sudo dpkg -i xxx.deb</code></li>
+</ul>
+</li>
+<li><code>sudo apt-get install libaio1 libmecab2</code> 或者 <code>sudo apt-get -f install</code></li>
+</ul>
+<blockquote>
+<p>安装过程会弹出用户名密码，设置下就行</p>
+</blockquote>
+<ul>
+<li>至此 MySQL 已安装完成<ul>
+<li>启动服务 <code>service mysql start</code></li>
+<li>检查服务状态 <code>systemctl status mysql.service</code></li>
+<li>进入 MySQL <code>mysql -u root -p</code></li>
+<li>-u 的用户是 root，-p 要输入密码</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>还有一种方法是直接命令行下载，不过我没有成功，就不献丑了！</p>
+</blockquote>
+<h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><ul>
+<li>这里得选 RedHat Linux 版本，还是一样，继续下载 RPM 捆绑包</li>
+<li>查询是否安装 <code>rpm -qa | grep mysql</code><ul>
+<li>若有多余的安装，可以卸载 <code>yum -y remove xx.xx</code></li>
+<li>再查找根目录 <code>sudo find / -name mysql</code> 若有文件则 <code>rm -rf xx</code></li>
+<li>给足权限 <code>sudo chmod 777 /tmp</code></li>
+<li>查看依赖 <code>rpm -qa | grep libaio</code>、<code>rpm -qa | grep net-tools</code> 正常都有</li>
+</ul>
+</li>
+<li>解压 <code>tar -xvf mysql-8.0.27-1.el8.x86_64.rpm-bundle.tar</code><ul>
+<li>这里注意 <code>-xvf</code> </li>
+</ul>
+</li>
+<li>用 <code>rpm -ivh</code> 进行安装<ul>
+<li>需要啥安装啥，这里就不一一列出了</li>
+</ul>
+</li>
+</ul>
+<p><img src="/pictrues/Database/MySQL.png" alt title="安装"></p>
+<p><img src="/pictrues/Database/install.png" alt title="安装"></p>
+<ul>
+<li>因为安装包很全面，就不需要在线安装命令了 <code>yum</code></li>
+</ul>
+<h3 id="更改密码"><a href="#更改密码" class="headerlink" title="更改密码"></a>更改密码</h3><blockquote>
+<p>法一</p>
+</blockquote>
+<ul>
+<li>初始化 <code>sudo mysqld --initialize --user=mysql</code><ul>
+<li>为 root 用户生成一个密码并标记为过期</li>
+</ul>
+</li>
+<li>查看密码 <code>sudo cat /var/log/mysqld.log</code></li>
+<li>查看服务 <code>systemctl status mysqld.service</code> 并启动 <code>sudo systemctl start mysqld.service</code></li>
+<li>自启动 <code>systemctl list-unit-files | grep mysqld.service</code><ul>
+<li>若不是 enabled 则 <code>sudo systemctl enable mysqld.service</code></li>
+</ul>
+</li>
+<li>更改密码 <code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;xing&#39;;</code><ul>
+<li>退出 <code>quit</code> 重登</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>法二</p>
+</blockquote>
+<ul>
+<li><p>安装好后设置下权限 <code>chown -R mysql:mysql /var/lib/mysql</code></p>
+<ul>
+<li>启动服务 <code>systemctl start mysqld.service</code></li>
+<li>查看状态 <code>systemctl status mysqld.service</code></li>
+<li>查看 mysqladmin 工具版本 <code>mysqladmin --version</code></li>
+</ul>
+</li>
+<li><p>注意这里，<code>mysql</code></p>
+<ul>
+<li>与 Ubuntu 安装不一样，没有弹出让你设置密码的界面，所以显示无权限</li>
+<li>网上的解决方法真的是参差不齐</li>
+<li>停止服务 <code>systemctl stop mysqld.service</code></li>
+<li>先设置配置文件 <code>sudo vim /etc/my.cnf</code> 在最后加上一行 <code>skip-grant-tables</code> （这一行待会之后还要删除）</li>
+<li><code>systemctl start mysqld.service</code></li>
+<li>进入 mysql <code>mysql -u root</code></li>
+</ul>
+</li>
+<li><p>修改密码</p>
+<ul>
+<li><code>use mysql;</code></li>
+<li>想修改简单的密码得先更改安全变量值</li>
+<li>查看安全系数 <code>SHOW VARIABLES LIKE &#39;validate_password%&#39;;</code></li>
+<li>设置为最低 <code>set global validate_password.policy=0;</code>、<code>set global validate_password.length=4;</code></li>
+<li>先把 root 密码置空 <code>UPDATE user SET authentication_string=&quot;&quot; WHERE user=&quot;root&quot;;</code></li>
+<li>更新下 <code>flush privileges;</code></li>
+<li><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;xing&#39;;</code></li>
+<li><code>quit</code></li>
+<li>删除之前配置文件 <code>/etc/my.cnf</code> 新添加的一句</li>
+<li>重启服务 <code>systemctl restart mysqld.service</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h3><ul>
+<li><p>用的是小海豚 SQLyog</p>
+<ul>
+<li>有点小问题，IP 地址的结尾不能是 0</li>
+<li>连接的时候首先要关闭防火墙 <code>systemctl stop firewalld.service</code></li>
+<li>然后进入 mysql 修改 user 表 <code>use mysql;</code>、<code>update user set host = &#39;%&#39; where user = &#39;root&#39;;</code></li>
+<li>之后再重启下</li>
+</ul>
+</li>
+<li><p>之后还是会报错，因为密码加密的问题</p>
+</li>
+</ul>
+<p><img src="/pictrues/Database/SQLyog.png" alt title="报错"></p>
+<ul>
+<li>解决方法<ul>
+<li><code>ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;xing&#39;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="MySQL-命令"><a href="#MySQL-命令" class="headerlink" title="MySQL 命令"></a>MySQL 命令</h2><ul>
+<li>切换数据库 <code>use mysql;</code></li>
+<li>查询用户表 <code>select User,authentication_string,Host from user;</code><ul>
+<li><code>select * from user;</code> 太多了</li>
+</ul>
+</li>
+<li>查看状态 <code>select host,user,plugin from user;</code></li>
+</ul>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><ul>
+<li><p>这里就以 CentOS 为例吧，Ubuntu 很少用了</p>
+</li>
+<li><p>需要 gcc</p>
+</li>
+<li><p>官网下载安装包、解压 <code>tar -zxvf xx.xx.tar.gz</code>、进入目录</p>
+<ul>
+<li><code>make</code></li>
+<li><code>make install</code></li>
+<li>默认安装目录 <code>/usr/local/bin</code></li>
+</ul>
+</li>
+<li><p>后台启动</p>
+<ul>
+<li><code>cp /xx/redis-x.x.x/redis.conf  /etc/redis.conf</code></li>
+<li><code>vim /etc/redis.conf</code> daemonize no -&gt; yes</li>
+<li><code>redis-server /etc/redis.conf</code> 启动</li>
+<li><code>redis-cli</code> 访问</li>
+<li><code>shutdown</code> 关闭再 <code>exit</code></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Database</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -892,6 +1067,7 @@
 <li>最新的会出现问题，还是换成 1.1.1m 版本吧。。。</li>
 <li><code>tar -xzf xxx.tar.gz</code> 解压后，进入目录，创建路径 <code>sudo mkdir /usr/local/openssl</code></li>
 <li>配置 <code>./config --prefix=/usr/local/openssl</code>、<code>make</code>、<code>make install</code></li>
+<li>为什么还是找不到 openssl 依赖？？？离线安装还是存在问题啊</li>
 <li>有什么问题再继续补充(cnblogs.com/shmily3929/p/9965327.html)</li>
 </ul>
 </li>
@@ -1010,178 +1186,6 @@
       </categories>
       <tags>
         <tag>C++ Projects</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Database</title>
-    <url>/2021/10/11/Database/</url>
-    <content><![CDATA[<p>Learning Database Record!!</p>
-<a id="more"></a>
-
-<blockquote>
-<p>虚拟机拍摄快照功能还是很好用的，方便备份恢复^-^！</p>
-</blockquote>
-<h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><ul>
-<li>下载更新时，将中科大源换成了阿里源！</li>
-</ul>
-<h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><ul>
-<li>先在官网 <a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">MySQL</a> 下载 DEB Bundle 捆绑包，然后解压会有各种安装包。</li>
-<li><code>sudo apt-get update</code></li>
-<li>除了测试包其余都装上，需要依赖就安装依赖<ul>
-<li><code>sudo dpkg -i xxx.deb</code></li>
-</ul>
-</li>
-<li><code>sudo apt-get install libaio1 libmecab2</code> 或者 <code>sudo apt-get -f install</code></li>
-</ul>
-<blockquote>
-<p>安装过程会弹出用户名密码，设置下就行</p>
-</blockquote>
-<ul>
-<li>至此 MySQL 已安装完成<ul>
-<li>启动服务 <code>service mysql start</code></li>
-<li>检查服务状态 <code>systemctl status mysql.service</code></li>
-<li>进入 MySQL <code>mysql -u root -p</code></li>
-<li>-u 的用户是 root，-p 要输入密码</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>还有一种方法是直接命令行下载，不过我没有成功，就不献丑了！</p>
-</blockquote>
-<h2 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><ul>
-<li>这里得选 RedHat Linux 版本，还是一样，继续下载 RPM 捆绑包</li>
-<li>查询是否安装 <code>rpm -qa | grep mysql</code><ul>
-<li>若有多余的安装，可以卸载 <code>yum -y remove xx.xx</code></li>
-<li>再查找根目录 <code>sudo find / -name mysql</code> 若有文件则 <code>rm -rf xx</code></li>
-<li>给足权限 <code>sudo chmod 777 /tmp</code></li>
-<li>查看依赖 <code>rpm -qa | grep libaio</code>、<code>rpm -qa | grep net-tools</code> 正常都有</li>
-</ul>
-</li>
-<li>解压 <code>tar -xvf mysql-8.0.27-1.el8.x86_64.rpm-bundle.tar</code><ul>
-<li>这里注意 <code>-xvf</code> </li>
-</ul>
-</li>
-<li>用 <code>rpm -ivh</code> 进行安装<ul>
-<li>需要啥安装啥，这里就不一一列出了</li>
-</ul>
-</li>
-</ul>
-<p><img src="/pictrues/Database/MySQL.png" alt title="安装"></p>
-<p><img src="/pictrues/Database/install.png" alt title="安装"></p>
-<ul>
-<li>因为安装包很全面，就不需要在线安装命令了 <code>yum</code></li>
-</ul>
-<h3 id="更改密码"><a href="#更改密码" class="headerlink" title="更改密码"></a>更改密码</h3><blockquote>
-<p>法一</p>
-</blockquote>
-<ul>
-<li>初始化 <code>sudo mysqld --initialize --user=mysql</code><ul>
-<li>为 root 用户生成一个密码并标记为过期</li>
-</ul>
-</li>
-<li>查看密码 <code>sudo cat /var/log/mysqld.log</code></li>
-<li>查看服务 <code>systemctl status mysqld.service</code> 并启动 <code>sudo systemctl start mysqld.service</code></li>
-<li>自启动 <code>systemctl list-unit-files | grep mysqld.service</code><ul>
-<li>若不是 enabled 则 <code>sudo systemctl enable mysqld.service</code></li>
-</ul>
-</li>
-<li>更改密码 <code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;xing&#39;;</code><ul>
-<li>退出 <code>quit</code> 重登</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>法二</p>
-</blockquote>
-<ul>
-<li><p>安装好后设置下权限 <code>chown -R mysql:mysql /var/lib/mysql</code></p>
-<ul>
-<li>启动服务 <code>systemctl start mysqld.service</code></li>
-<li>查看状态 <code>systemctl status mysqld.service</code></li>
-<li>查看 mysqladmin 工具版本 <code>mysqladmin --version</code></li>
-</ul>
-</li>
-<li><p>注意这里，<code>mysql</code></p>
-<ul>
-<li>与 Ubuntu 安装不一样，没有弹出让你设置密码的界面，所以显示无权限</li>
-<li>网上的解决方法真的是参差不齐</li>
-<li>停止服务 <code>systemctl stop mysqld.service</code></li>
-<li>先设置配置文件 <code>sudo vim /etc/my.cnf</code> 在最后加上一行 <code>skip-grant-tables</code> （这一行待会之后还要删除）</li>
-<li><code>systemctl start mysqld.service</code></li>
-<li>进入 mysql <code>mysql -u root</code></li>
-</ul>
-</li>
-<li><p>修改密码</p>
-<ul>
-<li><code>use mysql;</code></li>
-<li>想修改简单的密码得先更改安全变量值</li>
-<li>查看安全系数 <code>SHOW VARIABLES LIKE &#39;validate_password%&#39;;</code></li>
-<li>设置为最低 <code>set global validate_password.policy=0;</code>、<code>set global validate_password.length=4;</code></li>
-<li>先把 root 密码置空 <code>UPDATE user SET authentication_string=&quot;&quot; WHERE user=&quot;root&quot;;</code></li>
-<li>更新下 <code>flush privileges;</code></li>
-<li><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;xing&#39;;</code></li>
-<li><code>quit</code></li>
-<li>删除之前配置文件 <code>/etc/my.cnf</code> 新添加的一句</li>
-<li>重启服务 <code>systemctl restart mysqld.service</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h3><ul>
-<li><p>用的是小海豚 SQLyog</p>
-<ul>
-<li>有点小问题，IP 地址的结尾不能是 0</li>
-<li>连接的时候首先要关闭防火墙 <code>systemctl stop firewalld.service</code></li>
-<li>然后进入 mysql 修改 user 表 <code>use mysql;</code>、<code>update user set host = &#39;%&#39; where user = &#39;root&#39;;</code></li>
-<li>之后再重启下</li>
-</ul>
-</li>
-<li><p>之后还是会报错，因为密码加密的问题</p>
-</li>
-</ul>
-<p><img src="/pictrues/Database/SQLyog.png" alt title="报错"></p>
-<ul>
-<li>解决方法<ul>
-<li><code>ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;xing&#39;</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="MySQL-命令"><a href="#MySQL-命令" class="headerlink" title="MySQL 命令"></a>MySQL 命令</h2><ul>
-<li>切换数据库 <code>use mysql;</code></li>
-<li>查询用户表 <code>select User,authentication_string,Host from user;</code><ul>
-<li><code>select * from user;</code> 太多了</li>
-</ul>
-</li>
-<li>查看状态 <code>select host,user,plugin from user;</code></li>
-</ul>
-<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><ul>
-<li><p>这里就以 CentOS 为例吧，Ubuntu 很少用了</p>
-</li>
-<li><p>需要 gcc</p>
-</li>
-<li><p>官网下载安装包、解压 <code>tar -zxvf xx.xx.tar.gz</code>、进入目录</p>
-<ul>
-<li><code>make</code></li>
-<li><code>make install</code></li>
-<li>默认安装目录 <code>/usr/local/bin</code></li>
-</ul>
-</li>
-<li><p>后台启动</p>
-<ul>
-<li><code>cp /xx/redis-x.x.x/redis.conf  /etc/redis.conf</code></li>
-<li><code>vim /etc/redis.conf</code> daemonize no -&gt; yes</li>
-<li><code>redis-server /etc/redis.conf</code> 启动</li>
-<li><code>redis-cli</code> 访问</li>
-<li><code>shutdown</code> 关闭再 <code>exit</code></li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Database</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1552,6 +1556,90 @@
       </tags>
   </entry>
   <entry>
+    <title>Markdown</title>
+    <url>/2019/08/20/Markdown/</url>
+    <content><![CDATA[<p>How to use Markdown.</p>
+<a id="more"></a>
+
+<h2 id="修改实时预览字体"><a href="#修改实时预览字体" class="headerlink" title="修改实时预览字体"></a>修改实时预览字体</h2><blockquote>
+<p>Tools-Options-Stylesheets-Markdownpad github.css-edit</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  min-width: 32em;</span><br><span class="line">  max-width: 52em;</span><br><span class="line">  margin: 10px;</span><br><span class="line">  zoom:2; #第一个body即可</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;font  更改语法&gt;   你的内容   &lt;/font&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>具体用法</p>
+</blockquote>
+<ul>
+<li><font color="#00ffff">字体改成蓝色了</font><br><code>&lt;font color=#00ffff&gt;字体改成蓝色了&lt;/font&gt;</code></li>
+<li><font color="#FF0000">字体改成红色了</font><br><code>&lt;font color=#FF0000&gt;字体改成红色了&lt;/font&gt;</code></li>
+</ul>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">color=#0099ff   更改字体颜色</span><br><span class="line">face=&quot;黑体&quot;   更改字体</span><br><span class="line">size= 7     更改字体大小</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;黑体&quot;&gt;我是黑体字&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;微软雅黑&quot;&gt;我是微软雅黑&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;STCAIYUN&quot;&gt;我是华文彩云&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=#0099ff size=5 face=&quot;黑体&quot;&gt;color=#0099ff size=5 face=&quot;黑体&quot;&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=#00ffff size=5&gt;color=#00ffff&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=gray size=5&gt;color=gray&lt;/font&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><pre><code># 一级标题</code></pre><h2 id="二级"><a href="#二级" class="headerlink" title="二级"></a>二级</h2><pre><code>## 二级</code></pre><h3 id="三级"><a href="#三级" class="headerlink" title="三级"></a>三级</h3><pre><code>### 三级</code></pre><ul>
+<li>列表</li>
+<li>列表</li>
+</ul>
+<h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![图片名字](图片地址 &quot;图片title&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1.png" alt="卡哇伊" title="卡哇伊"></p>
+<p><img src="/images/5.jpg" alt="四月是你的谎言" title="四月是你的谎言"></p>
+<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><hr>
+<hr>
+<h2 id="斜字体"><a href="#斜字体" class="headerlink" title="斜字体"></a><em>斜字体</em></h2><pre><code>*xingkong*</code></pre><h2 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a><strong>加粗</strong></h2><pre><code>**xingkong**</code></pre><h2 id="加粗斜体"><a href="#加粗斜体" class="headerlink" title="加粗斜体"></a><strong><em>加粗斜体</em></strong></h2><pre><code>***xingkong***</code></pre><h2 id="加删除线"><a href="#加删除线" class="headerlink" title="加删除线"></a><del>加删除线</del></h2><pre><code>~~xingkong~~</code></pre><h2 id="插入单行代码"><a href="#插入单行代码" class="headerlink" title="插入单行代码"></a>插入单行代码</h2><p><code>import *</code></p>
+<h2 id="插入多行代码"><a href="#插入多行代码" class="headerlink" title="插入多行代码"></a>插入多行代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><pre><code>&gt;</code></pre><blockquote>
+<p>引用内容</p>
+<blockquote>
+<p>2333</p>
+<blockquote>
+<p>66666</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p><a href="https://space.bilibili.com/34033362">bilibili</a></p>
+<pre><code>[超链接名](超链接地址 &quot;超链接title&quot;)  </code></pre><h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2><pre><code>1.列表内容
+    二级
+2.列表内容
+    二级
+3.列表内容
+    二级</code></pre><h2 id="列表嵌套"><a href="#列表嵌套" class="headerlink" title="列表嵌套"></a>列表嵌套</h2><pre><code>上一级和下一级之间敲四个空格即可</code></pre><h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><pre><code>姓名|技能|排行
+--|:--:|--:
+刘备|哭|大哥</code></pre><table>
+<thead>
+<tr>
+<th>姓名</th>
+<th align="center">技能</th>
+<th align="right">排行</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>刘备</td>
+<td align="center">哭</td>
+<td align="right">大哥</td>
+</tr>
+<tr>
+<td>关羽</td>
+<td align="center">打</td>
+<td align="right">二哥</td>
+</tr>
+<tr>
+<td>张飞</td>
+<td align="center">骂</td>
+<td align="right">三弟</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>介绍</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Machine Learning</title>
     <url>/2021/03/25/Machine-Learning/</url>
     <content><![CDATA[<p>Record study Machine Learning!!!</p>
@@ -1649,90 +1737,6 @@
       <tags>
         <tag>Python3</tag>
         <tag>TensorFlow</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Markdown</title>
-    <url>/2019/08/20/Markdown/</url>
-    <content><![CDATA[<p>How to use Markdown.</p>
-<a id="more"></a>
-
-<h2 id="修改实时预览字体"><a href="#修改实时预览字体" class="headerlink" title="修改实时预览字体"></a>修改实时预览字体</h2><blockquote>
-<p>Tools-Options-Stylesheets-Markdownpad github.css-edit</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  min-width: 32em;</span><br><span class="line">  max-width: 52em;</span><br><span class="line">  margin: 10px;</span><br><span class="line">  zoom:2; #第一个body即可</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;font  更改语法&gt;   你的内容   &lt;/font&gt;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>具体用法</p>
-</blockquote>
-<ul>
-<li><font color="#00ffff">字体改成蓝色了</font><br><code>&lt;font color=#00ffff&gt;字体改成蓝色了&lt;/font&gt;</code></li>
-<li><font color="#FF0000">字体改成红色了</font><br><code>&lt;font color=#FF0000&gt;字体改成红色了&lt;/font&gt;</code></li>
-</ul>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">color=#0099ff   更改字体颜色</span><br><span class="line">face=&quot;黑体&quot;   更改字体</span><br><span class="line">size= 7     更改字体大小</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;黑体&quot;&gt;我是黑体字&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;微软雅黑&quot;&gt;我是微软雅黑&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font face=&quot;STCAIYUN&quot;&gt;我是华文彩云&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=#0099ff size=5 face=&quot;黑体&quot;&gt;color=#0099ff size=5 face=&quot;黑体&quot;&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=#00ffff size=5&gt;color=#00ffff&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">&lt;font color=gray size=5&gt;color=gray&lt;/font&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><pre><code># 一级标题</code></pre><h2 id="二级"><a href="#二级" class="headerlink" title="二级"></a>二级</h2><pre><code>## 二级</code></pre><h3 id="三级"><a href="#三级" class="headerlink" title="三级"></a>三级</h3><pre><code>### 三级</code></pre><ul>
-<li>列表</li>
-<li>列表</li>
-</ul>
-<h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![图片名字](图片地址 &quot;图片title&quot;)</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1.png" alt="卡哇伊" title="卡哇伊"></p>
-<p><img src="/images/5.jpg" alt="四月是你的谎言" title="四月是你的谎言"></p>
-<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><hr>
-<hr>
-<h2 id="斜字体"><a href="#斜字体" class="headerlink" title="斜字体"></a><em>斜字体</em></h2><pre><code>*xingkong*</code></pre><h2 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a><strong>加粗</strong></h2><pre><code>**xingkong**</code></pre><h2 id="加粗斜体"><a href="#加粗斜体" class="headerlink" title="加粗斜体"></a><strong><em>加粗斜体</em></strong></h2><pre><code>***xingkong***</code></pre><h2 id="加删除线"><a href="#加删除线" class="headerlink" title="加删除线"></a><del>加删除线</del></h2><pre><code>~~xingkong~~</code></pre><h2 id="插入单行代码"><a href="#插入单行代码" class="headerlink" title="插入单行代码"></a>插入单行代码</h2><p><code>import *</code></p>
-<h2 id="插入多行代码"><a href="#插入多行代码" class="headerlink" title="插入多行代码"></a>插入多行代码</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><pre><code>&gt;</code></pre><blockquote>
-<p>引用内容</p>
-<blockquote>
-<p>2333</p>
-<blockquote>
-<p>66666</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><p><a href="https://space.bilibili.com/34033362">bilibili</a></p>
-<pre><code>[超链接名](超链接地址 &quot;超链接title&quot;)  </code></pre><h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2><pre><code>1.列表内容
-    二级
-2.列表内容
-    二级
-3.列表内容
-    二级</code></pre><h2 id="列表嵌套"><a href="#列表嵌套" class="headerlink" title="列表嵌套"></a>列表嵌套</h2><pre><code>上一级和下一级之间敲四个空格即可</code></pre><h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><pre><code>姓名|技能|排行
---|:--:|--:
-刘备|哭|大哥</code></pre><table>
-<thead>
-<tr>
-<th>姓名</th>
-<th align="center">技能</th>
-<th align="right">排行</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>刘备</td>
-<td align="center">哭</td>
-<td align="right">大哥</td>
-</tr>
-<tr>
-<td>关羽</td>
-<td align="center">打</td>
-<td align="right">二哥</td>
-</tr>
-<tr>
-<td>张飞</td>
-<td align="center">骂</td>
-<td align="right">三弟</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>介绍</category>
-      </categories>
-      <tags>
-        <tag>Markdown</tag>
       </tags>
   </entry>
   <entry>
